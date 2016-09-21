@@ -10,5 +10,4 @@ public class ApplicationLauncher extends Application {
 		// TODO Auto-generated method stub
 		System.out.println("TEST");
 	}
-
 }
