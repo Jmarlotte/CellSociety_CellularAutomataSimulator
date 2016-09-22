@@ -5,6 +5,7 @@ import java.util.*;
  * This rule represents a binary board pattern in which a cell 
  * will be populated when a specific number of neighbor cells are 
  * populated. 
+ * Cell value of 0 is unoccupied, and cell value of 1 is occupied. 
  * @author ZYL
  *
  */

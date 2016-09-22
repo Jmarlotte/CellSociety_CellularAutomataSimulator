@@ -18,14 +18,25 @@ public class Cell {
 	 * Needs to consider rule. 
 	 */
 	public void prepareForUpdate() {
-		
-	};
+		// cell reproduction
+		if(rule instanceof ReproductionRule) {
+			int neighborCount = 0;
+			for(Cell c : this.neighbors) {
+				neighborCount += c.getValue().getVal();
+			}
+			if(((ReproductionRule)rule).getCounts().contains(neighborCount)) {
+				this.nextValue.setVal(1);
+			} else {
+				this.nextValue.setVal(0);
+			}
+		}
+	}
 	
 	/**
 	 * update. Replace value with nextValue.
 	 */
 	public void update() {
-		value = nextValue;
+		value.setVal(nextValue.getVal());
 	}
 
 	public ArrayList<Cell> getNeighbors() {
@@ -40,16 +51,8 @@ public class Cell {
 		return value;
 	}
 
-	public void setValue(CellValue value) {
-		this.value = value;
-	}
-
 	public CellValue getNextValue() {
 		return nextValue;
-	}
-
-	public void setNextValue(CellValue nextValue) {
-		this.nextValue = nextValue;
 	}
 
 	public Rule getRule() {
