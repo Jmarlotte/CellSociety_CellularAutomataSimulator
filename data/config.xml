@@ -4,6 +4,7 @@
 <DefaultCellValue>0</DefaultCellValue>
 <Width>100</Width>
 <Height>100</Height>
+<CellValueType>Int</CellValueType>
 <CellValues>
 50,50,1;
 50,49,1;
