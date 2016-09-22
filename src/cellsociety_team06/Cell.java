@@ -9,6 +9,10 @@ public class Cell {
 	private CellValue nextValue;
 	private Rule rule;
 	
+	// The x and y index of the cell. Mainly used for rendering on GUI. 
+	private int x;
+	private int y;
+	
 	/**
 	 * Prepare for update. Change nextValue based on neighbors.
 	 * Needs to consider rule. 

@@ -6,6 +6,7 @@ import javafx.stage.Stage;
 public class ApplicationLauncher extends Application {
 	
 	public static void main(String [] args){
+		new SpecificationFileParser().readFile("data/config.xml");
 		launch(args);
 	}
 

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Environment>
+<DefaultCellValue>0</DefaultCellValue>
+<Width>100</Width>
+<Height>100</Height>
+<CellValues>
+50,50,1;
+50,49,1;
+50,51,1;
+</CellValues>
+<RuleType>Reproduction</RuleType>
+<RequiredNeighborCounts>2,3,4</RequiredNeighborCounts>
+</Environment>
