@@ -20,7 +20,6 @@ public class ReproductionRule extends Rule {
 		this.emergeNeighborCounts = emergeCounts;
 	}
 	
-
 	public ArrayList<Integer> getLiveNeighborCounts() {
 		return liveNeighborCounts;
 	}

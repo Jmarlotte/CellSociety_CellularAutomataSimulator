@@ -24,22 +24,48 @@ public class Cell {
 	public void prepareForUpdate() {
 		// cell reproduction
 		if(rule instanceof ReproductionRule) {
-			int neighborCount = 0;
+			updateReproduction();
+		} else if(rule instanceof FireRule) {
+			updateFire();
+		}
+	}
+
+	private void updateFire() {
+		if(this.getValue().getVal()==1) {
+			boolean neighborBurning = false;
 			for(Cell c : this.neighbors) {
-				neighborCount += c.getValue().getVal();
+				if(c.getValue().getVal()==2) {
+					neighborBurning = true;
+					break;
+				}
 			}
-			if(this.value.getVal()==1) {
-				if(((ReproductionRule)rule).getLiveNeighborCounts().contains(neighborCount)) {
-					this.nextValue.setVal(1);
-				} else {
-					this.nextValue.setVal(0);
+			if(neighborBurning) {
+				if(new Random().nextDouble()<((FireRule)rule).getProbCatch()) {
+					this.nextValue.setVal(2);
 				}
+			}
+		} else { // regardless of empty or burning
+			this.nextValue.setVal(0);
+		}
+		
+	}
+	
+	private void updateReproduction() {
+		int neighborCount = 0;
+		for(Cell c : this.neighbors) {
+			neighborCount += c.getValue().getVal();
+		}
+		if(this.value.getVal()==1) {
+			if(((ReproductionRule)rule).getLiveNeighborCounts().contains(neighborCount)) {
+				this.nextValue.setVal(1);
 			} else {
-				if(((ReproductionRule)rule).getEmergeNeighborCounts().contains(neighborCount)) {
-					this.nextValue.setVal(1);
-				} else {
-					this.nextValue.setVal(0);
-				}
+				this.nextValue.setVal(0);
+			}
+		} else {
+			if(((ReproductionRule)rule).getEmergeNeighborCounts().contains(neighborCount)) {
+				this.nextValue.setVal(1);
+			} else {
+				this.nextValue.setVal(0);
 			}
 		}
 	}

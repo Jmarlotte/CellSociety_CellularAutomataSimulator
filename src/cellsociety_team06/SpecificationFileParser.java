@@ -22,20 +22,30 @@ public class SpecificationFileParser {
 			DocumentBuilder db = DocumentBuilderFactory.newInstance().newDocumentBuilder();
 			Document d = db.parse(name);
 			String ruleType = this.getUniqueKey(d, "RuleType");
-			assert ruleType.equals("Reproduction"); // the only currently supported rule type
 			if(ruleType.equals("Reproduction")) {
 				parseReproductionRule(d);
-			}
-			int width = Integer.parseInt(getUniqueKey(d, "Width"));
-			int height = Integer.parseInt(getUniqueKey(d, "Height"));
-			int defaultCellVal = Integer.parseInt(getUniqueKey(d, "DefaultCellValue"));
-			String nonDefaultCellValStr = getUniqueKey(d, "CellValues").trim().replace("\n", "");
-			board = buildBoard(width, height, defaultCellVal, nonDefaultCellValStr, rule);
+				setupBoard(d, 8);
+			} else if(ruleType.equals("Fire")) {
+				parseFireRule(d);
+				setupBoard(d, 4);
+			}/* else if(ruleType.equals("WaTor")) {
+				parseWaTorRule(d);
+				setupBoard(d, 4);
+			}*/
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 			return;
 		}
 		System.out.println("Parsing done");
+	}
+	
+	private void setupBoard(Document d, int neighbors) {
+		int width = Integer.parseInt(getUniqueKey(d, "Width"));
+		int height = Integer.parseInt(getUniqueKey(d, "Height"));
+		int defaultCellVal = Integer.parseInt(getUniqueKey(d, "DefaultCellValue"));
+		String nonDefaultCellValStr = getUniqueKey(d, "CellValues").trim().replace("\n", "");
+		board = buildBoard(width, height, defaultCellVal, nonDefaultCellValStr, rule, neighbors);
 	}
 
 	private void parseReproductionRule(Document d) {
@@ -52,8 +62,12 @@ public class SpecificationFileParser {
 		rule = new ReproductionRule(liveCountList, emergeCountList);
 	}
 
+	private void parseFireRule(Document d) {
+		double probCatch = Double.parseDouble(this.getUniqueKey(d, "ProbCatch"));
+		rule = new FireRule(probCatch);
+	}
 	
-	
+
 	/**
 	 * Build board adjacency list representation
 	 * @param width
@@ -64,7 +78,7 @@ public class SpecificationFileParser {
 	 * @return
 	 */
 	private ArrayList<Cell> buildBoard(int width, int height, int defaultCellVal,
-			String nonDefaultCellValStr, Rule rule) {
+			String nonDefaultCellValStr, Rule rule, int connection) {
 		Cell[][] board = new Cell[height][width];
 		// add cell and append rule
 		for(int h=0; h<height; h++) {
@@ -98,6 +112,16 @@ public class SpecificationFileParser {
 					neighbors.add(board[h+1][w]);
 				if(w!=width-1)
 					neighbors.add(board[h][w+1]);
+				if(connection==8) {
+					if(h!=0 && w!=0)
+						neighbors.add(board[h-1][w-1]);
+					if(h!=0 && w!=width-1)
+						neighbors.add(board[h-1][w+1]);
+					if(h!=height-1 && w!=0)
+						neighbors.add(board[h+1][w-1]);
+					if(h!=height-1 && w!=width-1)
+						neighbors.add(board[h+1][w+1]);
+				}
 				board[h][w].setNeighbors(neighbors);
 			}
 		}
@@ -114,7 +138,7 @@ public class SpecificationFileParser {
 	public Rule getRule() {
 		return rule;
 	}
-	
+
 	public ArrayList<Cell> getBoard() {
 		return board;
 	}
