@@ -11,5 +11,6 @@
 50,51,1;
 </CellValues>
 <RuleType>Reproduction</RuleType>
-<RequiredNeighborCounts>2,3,4</RequiredNeighborCounts>
+<RequiredNeighborCountsToLive>2,3</RequiredNeighborCountsToLive>
+<RequiredNeighborCountsToEmerge>3</RequiredNeighborCountsToEmerge>
 </Environment>

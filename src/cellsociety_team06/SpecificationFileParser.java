@@ -24,12 +24,7 @@ public class SpecificationFileParser {
 			String ruleType = this.getUniqueKey(d, "RuleType");
 			assert ruleType.equals("Reproduction"); // the only currently supported rule type
 			if(ruleType.equals("Reproduction")) {
-				String[] neighborCounts = this.getUniqueKey(d, "RequiredNeighborCounts").split(",");
-				ArrayList<Integer> countArrayList = new ArrayList<Integer>();
-				for(String c : neighborCounts) {
-					countArrayList.add(Integer.parseInt(c));
-				}
-				rule = new ReproductionRule(countArrayList);
+				parseReproductionRule(d);
 			}
 			int width = Integer.parseInt(getUniqueKey(d, "Width"));
 			int height = Integer.parseInt(getUniqueKey(d, "Height"));
@@ -43,6 +38,22 @@ public class SpecificationFileParser {
 		System.out.println("Parsing done");
 	}
 
+	private void parseReproductionRule(Document d) {
+		String[] liveCounts = this.getUniqueKey(d, "RequiredNeighborCountsToLive").split(",");
+		ArrayList<Integer> liveCountList = new ArrayList<Integer>();
+		for(String c : liveCounts) {
+			liveCountList.add(Integer.parseInt(c));
+		}
+		String[] emergeCounts = this.getUniqueKey(d, "RequiredNeighborCountsToEmerge").split(",");
+		ArrayList<Integer> emergeCountList = new ArrayList<Integer>();
+		for(String c : emergeCounts) {
+			emergeCountList.add(Integer.parseInt(c));
+		}
+		rule = new ReproductionRule(liveCountList, emergeCountList);
+	}
+
+	
+	
 	/**
 	 * Build board adjacency list representation
 	 * @param width

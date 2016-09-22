@@ -11,14 +11,22 @@ import java.util.*;
  */
 public class ReproductionRule extends Rule {
 
-	private ArrayList<Integer> requiredNeighborCounts;
+	private ArrayList<Integer> liveNeighborCounts;
+
+	private ArrayList<Integer> emergeNeighborCounts;
 	
-	public ReproductionRule(ArrayList<Integer> counts) {
-		this.requiredNeighborCounts = counts;
+	public ReproductionRule(ArrayList<Integer> liveCounts, ArrayList<Integer> emergeCounts) {
+		this.liveNeighborCounts = liveCounts;
+		this.emergeNeighborCounts = emergeCounts;
 	}
 	
-	public ArrayList<Integer> getCounts() {
-		return this.requiredNeighborCounts;
+
+	public ArrayList<Integer> getLiveNeighborCounts() {
+		return liveNeighborCounts;
+	}
+
+	public ArrayList<Integer> getEmergeNeighborCounts() {
+		return emergeNeighborCounts;
 	}
 	
 }

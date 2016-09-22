@@ -12,11 +12,11 @@ public class Cell {
 
 	private CellValue nextValue;
 	private Rule rule;
-	
+
 	// The x and y index of the cell. Mainly used for rendering on GUI. 
 	private int x;
 	private int y;
-	
+
 	/**
 	 * Prepare for update. Change nextValue based on neighbors.
 	 * Needs to consider rule. 
@@ -28,14 +28,22 @@ public class Cell {
 			for(Cell c : this.neighbors) {
 				neighborCount += c.getValue().getVal();
 			}
-			if(((ReproductionRule)rule).getCounts().contains(neighborCount)) {
-				this.nextValue.setVal(1);
+			if(this.value.getVal()==1) {
+				if(((ReproductionRule)rule).getLiveNeighborCounts().contains(neighborCount)) {
+					this.nextValue.setVal(1);
+				} else {
+					this.nextValue.setVal(0);
+				}
 			} else {
-				this.nextValue.setVal(0);
+				if(((ReproductionRule)rule).getEmergeNeighborCounts().contains(neighborCount)) {
+					this.nextValue.setVal(1);
+				} else {
+					this.nextValue.setVal(0);
+				}
 			}
 		}
 	}
-	
+
 	/**
 	 * update. Replace value with nextValue.
 	 */
@@ -83,5 +91,5 @@ public class Cell {
 		this.y = y;
 	}
 
-	
+
 }
