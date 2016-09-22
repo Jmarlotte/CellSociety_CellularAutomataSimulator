@@ -6,6 +6,10 @@ public class Cell {
 
 	private ArrayList<Cell> neighbors;
 	private CellValue value;
+	public void setValue(CellValue value) {
+		this.value = value;
+	}
+
 	private CellValue nextValue;
 	private Rule rule;
 	
@@ -78,5 +82,6 @@ public class Cell {
 	public void setY(int y) {
 		this.y = y;
 	}
+
 	
 }
