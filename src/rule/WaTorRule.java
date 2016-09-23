@@ -8,6 +8,10 @@ package rule;
  */
 public class WaTorRule extends Rule {
 
+	public static final int EMPTY_TYPE = 0;
+	public static final int FISH_TYPE = 1;
+	public static final int SHARK_TYPE = 2;
+	
 	private int initialHealth;
 	private int minReproductionHealth;
 	private int sharkReproductionInterval;

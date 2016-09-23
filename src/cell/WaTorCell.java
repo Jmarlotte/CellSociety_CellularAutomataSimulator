@@ -15,11 +15,11 @@ public class WaTorCell extends Cell {
 
 	public void step() {
 		// fish: prepare to reproduce
-		if(this.value.getVal()==1) {
+		if(this.value.getVal()==WaTorRule.FISH_TYPE) {
 			timeToReproduce--;
 		} 
 		// shark: prepare to reproduce if healthy, reset reproduce timer if unhealthy, decrement health
-		if(this.value.getVal()==2) {
+		if(this.value.getVal()==WaTorRule.SHARK_TYPE) {
 			if(this.currentHealth>=((WaTorRule)this.rule).getMinReproductionHealth()) {
 				timeToReproduce--;
 			} else {
@@ -30,14 +30,14 @@ public class WaTorCell extends Cell {
 	}
 	
 	public void eat() {
-		assert this.value.getVal()==2; // only shark can eat
+		assert this.value.getVal()==WaTorRule.SHARK_TYPE; // only shark can eat
 		this.currentHealth += ((WaTorRule)this.rule).getFishEnergy();
 	}
 	
 	public void resetReproduceTimer() {
-		if(this.value.getVal()==1) {
+		if(this.value.getVal()==WaTorRule.FISH_TYPE) {
 			timeToReproduce = ((WaTorRule)this.rule).getFishReproductionInterval();
-		} else if(this.value.getVal()==2) {
+		} else if(this.value.getVal()==WaTorRule.SHARK_TYPE) {
 			timeToReproduce = ((WaTorRule)this.rule).getSharkReproductionInterval();
 		}
 	}
@@ -48,9 +48,16 @@ public class WaTorCell extends Cell {
 		this.resetReproduceTimer();
 	}
 	
-	public void changeType(int type, int ttr) {
+	public void changeTypeAndKeepReprTimer(int type, int ttr) {
 		this.value.setVal(type);
 		currentHealth = ((WaTorRule)this.rule).getInitialHealth();
+		this.timeToReproduce = ttr;
+	}
+
+	public void changeTypeAndKeepReprTimerAndKeepHealth(int type, int ttr, int health) {
+		assert type==WaTorRule.SHARK_TYPE; // only shark has health
+		this.value.setVal(type);
+		currentHealth = health;
 		this.timeToReproduce = ttr;
 	}
 
