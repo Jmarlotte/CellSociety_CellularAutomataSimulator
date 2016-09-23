@@ -2,7 +2,7 @@ package cellsociety_team06;
 import java.util.*;
 
 import cell.Cell;
-import global_simulation.WaTorSimulator;
+import global_stepper.WaTorStepper;
 import rule.FireRule;
 import rule.ReproductionRule;
 import rule.WaTorRule;
@@ -29,11 +29,11 @@ public class SimulationController {
 				}
 			}, 0, interval);
 		} else if(board.get(0).getRule() instanceof WaTorRule) {
-			WaTorSimulator sim = new WaTorSimulator(board);
+			WaTorStepper sim = new WaTorStepper(board);
 			timer.scheduleAtFixedRate(new TimerTask() {
 				@Override
 				public void run() {
-					sim.stepWaTor();
+					sim.step();
 				}
 			}, 0, interval);
 			

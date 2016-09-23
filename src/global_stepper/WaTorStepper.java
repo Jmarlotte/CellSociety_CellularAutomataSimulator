@@ -1,4 +1,4 @@
-package global_simulation;
+package global_stepper;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -8,11 +8,11 @@ import cell.Cell;
 import cell.WaTorCell;
 import rule.WaTorRule;
 
-public class WaTorSimulator {
+public class WaTorStepper extends BaseStepper {
 
 	private ArrayList<Cell> board;
 	
-	public WaTorSimulator(ArrayList<Cell> board) {
+	public WaTorStepper(ArrayList<Cell> board) {
 		this.board = board;
 	}
 	
@@ -23,7 +23,8 @@ public class WaTorSimulator {
 	 * 3. update shark. for each shark, move to a nearby position. eat fish if possible. reproduce as needed
 	 * 
 	 */
-	public void stepWaTor() {
+	@Override
+	public void step() {
 		Collections.shuffle(board); // randomly shuffle the board
 		updateFish();
 		updateShark();
@@ -83,28 +84,6 @@ public class WaTorSimulator {
 		}
 	}
 	
-	private ArrayList<Integer> getIndicesOfType(int type) {
-		ArrayList<Integer> indices = new ArrayList<Integer>();
-		int idx = 0;
-		for(Cell c : board) {
-			if(c.getValue().getVal()==type) {
-				indices.add(idx);
-			}
-			idx++;
-		}
-		return indices;
-	}
 	
-	private ArrayList<Integer> getNeighborIndices(ArrayList<Cell> neighbors, int type) {
-		int idx = 0;
-		ArrayList<Integer> indices = new ArrayList<Integer>();
-		for(Cell c : neighbors) {
-			if(c.getValue().getVal()==type) {
-				indices.add(idx);
-			}
-			idx++;
-		}
-		return indices;
-	}
 	
 }
