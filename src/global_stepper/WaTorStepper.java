@@ -2,7 +2,6 @@ package global_stepper;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Random;
 
 import cell.Cell;
 import cell.WaTorCell;
@@ -10,10 +9,8 @@ import rule.WaTorRule;
 
 public class WaTorStepper extends BaseStepper {
 
-	private ArrayList<Cell> board;
-	
 	public WaTorStepper(ArrayList<Cell> board) {
-		this.board = board;
+		super(board);
 	}
 	
 	/**
@@ -32,16 +29,16 @@ public class WaTorStepper extends BaseStepper {
 
 	private void updateShark() {
 		// shark update
-		ArrayList<Integer> sharkIndices = getIndicesOfType(WaTorRule.SHARK_TYPE);
+		ArrayList<Integer> sharkIndices = getIndicesOfType(board, WaTorRule.SHARK_TYPE);
 		for(int idx : sharkIndices) {
 			WaTorCell thisCell = (WaTorCell) board.get(idx);
 			thisCell.step();
 			ArrayList<Integer> neighborIdxs = 
-					this.getNeighborIndices(thisCell.getNeighbors(), WaTorRule.EMPTY_TYPE);
-			neighborIdxs.addAll(this.getNeighborIndices(thisCell.getNeighbors(), WaTorRule.FISH_TYPE));
+					this.getIndicesOfType(thisCell.getNeighbors(), WaTorRule.EMPTY_TYPE);
+			neighborIdxs.addAll(this.getIndicesOfType(thisCell.getNeighbors(), WaTorRule.FISH_TYPE));
 			if(neighborIdxs.isEmpty()) // no empty or fish cell
 				continue;
-			int targetIdx = neighborIdxs.get(new Random().nextInt(neighborIdxs.size()));
+			int targetIdx = randomAccess(neighborIdxs);
 			WaTorCell targetCell = (WaTorCell)board.get(targetIdx);
 			if(targetCell.getValue().getVal()==WaTorRule.FISH_TYPE) {
 				// eating a fish
@@ -56,15 +53,15 @@ public class WaTorStepper extends BaseStepper {
 
 	private void updateFish() {
 		// fish update
-		ArrayList<Integer> fishIndices = getIndicesOfType(WaTorRule.FISH_TYPE);
+		ArrayList<Integer> fishIndices = getIndicesOfType(board, WaTorRule.FISH_TYPE);
 		for(int idx : fishIndices) {
 			WaTorCell thisCell = (WaTorCell) board.get(idx);
 			thisCell.step();
 			ArrayList<Integer> emptyNeighborIdxs = 
-					this.getNeighborIndices(thisCell.getNeighbors(), WaTorRule.EMPTY_TYPE);
+					this.getIndicesOfType(thisCell.getNeighbors(), WaTorRule.EMPTY_TYPE);
 			if(emptyNeighborIdxs.isEmpty()) // no empty cell
 				continue;
-			int targetIdx = emptyNeighborIdxs.get(new Random().nextInt(emptyNeighborIdxs.size()));
+			int targetIdx = randomAccess(emptyNeighborIdxs);
 			WaTorCell targetCell = (WaTorCell)board.get(targetIdx);
 			// change type of the neighbor cell, but keep reproduce timer
 			targetCell.changeTypeAndKeepReprTimer(WaTorRule.FISH_TYPE, thisCell.getTimeToReproduce());

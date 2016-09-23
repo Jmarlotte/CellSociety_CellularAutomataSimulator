@@ -1,6 +1,7 @@
 package global_stepper;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 import cell.Cell;
 
@@ -8,21 +9,13 @@ public abstract class BaseStepper {
 
 	protected ArrayList<Cell> board;
 	
+	public BaseStepper(ArrayList<Cell> board) {
+		this.board = board;
+	}
+
 	public abstract void step();
 	
-	protected ArrayList<Integer> getIndicesOfType(int type) {
-		ArrayList<Integer> indices = new ArrayList<Integer>();
-		int idx = 0;
-		for(Cell c : board) {
-			if(c.getValue().getVal()==type) {
-				indices.add(idx);
-			}
-			idx++;
-		}
-		return indices;
-	}
-	
-	protected ArrayList<Integer> getNeighborIndices(ArrayList<Cell> neighbors, int type) {
+	protected ArrayList<Integer> getIndicesOfType(ArrayList<Cell> neighbors, int type) {
 		int idx = 0;
 		ArrayList<Integer> indices = new ArrayList<Integer>();
 		for(Cell c : neighbors) {
@@ -32,6 +25,10 @@ public abstract class BaseStepper {
 			idx++;
 		}
 		return indices;
+	}
+	
+	protected <T> T randomAccess(ArrayList<T> list) {
+		return list.get(new Random().nextInt(list.size()));
 	}
 	
 }
