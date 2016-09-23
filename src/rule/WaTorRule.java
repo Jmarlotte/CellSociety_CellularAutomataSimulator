@@ -1,5 +1,11 @@
 package rule;
 
+/**
+ * This rule represents a ternary board pattern for WaTor problem. 
+ * Cell value of 0 means empty, 1 means fish, 2 means shark. 
+ * @author ZYL
+ *
+ */
 public class WaTorRule extends Rule {
 
 	private int initialHealth;

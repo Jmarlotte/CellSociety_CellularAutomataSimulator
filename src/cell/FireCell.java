@@ -6,6 +6,10 @@ import rule.FireRule;
 
 public class FireCell extends Cell {
 
+	public FireCell(int value, FireRule rule) {
+		super(value, rule);
+	}
+
 	@Override
 	public void prepareForUpdate() {
 		updateFire();

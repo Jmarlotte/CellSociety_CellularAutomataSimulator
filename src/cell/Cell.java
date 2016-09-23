@@ -16,6 +16,18 @@ public abstract class Cell {
 	private int x;
 	private int y;
 
+	public Cell(int value, Rule rule) {
+		this.value = new CellValue(value);
+		this.nextValue = new CellValue(value);
+		this.rule = rule;
+	}
+	
+	public void setAllValue(int value) {
+		this.value.setVal(value);
+		this.nextValue.setVal(value);
+	}
+	
+	
 	/**
 	 * Prepare for update. Change nextValue based on neighbors.
 	 * Needs to consider rule. 

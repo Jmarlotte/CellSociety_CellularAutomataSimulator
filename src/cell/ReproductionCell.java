@@ -4,6 +4,10 @@ import rule.ReproductionRule;
 
 public class ReproductionCell extends Cell {
 
+	public ReproductionCell(int value, ReproductionRule rule) {
+		super(value, rule);
+	}
+
 	@Override
 	public void prepareForUpdate() {
 		updateReproduction();

@@ -123,11 +123,9 @@ public class SpecificationFileParser {
 		// add cell and append rule
 		for(int h=0; h<height; h++) {
 			for(int w=0; w<width; w++) {
-				board[h][w] = CellFactory.newCell(cellClass, rule);
-				board[h][w].setRule(rule);
+				board[h][w] = CellFactory.newCell(cellClass, defaultCellVal, rule);
 				board[h][w].setX(h);
 				board[h][w].setY(w);
-				board[h][w].setValue(new CellValue(defaultCellVal));
 			}
 		}
 		String[] nonDefaultCellValArr = nonDefaultCellValStr.split(";");
@@ -138,9 +136,21 @@ public class SpecificationFileParser {
 			int x = Integer.parseInt(info[0]);
 			int y = Integer.parseInt(info[1]);
 			int v = Integer.parseInt(info[2]);
-			board[x][y].setValue(new CellValue(v));
+			board[x][y].setAllValue(v);
 		}
 		// Add neighbors
+		setNeighborConnection(width, height, connection, board);
+		// Build ArrayList
+		ArrayList<Cell> cellList = new ArrayList<Cell>();
+		for(int h=0; h<height; h++) {
+			for(int w=0; w<width; w++) {
+				cellList.add(board[h][w]);
+			}
+		}
+		return cellList;
+	}
+
+	private void setNeighborConnection(int width, int height, int connection, Cell[][] board) {
 		for(int h=0; h<height; h++) {
 			for(int w=0; w<width; w++) {
 				ArrayList<Cell> neighbors = new ArrayList<Cell>();
@@ -165,14 +175,6 @@ public class SpecificationFileParser {
 				board[h][w].setNeighbors(neighbors);
 			}
 		}
-		// Build ArrayList
-		ArrayList<Cell> cellList = new ArrayList<Cell>();
-		for(int h=0; h<height; h++) {
-			for(int w=0; w<width; w++) {
-				cellList.add(board[h][w]);
-			}
-		}
-		return cellList;
 	}
 
 	public Rule getRule() {
