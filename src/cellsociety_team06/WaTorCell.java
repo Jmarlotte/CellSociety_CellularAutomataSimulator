@@ -4,7 +4,9 @@ public class WaTorCell extends Cell {
 
 	private int currentHealth;
 	
-	public WaTorCell() {
+	public WaTorCell(Rule rule) {
+		super();
+		super.setRule(rule);
 		currentHealth = ((WaTorRule)this.rule).getInitialHealth();
 	}
 	

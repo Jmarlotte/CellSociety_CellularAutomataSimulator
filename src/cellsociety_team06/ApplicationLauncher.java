@@ -6,7 +6,9 @@ import javafx.stage.Stage;
 public class ApplicationLauncher extends Application {
 	
 	public static void main(String [] args){
-		new SpecificationFileParser().readFile("data/fire.xml");
+		SpecificationFileParser sfp = new SpecificationFileParser();
+		sfp.readFile("data/wator.xml");
+		System.out.println(sfp.getBoard().get(0).getRule());
 		launch(args);
 	}
 

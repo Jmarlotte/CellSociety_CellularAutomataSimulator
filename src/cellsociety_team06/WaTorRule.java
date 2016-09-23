@@ -16,6 +16,13 @@ public class WaTorRule extends Rule {
 		fishEnergy = 5;
 	}
 
+	@Override
+	public String toString() {
+		return "WaTorRule [initialHealth=" + initialHealth + ", minReproductionHealth=" + minReproductionHealth
+				+ ", sharkReproductionInterval=" + sharkReproductionInterval + ", fishReproductionInterval="
+				+ fishReproductionInterval + ", fishEnergy=" + fishEnergy + "]";
+	}
+
 	public int getInitialHealth() {
 		return initialHealth;
 	}

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Environment>
+<DefaultCellValue>1</DefaultCellValue>
+<Width>100</Width>
+<Height>100</Height>
+<CellValueType>Int</CellValueType>
+<CellValues>
+50,50,2;
+50,49,2;
+50,51,2;
+</CellValues>
+<RuleType>WaTor</RuleType>
+<InitialHealth>100</InitialHealth>
+<MinReproductionHealth>50</MinReproductionHealth>
+<SharkReproductionInterval>20</SharkReproductionInterval>
+<FishReproductionInterval>15</FishReproductionInterval>
+<FishEnergy>5</FishEnergy>
+</Environment>

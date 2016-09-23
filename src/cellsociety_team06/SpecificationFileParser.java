@@ -10,7 +10,12 @@ public class SpecificationFileParser {
 	private ArrayList<Cell> board; // adjacency list representation of board
 
 	private String getUniqueKey(Document d, String key) {
-		return d.getElementsByTagName(key).item(0).getTextContent();
+		try {
+			return d.getElementsByTagName(key).item(0).getTextContent();
+		} catch (NullPointerException e) {
+			return null;
+		}
+
 	}
 
 	/**
@@ -24,14 +29,14 @@ public class SpecificationFileParser {
 			String ruleType = this.getUniqueKey(d, "RuleType");
 			if(ruleType.equals("Reproduction")) {
 				parseReproductionRule(d);
-				setupBoard(ReproductionCell.class, d, 8);
+				setupBoard(ruleType, d, 8);
 			} else if(ruleType.equals("Fire")) {
 				parseFireRule(d);
-				setupBoard(FireCell.class, d, 4);
-			}/* else if(ruleType.equals("WaTor")) {
+				setupBoard(ruleType, d, 4);
+			} else if(ruleType.equals("WaTor")) {
 				parseWaTorRule(d);
-				setupBoard(d, 4);
-			}*/
+				setupBoard(ruleType, d, 4);
+			}
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -40,14 +45,14 @@ public class SpecificationFileParser {
 		System.out.println("Parsing done");
 	}
 
-	private void setupBoard(Class cellClass, Document d, int neighbors) {
+	private void setupBoard(String cellClass, Document d, int neighbors) {
 		int width = Integer.parseInt(getUniqueKey(d, "Width"));
 		int height = Integer.parseInt(getUniqueKey(d, "Height"));
 		int defaultCellVal = Integer.parseInt(getUniqueKey(d, "DefaultCellValue"));
 		String nonDefaultCellValStr = getUniqueKey(d, "CellValues").trim().replace("\n", "");
 		board = buildBoard(cellClass, width, height, defaultCellVal, nonDefaultCellValStr, rule, neighbors);
 	}
-	
+
 	private ArrayList<Integer> csvStrToIntList(String s) {
 		String[] strArr = s.split(",");
 		ArrayList<Integer> intList = new ArrayList<Integer>();
@@ -64,16 +69,36 @@ public class SpecificationFileParser {
 				csvStrToIntList(this.getUniqueKey(d, "RequiredNeighborCountsToEmerge"));
 		rule = new ReproductionRule(liveCountList, emergeCountList);
 	}
-	
+
 	private void parseWaTorRule(Document d) {
-		
+		WaTorRule watorRule = new WaTorRule();
+		String initHealth = this.getUniqueKey(d, "InitialHealth");
+		if(initHealth != null) {
+			watorRule.setInitialHealth(Integer.parseInt(initHealth));
+		}
+		String minReprHealth = this.getUniqueKey(d, "MinReproductionHealth");
+		if(minReprHealth != null) {
+			watorRule.setMinReproductionHealth(Integer.parseInt(minReprHealth));
+		}
+		String sharkReprInterval = this.getUniqueKey(d, "SharkReproductionInterval");
+		if(sharkReprInterval != null) {
+			watorRule.setSharkReproductionInterval(Integer.parseInt(sharkReprInterval));
+		}
+		String fishReprInterval = this.getUniqueKey(d, "FishReproductionInterval");
+		if(fishReprInterval != null) {
+			watorRule.setFishReproductionInterval(Integer.parseInt(fishReprInterval));
+		}
+		String fishEnergy = this.getUniqueKey(d, "FishEnergy");
+		if(fishEnergy != null) {
+			watorRule.setFishEnergy(Integer.parseInt(fishEnergy));
+		}
+		rule = watorRule;
 	}
 
 	private void parseFireRule(Document d) {
 		double probCatch = Double.parseDouble(this.getUniqueKey(d, "ProbCatch"));
 		rule = new FireRule(probCatch);
 	}
-
 
 	/**
 	 * Build board adjacency list representation
@@ -84,17 +109,13 @@ public class SpecificationFileParser {
 	 * @param rule
 	 * @return
 	 */
-	private ArrayList<Cell> buildBoard(Class cellClass, int width, int height, int defaultCellVal,
+	private ArrayList<Cell> buildBoard(String cellClass, int width, int height, int defaultCellVal,
 			String nonDefaultCellValStr, Rule rule, int connection) {
 		Cell[][] board = new Cell[height][width];
 		// add cell and append rule
 		for(int h=0; h<height; h++) {
 			for(int w=0; w<width; w++) {
-				try {
-					board[h][w] = (Cell) cellClass.newInstance();
-				} catch (InstantiationException | IllegalAccessException e) {
-					e.printStackTrace();
-				}
+				board[h][w] = CellFactory.newCell(cellClass, rule);
 				board[h][w].setRule(rule);
 				board[h][w].setX(h);
 				board[h][w].setY(w);
