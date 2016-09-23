@@ -2,9 +2,11 @@ package cellsociety_team06;
 import java.util.*;
 
 import cell.Cell;
+import global_stepper.SegregationStepper;
 import global_stepper.WaTorStepper;
 import rule.FireRule;
 import rule.ReproductionRule;
+import rule.SegregationRule;
 import rule.WaTorRule;
 
 public class SimulationController {
@@ -13,13 +15,13 @@ public class SimulationController {
 	private SimulationDisplay display;
 	private Timer timer;
 	public int interval = 1000;
-	
+
 	public SimulationController(ArrayList<Cell> bd, SimulationDisplay sd) {
 		timer = new Timer();
 		board = bd;
 		display = sd;
 	}
-	
+
 	public void startTask() {
 		if(board.get(0).getRule() instanceof FireRule || board.get(0).getRule() instanceof ReproductionRule) {
 			timer.scheduleAtFixedRate(new TimerTask() {
@@ -36,10 +38,17 @@ public class SimulationController {
 					sim.step();
 				}
 			}, 0, interval);
-			
+		} else if(board.get(0).getRule() instanceof SegregationRule) {
+			SegregationStepper sim = new SegregationStepper(board);
+			timer.scheduleAtFixedRate(new TimerTask() {
+				@Override
+				public void run() {
+					sim.step();
+				}
+			}, 0, interval);
 		}
 	}
-	
+
 	/**
 	 * Update once locally. 
 	 */
@@ -52,7 +61,7 @@ public class SimulationController {
 		}
 		display.updateScreen(board);
 	}
-	
-	
-	
+
+
+
 }
