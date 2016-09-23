@@ -1,6 +1,8 @@
 package cellsociety_team06;
 import java.util.*;
 
+import cell.Cell;
+
 public class SimulationDisplay {
 
 	/**

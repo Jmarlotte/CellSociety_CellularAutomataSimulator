@@ -1,4 +1,4 @@
-package cellsociety_team06;
+package cell;
 
 public class CellValue {
 

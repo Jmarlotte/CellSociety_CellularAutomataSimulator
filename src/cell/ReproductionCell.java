@@ -1,4 +1,6 @@
-package cellsociety_team06;
+package cell;
+
+import rule.ReproductionRule;
 
 public class ReproductionCell extends Cell {
 

@@ -1,6 +1,8 @@
-package cellsociety_team06;
+package cell;
 
 import java.util.*;
+
+import rule.Rule;
 
 public abstract class Cell {
 

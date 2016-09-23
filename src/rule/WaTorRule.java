@@ -1,4 +1,4 @@
-package cellsociety_team06;
+package rule;
 
 public class WaTorRule extends Rule {
 

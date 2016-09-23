@@ -1,6 +1,11 @@
 package cellsociety_team06;
 import java.util.*;
 
+import cell.Cell;
+import rule.FireRule;
+import rule.ReproductionRule;
+import rule.WaTorRule;
+
 public class SimulationController {
 
 	private ArrayList<Cell> board;

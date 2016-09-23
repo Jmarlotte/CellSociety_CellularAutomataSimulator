@@ -1,6 +1,8 @@
-package cellsociety_team06;
+package cell;
 
 import java.util.Random;
+
+import rule.FireRule;
 
 public class FireCell extends Cell {
 

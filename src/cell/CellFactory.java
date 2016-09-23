@@ -1,4 +1,6 @@
-package cellsociety_team06;
+package cell;
+
+import rule.Rule;
 
 public class CellFactory {
 

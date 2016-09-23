@@ -1,4 +1,7 @@
-package cellsociety_team06;
+package cell;
+
+import rule.Rule;
+import rule.WaTorRule;
 
 public class WaTorCell extends Cell {
 
