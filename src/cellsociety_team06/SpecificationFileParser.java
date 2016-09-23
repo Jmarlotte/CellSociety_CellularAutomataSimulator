@@ -24,49 +24,56 @@ public class SpecificationFileParser {
 			String ruleType = this.getUniqueKey(d, "RuleType");
 			if(ruleType.equals("Reproduction")) {
 				parseReproductionRule(d);
-				setupBoard(d, 8);
+				setupBoard(ReproductionCell.class, d, 8);
 			} else if(ruleType.equals("Fire")) {
 				parseFireRule(d);
-				setupBoard(d, 4);
+				setupBoard(FireCell.class, d, 4);
 			}/* else if(ruleType.equals("WaTor")) {
 				parseWaTorRule(d);
 				setupBoard(d, 4);
 			}*/
-			
+
 		} catch (Exception e) {
 			e.printStackTrace();
 			return;
 		}
 		System.out.println("Parsing done");
 	}
-	
-	private void setupBoard(Document d, int neighbors) {
+
+	private void setupBoard(Class cellClass, Document d, int neighbors) {
 		int width = Integer.parseInt(getUniqueKey(d, "Width"));
 		int height = Integer.parseInt(getUniqueKey(d, "Height"));
 		int defaultCellVal = Integer.parseInt(getUniqueKey(d, "DefaultCellValue"));
 		String nonDefaultCellValStr = getUniqueKey(d, "CellValues").trim().replace("\n", "");
-		board = buildBoard(width, height, defaultCellVal, nonDefaultCellValStr, rule, neighbors);
+		board = buildBoard(cellClass, width, height, defaultCellVal, nonDefaultCellValStr, rule, neighbors);
+	}
+	
+	private ArrayList<Integer> csvStrToIntList(String s) {
+		String[] strArr = s.split(",");
+		ArrayList<Integer> intList = new ArrayList<Integer>();
+		for(String c : strArr) {
+			intList.add(Integer.parseInt(c));
+		}
+		return intList;
 	}
 
 	private void parseReproductionRule(Document d) {
-		String[] liveCounts = this.getUniqueKey(d, "RequiredNeighborCountsToLive").split(",");
-		ArrayList<Integer> liveCountList = new ArrayList<Integer>();
-		for(String c : liveCounts) {
-			liveCountList.add(Integer.parseInt(c));
-		}
-		String[] emergeCounts = this.getUniqueKey(d, "RequiredNeighborCountsToEmerge").split(",");
-		ArrayList<Integer> emergeCountList = new ArrayList<Integer>();
-		for(String c : emergeCounts) {
-			emergeCountList.add(Integer.parseInt(c));
-		}
+		ArrayList<Integer> liveCountList = 
+				csvStrToIntList(this.getUniqueKey(d, "RequiredNeighborCountsToLive"));
+		ArrayList<Integer> emergeCountList = 
+				csvStrToIntList(this.getUniqueKey(d, "RequiredNeighborCountsToEmerge"));
 		rule = new ReproductionRule(liveCountList, emergeCountList);
+	}
+	
+	private void parseWaTorRule(Document d) {
+		
 	}
 
 	private void parseFireRule(Document d) {
 		double probCatch = Double.parseDouble(this.getUniqueKey(d, "ProbCatch"));
 		rule = new FireRule(probCatch);
 	}
-	
+
 
 	/**
 	 * Build board adjacency list representation
@@ -77,13 +84,17 @@ public class SpecificationFileParser {
 	 * @param rule
 	 * @return
 	 */
-	private ArrayList<Cell> buildBoard(int width, int height, int defaultCellVal,
+	private ArrayList<Cell> buildBoard(Class cellClass, int width, int height, int defaultCellVal,
 			String nonDefaultCellValStr, Rule rule, int connection) {
 		Cell[][] board = new Cell[height][width];
 		// add cell and append rule
 		for(int h=0; h<height; h++) {
 			for(int w=0; w<width; w++) {
-				board[h][w] = new Cell();
+				try {
+					board[h][w] = (Cell) cellClass.newInstance();
+				} catch (InstantiationException | IllegalAccessException e) {
+					e.printStackTrace();
+				}
 				board[h][w].setRule(rule);
 				board[h][w].setX(h);
 				board[h][w].setY(w);

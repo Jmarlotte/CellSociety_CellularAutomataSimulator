@@ -17,15 +17,25 @@ public class SimulationController {
 	public void startTask() {
 		timer.scheduleAtFixedRate(new TimerTask() {
 			public void run() {
-				step();
+				// cell can locally make decisions if game rule is fire or reproduction
+				if(board.get(0).getRule() instanceof FireRule || board.get(0).getRule() instanceof ReproductionRule) {
+					stepLocal();
+				} else if(board.get(0).getRule() instanceof WaTorRule) {
+					stepWaTor();
+				}
 			}
 		}, 0, interval);
 	}
 	
+	private void stepWaTor() {
+		// stepping in WaTor scenario
+		
+	}
+
 	/**
-	 * Update once. 
+	 * Update once locally. 
 	 */
-	private void step() {
+	private void stepLocal() {
 		for(Cell c : board) {
 			c.prepareForUpdate();
 		}

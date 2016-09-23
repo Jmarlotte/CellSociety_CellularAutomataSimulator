@@ -2,16 +2,13 @@ package cellsociety_team06;
 
 import java.util.*;
 
-public class Cell {
+public abstract class Cell {
 
-	private ArrayList<Cell> neighbors;
-	private CellValue value;
-	public void setValue(CellValue value) {
-		this.value = value;
-	}
+	protected ArrayList<Cell> neighbors;
+	protected CellValue value;
 
-	private CellValue nextValue;
-	private Rule rule;
+	protected CellValue nextValue;
+	protected Rule rule;
 
 	// The x and y index of the cell. Mainly used for rendering on GUI. 
 	private int x;
@@ -21,54 +18,7 @@ public class Cell {
 	 * Prepare for update. Change nextValue based on neighbors.
 	 * Needs to consider rule. 
 	 */
-	public void prepareForUpdate() {
-		// cell reproduction
-		if(rule instanceof ReproductionRule) {
-			updateReproduction();
-		} else if(rule instanceof FireRule) {
-			updateFire();
-		}
-	}
-
-	private void updateFire() {
-		if(this.getValue().getVal()==1) {
-			boolean neighborBurning = false;
-			for(Cell c : this.neighbors) {
-				if(c.getValue().getVal()==2) {
-					neighborBurning = true;
-					break;
-				}
-			}
-			if(neighborBurning) {
-				if(new Random().nextDouble()<((FireRule)rule).getProbCatch()) {
-					this.nextValue.setVal(2);
-				}
-			}
-		} else { // regardless of empty or burning
-			this.nextValue.setVal(0);
-		}
-		
-	}
-	
-	private void updateReproduction() {
-		int neighborCount = 0;
-		for(Cell c : this.neighbors) {
-			neighborCount += c.getValue().getVal();
-		}
-		if(this.value.getVal()==1) {
-			if(((ReproductionRule)rule).getLiveNeighborCounts().contains(neighborCount)) {
-				this.nextValue.setVal(1);
-			} else {
-				this.nextValue.setVal(0);
-			}
-		} else {
-			if(((ReproductionRule)rule).getEmergeNeighborCounts().contains(neighborCount)) {
-				this.nextValue.setVal(1);
-			} else {
-				this.nextValue.setVal(0);
-			}
-		}
-	}
+	public abstract void prepareForUpdate();
 
 	/**
 	 * update. Replace value with nextValue.
@@ -87,6 +37,10 @@ public class Cell {
 
 	public CellValue getValue() {
 		return value;
+	}
+
+	public void setValue(CellValue value) {
+		this.value = value;
 	}
 
 	public CellValue getNextValue() {
