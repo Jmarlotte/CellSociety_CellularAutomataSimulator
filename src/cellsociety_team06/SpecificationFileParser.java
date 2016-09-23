@@ -5,7 +5,6 @@ import org.w3c.dom.*;
 
 import cell.Cell;
 import cell.CellFactory;
-import cell.CellValue;
 import rule.FireRule;
 import rule.ReproductionRule;
 import rule.Rule;

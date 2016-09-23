@@ -16,21 +16,21 @@ public class FireCell extends Cell {
 	}
 	
 	private void updateFire() {
-		if(this.getValue().getVal()==1) {
+		if(this.getValue().getVal()==FireRule.TREE_TYPE) {
 			boolean neighborBurning = false;
 			for(Cell c : this.neighbors) {
-				if(c.getValue().getVal()==2) {
+				if(c.getValue().getVal()==FireRule.BURNING_TYPE) {
 					neighborBurning = true;
 					break;
 				}
 			}
 			if(neighborBurning) {
 				if(new Random().nextDouble()<((FireRule)rule).getProbCatch()) {
-					this.nextValue.setVal(2);
+					this.nextValue.setVal(FireRule.BURNING_TYPE);
 				}
 			}
 		} else { // regardless of empty or burning
-			this.nextValue.setVal(0);
+			this.nextValue.setVal(FireRule.EMPTY_TYPE);
 		}
 	}
 	

@@ -25,21 +25,11 @@ public class WaTorSimulator {
 	 */
 	public void stepWaTor() {
 		Collections.shuffle(board); // randomly shuffle the board
-		// fish update
-		ArrayList<Integer> fishIndices = getIndicesOfType(WaTorRule.FISH_TYPE);
-		for(int idx : fishIndices) {
-			WaTorCell thisCell = (WaTorCell) board.get(idx);
-			thisCell.step();
-			ArrayList<Integer> emptyNeighborIdxs = 
-					this.getNeighborIndices(thisCell.getNeighbors(), WaTorRule.EMPTY_TYPE);
-			if(emptyNeighborIdxs.isEmpty()) // no empty cell
-				continue;
-			int targetIdx = emptyNeighborIdxs.get(new Random().nextInt(emptyNeighborIdxs.size()));
-			WaTorCell targetCell = (WaTorCell)board.get(targetIdx);
-			// change type of the neighbor cell, but keep reproduce timer
-			targetCell.changeTypeAndKeepReprTimer(WaTorRule.FISH_TYPE, thisCell.getTimeToReproduce());
-			checkReproduction(thisCell, targetCell);
-		}
+		updateFish();
+		updateShark();
+	}
+
+	private void updateShark() {
 		// shark update
 		ArrayList<Integer> sharkIndices = getIndicesOfType(WaTorRule.SHARK_TYPE);
 		for(int idx : sharkIndices) {
@@ -59,6 +49,24 @@ public class WaTorSimulator {
 			// change type of neighbor cell, but keep reproduce timer and current health
 			targetCell.changeTypeAndKeepReprTimerAndKeepHealth(WaTorRule.SHARK_TYPE, 
 					thisCell.getTimeToReproduce(), thisCell.getCurrentHealth());
+			checkReproduction(thisCell, targetCell);
+		}
+	}
+
+	private void updateFish() {
+		// fish update
+		ArrayList<Integer> fishIndices = getIndicesOfType(WaTorRule.FISH_TYPE);
+		for(int idx : fishIndices) {
+			WaTorCell thisCell = (WaTorCell) board.get(idx);
+			thisCell.step();
+			ArrayList<Integer> emptyNeighborIdxs = 
+					this.getNeighborIndices(thisCell.getNeighbors(), WaTorRule.EMPTY_TYPE);
+			if(emptyNeighborIdxs.isEmpty()) // no empty cell
+				continue;
+			int targetIdx = emptyNeighborIdxs.get(new Random().nextInt(emptyNeighborIdxs.size()));
+			WaTorCell targetCell = (WaTorCell)board.get(targetIdx);
+			// change type of the neighbor cell, but keep reproduce timer
+			targetCell.changeTypeAndKeepReprTimer(WaTorRule.FISH_TYPE, thisCell.getTimeToReproduce());
 			checkReproduction(thisCell, targetCell);
 		}
 	}

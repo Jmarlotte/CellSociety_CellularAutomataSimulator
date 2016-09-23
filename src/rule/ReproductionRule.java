@@ -7,7 +7,6 @@ import java.util.*;
  * populated. 
  * Cell value of 0 is unoccupied, and cell value of 1 is occupied. 
  * @author ZYL
- *
  */
 public class ReproductionRule extends Rule {
 
