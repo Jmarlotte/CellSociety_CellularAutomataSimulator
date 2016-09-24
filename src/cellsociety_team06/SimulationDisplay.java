@@ -11,6 +11,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.shape.Shape;
 public class SimulationDisplay {
 
 private final String RESOURCE_PATH = "resources/DisplaySettings";
@@ -25,13 +26,13 @@ private double gridHeight;
 private int rowCount;
 private int columnCount;
 	
-	public SimulationDisplay(){
+	public SimulationDisplay(int width, int height){
 		myResources = ResourceBundle.getBundle(RESOURCE_PATH);
 		BorderPane root = new BorderPane();
 		myScene = createScene(root);
 		double windowSize = myScene.getWidth();
-		grid = createGridPane(windowSize);
-		root.getChildren().add(grid);
+		createGrid(50, 50, windowSize, root);
+//		root.getChildren().add(grid);
 	}
 	
 	private Scene createScene(Parent root){
@@ -39,6 +40,27 @@ private int columnCount;
 		int height = Integer.parseInt(myResources.getString("WindowHeight"));
 		Scene scene = new Scene(root, width, height, Color.BLACK);
 		return scene;
+	}
+	
+	private Shape[][] createGrid(int rows, int columns, double windowSize, BorderPane root){
+		gridWidth = Integer.parseInt(myResources.getString("GridWidth"));
+		gridHeight = gridWidth;
+		double offsetX = (windowSize - gridWidth)/2;
+		double offsetY = (windowSize-gridHeight)/2;
+		double cellSize = (double)gridWidth / rows;
+		Shape[][] cells = new Shape[rows][columns];
+		for (int i = 0; i < rows; i++){
+			double y = offsetY + cellSize*i;
+			for (int j = 0; j < columns; j++){
+				double x = offsetX + cellSize*j;
+				Rectangle cell = new Rectangle(x, y, cellSize, cellSize);
+				cells[i][j] = cell;
+				if (i%2 == j % 2)
+					cell.setFill(Color.WHITE);
+				root.getChildren().add(cell);
+			}
+		}
+		return cells;
 	}
 	
 	private GridPane createGridPane(double windowSize){

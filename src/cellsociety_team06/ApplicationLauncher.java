@@ -18,7 +18,7 @@ public class ApplicationLauncher extends Application {
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 		// TODO Auto-generated method stub
-		SimulationDisplay displayView = new SimulationDisplay();
+		SimulationDisplay displayView = new SimulationDisplay(100, 100);
 		primaryStage.setScene(displayView.getScene());
 		primaryStage.show();
 		
