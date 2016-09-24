@@ -22,6 +22,8 @@ private Button stepButton;
 private Button pauseButton;
 private double gridWidth;
 private double gridHeight;
+private int rowCount;
+private int columnCount;
 	
 	public SimulationDisplay(){
 		myResources = ResourceBundle.getBundle(RESOURCE_PATH);
@@ -41,19 +43,16 @@ private double gridHeight;
 	
 	private GridPane createGridPane(double windowSize){
 		GridPane grid = new GridPane();
-//		grid.setPrefWidth(size);
-		System.out.println(windowSize);
+		
 		gridWidth = Integer.parseInt(myResources.getString("GridWidth"));
 		gridHeight = Integer.parseInt(myResources.getString("GridHeight"));
 		grid.setLayoutX((windowSize - gridWidth)/2);
-		System.out.println(grid.getLayoutX());
 		grid.setLayoutY((windowSize-gridHeight)/2);
 		grid.setGridLinesVisible(true);
 		grid.setHgap(0);
 		grid.setVgap(0);
-		System.out.println(grid.getInsets());
-		for (int i = 0; i < 100; i++){
-			Rectangle rect = new Rectangle(10, 10);
+		for (int i = 0; i < 1; i++){
+			Rectangle rect = new Rectangle(100, 100);
 			rect.setFill(Color.RED);
 			grid.add(rect, i, i);
 		}
@@ -62,6 +61,19 @@ private double gridHeight;
 	
 	public Scene getScene(){
 		return myScene;
+	}
+	
+	private double getCellSize(){
+		//TODO: Calculate size of cell based on size of grid/# of cells
+		return 0.0;
+	}
+	
+	private double getCellOffsetX(int column){
+		return 0.0;
+	}
+	
+	private double getCellOffsetY(int row){
+		return 0.0;
 	}
 	
 	/**
