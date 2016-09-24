@@ -25,20 +25,22 @@ private double gridWidth;
 private double gridHeight;
 private int rowCount;
 private int columnCount;
+private int numCells = 1000;
+private BorderPane root; 
 	
 	public SimulationDisplay(int width, int height){
 		myResources = ResourceBundle.getBundle(RESOURCE_PATH);
-		BorderPane root = new BorderPane();
+		root = new BorderPane();
 		myScene = createScene(root);
 		double windowSize = myScene.getWidth();
-		createGrid(50, 50, windowSize, root);
+	//	createGrid(50, 50, windowSize, root);
 //		root.getChildren().add(grid);
 	}
 	
 	private Scene createScene(Parent root){
 		int width = Integer.parseInt(myResources.getString("WindowWidth"));
 		int height = Integer.parseInt(myResources.getString("WindowHeight"));
-		Scene scene = new Scene(root, width, height, Color.BLACK);
+		Scene scene = new Scene(root, width, height, Color.WHITE);
 		return scene;
 	}
 	
@@ -63,7 +65,7 @@ private int columnCount;
 		return cells;
 	}
 	
-	private GridPane createGridPane(double windowSize){
+/*	private GridPane createGridPane(double windowSize){
 		GridPane grid = new GridPane();
 		
 		gridWidth = Integer.parseInt(myResources.getString("GridWidth"));
@@ -79,24 +81,35 @@ private int columnCount;
 			grid.add(rect, i, i);
 		}
 		return grid;
-	}
+	} */
 	
 	public Scene getScene(){
 		return myScene;
 	}
 	
-	private double getCellSize(){
-		//TODO: Calculate size of cell based on size of grid/# of cells
-		return 0.0;
+	private double getCellWidth(){
+		//TODO: Calculate size of cell based on size of grid/# of cell
+		gridWidth = Integer.parseInt(myResources.getString("GridWidth"));
+		gridHeight = Integer.parseInt(myResources.getString("GridHeight"));
+		double gridArea = gridWidth*gridHeight;
+		double sizeRatio = gridArea/numCells; 
+		return Math.sqrt(sizeRatio); 
+		
+		//return 0.0;
 	}
 	
 	private double getCellOffsetX(int column){
-		return 0.0;
+		return column*getCellWidth();
+		
+		//return 0.0;
 	}
 	
 	private double getCellOffsetY(int row){
-		return 0.0;
+		return row *getCellWidth();
+		
+		//return 0.0;
 	}
+	
 	
 	/**
 	 * Update the screen for current board
@@ -105,7 +118,25 @@ private int columnCount;
 	 * @param board
 	 */
 	public void updateScreen(ArrayList<Cell> board) {
+		
 		// TODO: Implement this
+		int numCellstoUpdate = board.size(); 
+		Shape[]cells = new Shape[numCellstoUpdate];
+		numCellstoUpdate -=1;
+		System.out.print(numCellstoUpdate);
+		for( Cell cell : board){
+			double OffY = getCellOffsetY(cell.getY()) + (myScene.getHeight()- gridHeight)/2; 
+			double OffX = getCellOffsetX(cell.getX()) + (myScene.getWidth()- gridWidth)/2;
+			
+			//change color assignment
+			Color cellFill = new Color(cell.getValue().getVal()/2.0, cell.getValue().getVal()/2.0, cell.getValue().getVal()/2.0, 1 );
+			Rectangle cellVisElement = new Rectangle( OffX, OffY, getCellWidth(), getCellWidth() );
+			cellVisElement.setFill(cellFill);
+			cells[numCellstoUpdate] = cellVisElement;
+			numCellstoUpdate -= 1; 
+		}
+		
+		root.getChildren().addAll(cells);
 	}
 	
 }

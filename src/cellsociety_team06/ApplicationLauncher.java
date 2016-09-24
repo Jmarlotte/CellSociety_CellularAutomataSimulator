@@ -10,7 +10,7 @@ public class ApplicationLauncher extends Application {
 	
 	public static void main(String [] args){
 		SpecificationFileParser sfp = new SpecificationFileParser();
-		sfp.readFile("data/wator.xml");
+		sfp.readFile("data/fire.xml");
 		System.out.println(sfp.getBoard().get(0).getRule());
 		launch(args);
 	}
@@ -18,9 +18,18 @@ public class ApplicationLauncher extends Application {
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 		// TODO Auto-generated method stub
+		
+		SpecificationFileParser sfp = new SpecificationFileParser();
+		sfp.readFile("data/fire.xml");
+		
 		SimulationDisplay displayView = new SimulationDisplay(100, 100);
+		
+		displayView.updateScreen(sfp.getBoard());
+		
 		primaryStage.setScene(displayView.getScene());
+		
 		primaryStage.show();
+		
 		
 	}
 }
