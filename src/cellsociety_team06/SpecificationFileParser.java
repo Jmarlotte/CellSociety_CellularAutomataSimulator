@@ -2,7 +2,6 @@ package cellsociety_team06;
 import java.util.*;
 import javax.xml.parsers.*;
 import org.w3c.dom.*;
-
 import cell.Cell;
 import cell.CellFactory;
 import rule.FireRule;
