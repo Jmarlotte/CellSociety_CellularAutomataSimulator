@@ -25,17 +25,6 @@ public abstract class BaseStepper {
 		return cells;
 	}
 	
-	/*protected ArrayList<Integer> getIndicesOfType(ArrayList<Cell> cellList, int type) {
-		ArrayList<Integer> indices = new ArrayList<Integer>();
-		for(int i=0; i<cellList.size(); i++) {
-			Cell c = cellList.get(i);
-			if(c.getValue().getVal()==type) {
-				indices.add(i);
-			}
-		}
-		return indices;
-	}*/
-	
 	protected <T> T randomAccess(ArrayList<T> list) {
 		return list.get(new Random().nextInt(list.size()));
 	}
