@@ -25,7 +25,7 @@ private double gridWidth;
 private double gridHeight;
 private int rowCount;
 private int columnCount;
-private int numCells = 1000;
+private int numCells = 10000;
 private BorderPane root; 
 	
 	public SimulationDisplay(int width, int height){
@@ -44,26 +44,26 @@ private BorderPane root;
 		return scene;
 	}
 	
-	private Shape[][] createGrid(int rows, int columns, double windowSize, BorderPane root){
-		gridWidth = Integer.parseInt(myResources.getString("GridWidth"));
-		gridHeight = gridWidth;
-		double offsetX = (windowSize - gridWidth)/2;
-		double offsetY = (windowSize-gridHeight)/2;
-		double cellSize = (double)gridWidth / rows;
-		Shape[][] cells = new Shape[rows][columns];
-		for (int i = 0; i < rows; i++){
-			double y = offsetY + cellSize*i;
-			for (int j = 0; j < columns; j++){
-				double x = offsetX + cellSize*j;
-				Rectangle cell = new Rectangle(x, y, cellSize, cellSize);
-				cells[i][j] = cell;
-				if (i%2 == j % 2)
-					cell.setFill(Color.WHITE);
-				root.getChildren().add(cell);
-			}
-		}
-		return cells;
-	}
+//	private Shape[][] createGrid(int rows, int columns, double windowSize, BorderPane root){
+//		gridWidth = Integer.parseInt(myResources.getString("GridWidth"));
+//		gridHeight = gridWidth;
+//		double offsetX = (windowSize - gridWidth)/2;
+//		double offsetY = (windowSize-gridHeight)/2;
+//		double cellSize = (double)gridWidth / rows;
+//		Shape[][] cells = new Shape[rows][columns];
+//		for (int i = 0; i < rows; i++){
+//			double y = offsetY + cellSize*i;
+//			for (int j = 0; j < columns; j++){
+//				double x = offsetX + cellSize*j;
+//				Rectangle cell = new Rectangle(x, y, cellSize, cellSize);
+//				cells[i][j] = cell;
+//				if (i%2 == j % 2)
+//					cell.setFill(Color.WHITE);
+//				root.getChildren().add(cell);
+//			}
+//		}
+//		return cells;
+//	}
 	
 /*	private GridPane createGridPane(double windowSize){
 		GridPane grid = new GridPane();

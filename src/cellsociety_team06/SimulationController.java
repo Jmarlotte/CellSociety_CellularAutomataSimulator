@@ -49,6 +49,10 @@ public class SimulationController {
 		}
 	}
 
+	public void step(){
+		stepLocal();
+	}
+	
 	/**
 	 * Update once locally. 
 	 */
@@ -56,12 +60,18 @@ public class SimulationController {
 		for(Cell c : board) {
 			c.prepareForUpdate();
 		}
+		ArrayList<Cell>  changedCells = new ArrayList<Cell>();
 		for(Cell c : board) {
-			c.update();
+			if (c.update()){
+				changedCells.add(c);
+			}
 		}
-		display.updateScreen(board);
+		display.updateScreen(changedCells);
 	}
 
+	public void setDisplay(SimulationDisplay d){
+		display = d;
+	}
 
 
 }
