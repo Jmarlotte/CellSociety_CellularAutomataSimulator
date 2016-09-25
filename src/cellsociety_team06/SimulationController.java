@@ -59,6 +59,7 @@ public class SimulationController {
 				@Override
 				public void run() {
 					sim.step();
+					display.updateScreen(board);
 				}
 			}, interval, interval);
 		} else if(board.get(0).getRule() instanceof WaTorRule) {
