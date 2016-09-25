@@ -1,9 +1,6 @@
 package cell;
 
-import rule.FireRule;
-import rule.ReproductionRule;
-import rule.Rule;
-import rule.WaTorRule;
+import rule.*;
 
 public class CellFactory {
 
@@ -14,8 +11,10 @@ public class CellFactory {
 			return new FireCell(value, (FireRule)rule);
 		} else if(type.equals("WaTor")) {
 			return new WaTorCell(value, (WaTorRule)rule);
+		} else if(type.equals("Segregation")) {
+			return new SegregationCell(value, (SegregationRule)rule);
 		}
-		return null;
+		throw new RuntimeException("Unrecognized Cell Type");
 	}
 	
 }

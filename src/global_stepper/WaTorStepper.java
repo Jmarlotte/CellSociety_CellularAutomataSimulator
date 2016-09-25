@@ -29,19 +29,40 @@ public class WaTorStepper extends BaseStepper {
 
 	private void updateShark() {
 		// shark update
-		ArrayList<Integer> sharkIndices = getIndicesOfType(board, WaTorRule.SHARK_TYPE);
-		for(int idx : sharkIndices) {
-			WaTorCell thisCell = (WaTorCell) board.get(idx);
+		ArrayList<Cell> sharkCells = getCellsOfType(board, WaTorRule.SHARK_TYPE);
+		for(Cell c : sharkCells) {
+			System.out.println(String.format("(%d,%d)", c.getX(), c.getY()));
+		}
+		System.out.println();
+		for(Cell thisC : sharkCells) {
+			WaTorCell thisCell = (WaTorCell) thisC;
+			System.out.println(String.format("Shark (%d,%d)", thisCell.getX(), thisCell.getY()));
 			thisCell.step();
-			ArrayList<Integer> neighborIdxs = 
-					this.getIndicesOfType(thisCell.getNeighbors(), WaTorRule.EMPTY_TYPE);
-			neighborIdxs.addAll(this.getIndicesOfType(thisCell.getNeighbors(), WaTorRule.FISH_TYPE));
-			if(neighborIdxs.isEmpty()) // no empty or fish cell
+			if(thisCell.getValue().getVal()==WaTorRule.EMPTY_TYPE) {
+				System.out.println(String.format("\tShark at (%d,%d) died", thisCell.getX(), thisCell.getY()));
 				continue;
-			int targetIdx = randomAccess(neighborIdxs);
-			WaTorCell targetCell = (WaTorCell)board.get(targetIdx);
+			}
+			ArrayList<Cell> allNeighbors = thisCell.getNeighbors();
+			for(Cell c : allNeighbors) {
+				System.out.println(String.format("\tneighbors: (%d,%d)", c.getX(), c.getY()));
+			}
+			ArrayList<Cell> neighborCells = 
+					this.getCellsOfType(thisCell.getNeighbors(), WaTorRule.EMPTY_TYPE);
+			neighborCells.addAll(this.getCellsOfType(thisCell.getNeighbors(), WaTorRule.FISH_TYPE));
+			for(Cell c : neighborCells) {
+				System.out.println(String.format("\tvalid neighbors: (%d,%d)", c.getX(), c.getY()));
+			}
+			if(neighborCells.isEmpty()) {
+				// no empty or fish cell
+				System.out.println("\tNo empty cell");
+				continue;
+			}
+			
+			WaTorCell targetCell = (WaTorCell)randomAccess(neighborCells);
+			System.out.println(String.format("\tmoving to (%d,%d)", targetCell.getX(), targetCell.getY()));
 			if(targetCell.getValue().getVal()==WaTorRule.FISH_TYPE) {
 				// eating a fish
+				System.out.println("\teating fish");
 				thisCell.eat();
 			}
 			// change type of neighbor cell, but keep reproduce timer and current health
@@ -53,16 +74,15 @@ public class WaTorStepper extends BaseStepper {
 
 	private void updateFish() {
 		// fish update
-		ArrayList<Integer> fishIndices = getIndicesOfType(board, WaTorRule.FISH_TYPE);
-		for(int idx : fishIndices) {
-			WaTorCell thisCell = (WaTorCell) board.get(idx);
+		ArrayList<Cell> fishCells = getCellsOfType(board, WaTorRule.FISH_TYPE);
+		for(Cell thisC : fishCells) {
+			WaTorCell thisCell = (WaTorCell) thisC;
 			thisCell.step();
-			ArrayList<Integer> emptyNeighborIdxs = 
-					this.getIndicesOfType(thisCell.getNeighbors(), WaTorRule.EMPTY_TYPE);
-			if(emptyNeighborIdxs.isEmpty()) // no empty cell
+			ArrayList<Cell> emptyNeighborCells = 
+					this.getCellsOfType(thisCell.getNeighbors(), WaTorRule.EMPTY_TYPE);
+			if(emptyNeighborCells.isEmpty()) // no empty cell
 				continue;
-			int targetIdx = randomAccess(emptyNeighborIdxs);
-			WaTorCell targetCell = (WaTorCell)board.get(targetIdx);
+			WaTorCell targetCell = (WaTorCell) randomAccess(emptyNeighborCells);
 			// change type of the neighbor cell, but keep reproduce timer
 			targetCell.changeTypeAndKeepReprTimer(WaTorRule.FISH_TYPE, thisCell.getTimeToReproduce());
 			checkReproduction(thisCell, targetCell);
@@ -75,6 +95,7 @@ public class WaTorStepper extends BaseStepper {
 			// do not change cell type. just reset the timer to represent new shark
 			thisCell.resetReproduceTimer();
 			targetCell.resetReproduceTimer();
+			thisCell.setCurrentHealth(((WaTorRule)thisCell.getRule()).getInitialHealth());
 		} else {
 			// otherwise, empty the cell
 			thisCell.changeType(WaTorRule.EMPTY_TYPE);

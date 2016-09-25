@@ -1,4 +1,4 @@
-package cellsociety_team06;
+package io;
 import java.util.*;
 import javax.xml.parsers.*;
 import org.w3c.dom.*;
@@ -7,6 +7,7 @@ import cell.CellFactory;
 import rule.FireRule;
 import rule.ReproductionRule;
 import rule.Rule;
+import rule.SegregationRule;
 import rule.WaTorRule;
 
 
@@ -39,6 +40,9 @@ public class SpecificationFileParser {
 			} else if(ruleType.equals("Fire")) {
 				parseFireRule(d);
 				setupBoard(ruleType, d, 4);
+			} else if(ruleType.equals("Segregation")) {
+				parseSegregationRule(d);
+				setupBoard(ruleType, d, 8);
 			} else if(ruleType.equals("WaTor")) {
 				parseWaTorRule(d);
 				setupBoard(ruleType, d, 4);
@@ -51,12 +55,30 @@ public class SpecificationFileParser {
 		System.out.println("Parsing done");
 	}
 
-	private void setupBoard(String cellClass, Document d, int neighbors) {
+	private void setupBoard(String cellClass, Document d, int neighborConnection) {
 		int width = Integer.parseInt(getUniqueKey(d, "Width"));
 		int height = Integer.parseInt(getUniqueKey(d, "Height"));
-		int defaultCellVal = Integer.parseInt(getUniqueKey(d, "DefaultCellValue"));
-		String nonDefaultCellValStr = getUniqueKey(d, "CellValues").trim().replace("\n", "");
-		board = buildBoard(cellClass, width, height, defaultCellVal, nonDefaultCellValStr, rule, neighbors);
+		String random = getUniqueKey(d, "Random");
+		if(random!=null && random.equalsIgnoreCase("true")) {
+			String ratioStr = getUniqueKey(d, "RandomRatio");
+			ArrayList<Double> ratio = csvStrToDoubleList(ratioStr);
+			Cell[][] board = RandomBoardInitializer.bernoulliRandomInitialize(
+					cellClass, rule, height, width, ratio);
+			// Set up neighbor connection
+			setNeighborConnection(width, height, neighborConnection, board);
+			// Build ArrayList
+			ArrayList<Cell> cellList = new ArrayList<Cell>();
+			for(int h=0; h<height; h++) {
+				for(int w=0; w<width; w++) {
+					cellList.add(board[h][w]);
+				}
+			}
+			this.board = cellList;
+		} else {
+			int defaultCellVal = Integer.parseInt(getUniqueKey(d, "DefaultCellValue"));
+			String nonDefaultCellValStr = getUniqueKey(d, "CellValues").trim().replace("\n", "");
+			board = buildBoard(cellClass, width, height, defaultCellVal, nonDefaultCellValStr, rule, neighborConnection);
+		}
 	}
 
 	private ArrayList<Integer> csvStrToIntList(String s) {
@@ -66,6 +88,15 @@ public class SpecificationFileParser {
 			intList.add(Integer.parseInt(c));
 		}
 		return intList;
+	}
+
+	private ArrayList<Double> csvStrToDoubleList(String s) {
+		String[] strArr = s.split(",");
+		ArrayList<Double> doubleList = new ArrayList<Double>();
+		for(String c : strArr) {
+			doubleList.add(Double.parseDouble(c));
+		}
+		return doubleList;
 	}
 
 	private void parseReproductionRule(Document d) {
@@ -104,6 +135,11 @@ public class SpecificationFileParser {
 	private void parseFireRule(Document d) {
 		double probCatch = Double.parseDouble(this.getUniqueKey(d, "ProbCatch"));
 		rule = new FireRule(probCatch);
+	}
+
+	private void parseSegregationRule(Document d) {
+		double threshold = Double.parseDouble(this.getUniqueKey(d, "SatisfactionThreshold"));
+		rule = new SegregationRule(threshold);
 	}
 
 	/**
