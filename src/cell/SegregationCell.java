@@ -1,10 +1,10 @@
 package cell;
 
-import rule.Rule;
+import rule.SegregationRule;
 
 public class SegregationCell extends Cell {
 
-	public SegregationCell(int value, Rule rule) {
+	public SegregationCell(int value, SegregationRule rule) {
 		super(value, rule);
 	}
 

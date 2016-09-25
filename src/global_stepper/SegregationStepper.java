@@ -24,12 +24,18 @@ public class SegregationStepper extends BaseStepper {
 	}
 	
 	private void relocate(ArrayList<Integer> unhappyIdxs) {
+		ArrayList<Integer> emptyIdxs = getIndicesOfType(board, SegregationRule.EMPTY_TYPE);
 		for(int idx : unhappyIdxs) {
 			Cell thisCell = board.get(idx);
-			Cell targetCell = board.get(randomAccess(getIndicesOfType(board, SegregationRule.EMPTY_TYPE)));
+			Integer emptyIdx = randomAccess(emptyIdxs);
+			Cell targetCell = board.get(emptyIdx);
+			emptyIdxs.remove(emptyIdx);
 			int type = thisCell.getValue().getVal();
 			thisCell.getValue().setVal(SegregationRule.EMPTY_TYPE);
 			targetCell.getValue().setVal(type);
+			if(emptyIdxs.isEmpty()) {
+				getIndicesOfType(board, SegregationRule.EMPTY_TYPE);
+			}
 		}
 	}
 	

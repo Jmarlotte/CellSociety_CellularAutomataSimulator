@@ -26,5 +26,11 @@ public class ReproductionRule extends Rule {
 	public ArrayList<Integer> getEmergeNeighborCounts() {
 		return emergeNeighborCounts;
 	}
+
+	@Override
+	public String toString() {
+		return "ReproductionRule [liveNeighborCounts=" + liveNeighborCounts + ", emergeNeighborCounts="
+				+ emergeNeighborCounts + "]";
+	}
 	
 }

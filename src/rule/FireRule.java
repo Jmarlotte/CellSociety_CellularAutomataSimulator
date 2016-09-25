@@ -8,9 +8,9 @@ package rule;
  */
 public class FireRule extends Rule {
 
-	public static final int EMPTY_TYPE = 0; 
-	public static final int TREE_TYPE = 1; 
-	public static final int BURNING_TYPE = 2; 
+	public static final int EMPTY_TYPE = 0;
+	public static final int TREE_TYPE = 1;
+	public static final int BURNING_TYPE = 2;
 	
 	private double probCatch;
 
@@ -24,6 +24,11 @@ public class FireRule extends Rule {
 
 	public void setProbCatch(double probCatch) {
 		this.probCatch = probCatch;
+	}
+
+	@Override
+	public String toString() {
+		return "FireRule [probCatch=" + probCatch + "]";
 	}
 	
 }

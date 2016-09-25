@@ -4,12 +4,8 @@
 <DefaultCellValue>1</DefaultCellValue>
 <Width>100</Width>
 <Height>100</Height>
-<CellValueType>Int</CellValueType>
-<CellValues>
-50,50,2;
-50,49,2;
-50,51,2;
-</CellValues>
-<RuleType>Fire</RuleType>
-<ProbCatch>1</ProbCatch>
+<Random>true</Random>
+<RandomRatio>0.5,0.35,0.15</RandomRatio>
+<RuleType>Segregation</RuleType>
+<SatisfactionThreshold>0.1</SatisfactionThreshold>
 </Environment>
