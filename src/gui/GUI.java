@@ -7,6 +7,7 @@ import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Text;
 public class GUI {
 
 	private Group root;
@@ -29,13 +30,33 @@ public class GUI {
 	private double cellHeight;
 	private HashMap<Coordinate, Rectangle> cellViews;
 	
-	public Scene init(ColorMap cm, ArrayList<Cell> board) {
+	public Scene init(ColorMap cm, ArrayList<Cell> board, String title) {
 		root = new Group();
 		scene = new Scene(root, SCREEN_WIDTH, SCREEN_HEIGHT, Color.WHITE);
+		Text txt = new Text(SCREEN_WIDTH/2, BOARD_H_OFFSET/2, title);
+		root.getChildren().add(txt);
+		Rectangle border = new Rectangle(BOARD_W_OFFSET, BOARD_H_OFFSET, BOARD_WIDTH, BOARD_HEIGHT);
+		border.setFill(Color.TRANSPARENT);
+		border.setStroke(Color.BLACK);
+		root.getChildren().add(border);
 		colorMap = cm;
 		cellViews = new HashMap<Coordinate, Rectangle>();
-		drawBoard(board, 100, 100);
+		int[] dim = getBoardDim(board);
+		drawBoard(board, dim[0], dim[1]);
 		return scene;
+	}
+	
+	private int[] getBoardDim(ArrayList<Cell> board) {
+		int r = 0;
+		int c = 0;
+		for(Cell cell : board) {
+			if(r<cell.getX())
+				r = cell.getX();
+			if(c<cell.getY())
+				c = cell.getY();
+		}
+		int[] dim = {r+1, c+1};
+		return dim;
 	}
 	
 	private void drawBoard(ArrayList<Cell> board, int wCount, int hCount) {

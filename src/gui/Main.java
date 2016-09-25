@@ -17,6 +17,7 @@ public class Main extends Application {
 	public static final int FRAMES_PER_SECOND = 32;
     private static final int MILLISECOND_DELAY = 1000 / FRAMES_PER_SECOND;
     private static final double SECOND_DELAY = 1.0 / FRAMES_PER_SECOND;
+    public static final int SIM_INTERVAL = 200;
 	
 	private GUI gui;
 	private SimulationController controller;
@@ -32,13 +33,19 @@ public class Main extends Application {
 		gui = new GUI();
         s.setTitle("Cell Society");
 
-        ColorMap cm = new ThreeColorMapFire();
-        Scene scene = gui.init(cm, board);
+        ColorMap cm = new ThreeColorMapSegregation();
+        Scene scene = gui.init(cm, board, "WaTor");
         s.setScene(scene);
         s.show();
         
-		controller = new SimulationController(board, gui);
-		controller.startTask();
+        controller = new SimulationController(board, gui);
+		controller.startTask(SIM_INTERVAL);
+		/*WaTorStepper stepper = new WaTorStepper(board);
+		gui.updateScreen(board);
+		System.out.println("press enter");
+		new InputStreamReader(System.in).read();
+		stepper.step();
+		gui.updateScreen(board);*/
 
         // sets the game's loop
         KeyFrame frame = new KeyFrame(Duration.millis(MILLISECOND_DELAY),

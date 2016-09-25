@@ -15,17 +15,26 @@ public abstract class BaseStepper {
 
 	public abstract void step();
 	
-	protected ArrayList<Integer> getIndicesOfType(ArrayList<Cell> neighbors, int type) {
-		int idx = 0;
-		ArrayList<Integer> indices = new ArrayList<Integer>();
-		for(Cell c : neighbors) {
+	protected ArrayList<Cell> getCellsOfType(ArrayList<Cell> cellList, int type) {
+		ArrayList<Cell> cells = new ArrayList<Cell>();
+		for(Cell c : cellList) {
 			if(c.getValue().getVal()==type) {
-				indices.add(idx);
+				cells.add(c);
 			}
-			idx++;
+		}
+		return cells;
+	}
+	
+	/*protected ArrayList<Integer> getIndicesOfType(ArrayList<Cell> cellList, int type) {
+		ArrayList<Integer> indices = new ArrayList<Integer>();
+		for(int i=0; i<cellList.size(); i++) {
+			Cell c = cellList.get(i);
+			if(c.getValue().getVal()==type) {
+				indices.add(i);
+			}
 		}
 		return indices;
-	}
+	}*/
 	
 	protected <T> T randomAccess(ArrayList<T> list) {
 		return list.get(new Random().nextInt(list.size()));

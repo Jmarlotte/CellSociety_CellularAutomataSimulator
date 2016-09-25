@@ -1,5 +1,6 @@
 package cell;
 
+import rule.SegregationRule;
 import rule.WaTorRule;
 
 public class WaTorCell extends Cell {
@@ -26,6 +27,10 @@ public class WaTorCell extends Cell {
 				resetReproduceTimer();
 			}
 			this.currentHealth--;
+			if(this.currentHealth<=0) {
+				System.out.println("shark died");
+				this.changeType(WaTorRule.EMPTY_TYPE);
+			}
 		}
 	}
 	
@@ -55,9 +60,10 @@ public class WaTorCell extends Cell {
 	}
 
 	public void changeTypeAndKeepReprTimerAndKeepHealth(int type, int ttr, int health) {
+		System.out.println(String.format("\tChanging (%d,%d) to shark type", this.getX(), this.getY()));
 		assert type==WaTorRule.SHARK_TYPE; // only shark has health
 		this.value.setVal(type);
-		currentHealth = health;
+		this.currentHealth = health;
 		this.timeToReproduce = ttr;
 	}
 

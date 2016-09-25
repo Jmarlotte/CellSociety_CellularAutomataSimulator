@@ -15,7 +15,6 @@ public class SimulationController {
 	private ArrayList<Cell> board;
 	private GUI display;
 	private Timer timer;
-	public int interval = 100;
 
 	public SimulationController(ArrayList<Cell> bd, GUI sd) {
 		timer = new Timer();
@@ -23,7 +22,7 @@ public class SimulationController {
 		display = sd;
 	}
 
-	public void startTask() {
+	public void startTask(int interval) {
 		if(board.get(0).getRule() instanceof FireRule || board.get(0).getRule() instanceof ReproductionRule) {
 			timer.scheduleAtFixedRate(new TimerTask() {
 				@Override
@@ -36,7 +35,12 @@ public class SimulationController {
 			timer.scheduleAtFixedRate(new TimerTask() {
 				@Override
 				public void run() {
+					double s = new Random().nextDouble();
+					System.out.println("run "+s);
+					long start = System.currentTimeMillis();
 					sim.step();
+					long end = System.currentTimeMillis();
+					System.out.println("done "+ s + " " + (end - start));
 					display.updateScreen(board);
 				}
 			}, interval, interval);
