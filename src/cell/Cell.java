@@ -38,7 +38,7 @@ public abstract class Cell {
 	 * update. Replace value with nextValue.
 	 */
 	public boolean update() {
-		boolean valueChanged = value.getVal() == nextValue.getVal();
+		boolean valueChanged = value.getVal() != nextValue.getVal();
 		value.setVal(nextValue.getVal());
 		return valueChanged;
 	}

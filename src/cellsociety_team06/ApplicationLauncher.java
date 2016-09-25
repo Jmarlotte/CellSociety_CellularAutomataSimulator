@@ -26,14 +26,16 @@ public class ApplicationLauncher extends Application {
 		sfp.readFile("data/fire.xml");
 		
 		SimulationDisplay displayView = new SimulationDisplay(100, 100);
-		
 		ArrayList<Cell> board = sfp.getBoard();
-		displayView.updateScreen(board);
+		SimulationController simulationController = new SimulationController(board, displayView);
+		simulationController.setSimType();
+		displayView.createBoard(board);
+		//TODO: Implement a method where the simulationController sets up initial stuff
+//		simulationController.beginStuff
 		
 		primaryStage.setScene(displayView.getScene());
 		
 		primaryStage.show();
-		SimulationController simulationController = new SimulationController(board, displayView);
 		//Hand off control to MainController 
 		MainController controller = new MainController();
 		controller.setSimulator(simulationController);

@@ -4,7 +4,7 @@ import javafx.scene.paint.Color;
 public class CellColors{
 	
 	public static Color[] fireColors(){
-		return new Color[]{Color.RED, Color.BLACK, Color.WHITE};
+		return new Color[]{Color.GRAY, Color.GREEN, Color.RED};
 	}
 	
 	public static Color[] waTorColors(){
