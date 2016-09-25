@@ -15,7 +15,7 @@ public class MainController {
 	Timeline loop;
 	
 	public MainController(){
-        KeyFrame frame = new KeyFrame(Duration.millis(50 * MILLISECOND_DELAY),
+        KeyFrame frame = new KeyFrame(Duration.millis(MILLISECOND_DELAY),
                 e -> step(SECOND_DELAY));
         loop = new Timeline();
         loop.setCycleCount(Timeline.INDEFINITE);
@@ -32,11 +32,11 @@ public class MainController {
 
 	//User events will be delegated to these methods.
 	public void pauseSimulation(){
-		
+		loop.stop();
 	}
 	
 	public void resumeSimulation(){
-		
+		loop.play();
 	}
 	
 	public void changeSimulationSpeed(){
