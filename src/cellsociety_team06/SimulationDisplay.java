@@ -1,7 +1,13 @@
 package cellsociety_team06;
 import java.util.*;
+
+import javax.swing.JComboBox;
+
 import cell.Cell;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.Group;
 import javafx.scene.Node;
@@ -9,19 +15,32 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
+import javafx.scene.effect.DropShadow;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
+import javafx.scene.text.Text;
 public class SimulationDisplay {
 
 private final String RESOURCE_PATH = "resources/DisplaySettings";
+private final String UIElements_Path = "resources/UIElements";
 private ResourceBundle myResources;
-private ComboBox speedBox;
+private ResourceBundle myUIElements;
+private ComboBox simSetter;
 private Scene myScene;
 private Button stepButton;
-private Button pauseButton;
+private Button stopButton;
+private Button startButton;
+private Button resetButton;
+private ComboBox speedSetter;
+
+
 
 private double gridWidth;
 private double gridHeight;
@@ -36,13 +55,17 @@ private BorderPane root;
 	
 	public SimulationDisplay(int rows, int columns){
 		myResources = ResourceBundle.getBundle(RESOURCE_PATH);
+		myUIElements = ResourceBundle.getBundle(UIElements_Path);
 		root = new BorderPane();
+		root.setTop(makeUIPanel());
+		
 		myScene = createScene(root);
 		rowCount = rows;
 		columnCount = columns;
 		windowSize = myScene.getWidth();
 	//	createGrid(50, 50, windowSize, root);
-//		root.getChildren().add(grid);
+		//	root.getChildren().add(grid);
+		
 	}
 	
 	private Scene createScene(Parent root){
@@ -166,6 +189,122 @@ private BorderPane root;
 		}
 		
 //		root.getChildren().addAll(cellShapes);
+	}
+	
+	private Button createButton(String description, EventHandler<ActionEvent> handler ){
+		
+		Button ret = new Button(); 
+		String retText = myUIElements.getString(description);
+		ret.setText(retText);
+		ret.setOnAction(handler);
+		
+		DropShadow effect = new DropShadow();
+		ret.addEventHandler(MouseEvent.MOUSE_PRESSED, new EventHandler<MouseEvent>(){
+			@Override public void handle(MouseEvent e){
+				ret.setEffect(effect);}});
+		
+		ret.addEventHandler(MouseEvent.MOUSE_RELEASED, new EventHandler<MouseEvent>(){
+			@Override public void handle(MouseEvent e){
+				ret.setEffect(null);}});
+		
+		return ret; 
+		
+	}
+	
+	private ComboBox<String> createComboBox(String description, EventHandler<ActionEvent> handler){
+		
+		ArrayList<String> options = new ArrayList<String>();
+		
+		for (int i = 1; i < 5 ; i++){
+			String temp = myUIElements.getString(description + Integer.toString(i));
+			if (! temp.equals(null)){
+				options.add(temp);
+			}
+		} 
+		
+		ComboBox<String> box = new ComboBox<String>();	
+		box.getItems().addAll(options.toArray(new String[options.size()]));
+		box.setOnAction(handler);
+		return box;
+	}
+	
+	
+	private Node makeUIPanel(){
+		HBox panel = new HBox();
+		
+		startButton = createButton("startButton", new EventHandler<ActionEvent>() {
+            @Override
+            public void handle (ActionEvent event) {
+            	startButtonHandler();
+            }});
+		
+		stopButton = createButton("stopButton", new EventHandler<ActionEvent>() {
+            @Override
+            public void handle (ActionEvent event) {
+            	stopButtonHandler();
+            }});
+		
+		stepButton = createButton("stepButton", new EventHandler<ActionEvent>() {
+            @Override
+            public void handle (ActionEvent event) {
+            	stepButtonHandler();
+            }});
+		
+		resetButton = createButton("resetButton", new EventHandler<ActionEvent>() {
+            @Override
+            public void handle (ActionEvent event) {
+            	resetButtonHandler();
+          
+            }});
+		
+		simSetter = createComboBox("simSetter", new EventHandler<ActionEvent>() {
+            @Override
+            public void handle (ActionEvent event) {
+            	simSetterHandler();
+          
+            }});
+		
+		speedSetter = createComboBox("speedSetter", new EventHandler<ActionEvent>() {
+            @Override
+            public void handle (ActionEvent event) {
+            	speedSetterHandler();
+          
+            }});
+		
+		panel.getChildren().add(startButton);
+		panel.getChildren().add(stopButton);
+		panel.getChildren().add(resetButton);
+		panel.getChildren().add(stepButton);
+		panel.getChildren().addAll(new Label("     Simulation:  "), new Text());
+		panel.getChildren().add(simSetter);
+		panel.getChildren().addAll(new Label("     Speed:  "), new Text());
+		panel.getChildren().add(speedSetter);
+		
+		return panel; 
+		}
+		
+	private void startButtonHandler(){
+		//TODO:
+	}
+		
+	private void stopButtonHandler(){
+		//TODO:
+	}
+	
+	private void resetButtonHandler(){
+		//TODO:
+	}
+	
+	private void stepButtonHandler(){
+		//TODO:
+	}
+		
+	private void simSetterHandler(){
+		//TODO:
+	}
+	
+	private void speedSetterHandler(){
+		//TODO:
 	}
 	
 }
