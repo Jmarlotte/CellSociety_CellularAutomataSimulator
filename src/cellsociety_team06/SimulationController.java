@@ -17,11 +17,13 @@ import rule.WaTorRule;
 public class SimulationController {
 
 	private ArrayList<Cell> board;
-	private GUI display;
+//	private GUI display;
 	private SimulationDisplay display;
 	private Timer timer;
+	private int interval;
 
 	public SimulationController(ArrayList<Cell> bd, SimulationDisplay sd) {
+		interval = 1000;
 		timer = new Timer();
 		board = bd;
 		display = sd;
@@ -59,7 +61,8 @@ public class SimulationController {
 				@Override
 				public void run() {
 					sim.step();
-					display.updateScreen(board);
+//					display.updateScreen(board);
+					display.updateBoard(board);
 				}
 			}, interval, interval);
 		} else if(board.get(0).getRule() instanceof WaTorRule) {
@@ -68,7 +71,8 @@ public class SimulationController {
 				@Override
 				public void run() {
 					sim.step();
-					display.updateScreen(board);
+//					display.updateScreen(board);
+					display.updateBoard(board);
 				}
 			}, interval, interval);
 		} else if(board.get(0).getRule() instanceof SegregationRule) {
@@ -77,7 +81,8 @@ public class SimulationController {
 				@Override
 				public void run() {
 					sim.step();
-					display.updateScreen(board);
+//					display.updateScreen(board);
+					display.updateBoard(board);
 				}
 			}, interval, interval);
 		}
