@@ -2,13 +2,18 @@ package cellsociety_team06;
 import java.util.*;
 
 import cell.Cell;
+<<<<<<< HEAD
 import global_stepper.LocalStepper;
+import global_stepper.SegregationStepper;
+import global_stepper.WaTorStepper;
+import gui.GUI;
+=======
 import cell.CellColors;
 import global_stepper.BaseStepper;
 import global_stepper.SegregationStepper;
 import global_stepper.WaTorStepper;
-import gui.GUI;
 import javafx.scene.paint.Color;
+>>>>>>> feature/ui
 import rule.FireRule;
 import rule.ReproductionRule;
 import rule.SegregationRule;
@@ -18,15 +23,17 @@ public class SimulationController {
 
 	private ArrayList<Cell> board;
 	private GUI display;
-	private SimulationDisplay display;
 	private Timer timer;
 
-	public SimulationController(ArrayList<Cell> bd, SimulationDisplay sd) {
+	public SimulationController(ArrayList<Cell> bd, GUI sd) {
 		timer = new Timer();
 		board = bd;
 		display = sd;
 	}
 
+<<<<<<< HEAD
+	public void startTask(int interval) {
+=======
 	public void setSimType() {
 		Color[] simulationColors;
 		BaseStepper stepper; 
@@ -53,6 +60,7 @@ public class SimulationController {
 	}
 	
 	public void startTask() {
+>>>>>>> feature/ui
 		if(board.get(0).getRule() instanceof FireRule || board.get(0).getRule() instanceof ReproductionRule) {
 			LocalStepper sim = new LocalStepper(board);
 			timer.scheduleAtFixedRate(new TimerTask() {
@@ -82,6 +90,8 @@ public class SimulationController {
 		}
 	}
 
+<<<<<<< HEAD
+=======
 	public void step(){
 		stepLocal();
 	}
@@ -108,4 +118,5 @@ public class SimulationController {
 	}
 
 
+>>>>>>> feature/ui
 }

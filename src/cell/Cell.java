@@ -37,8 +37,10 @@ public abstract class Cell {
 	/**
 	 * update. Replace value with nextValue.
 	 */
-	public void update() {
+	public boolean update() {
+		boolean valueChanged = value.getVal() != nextValue.getVal();
 		value.setVal(nextValue.getVal());
+		return valueChanged;
 	}
 
 	public ArrayList<Cell> getNeighbors() {

@@ -11,5 +11,9 @@
 50,51,2;
 </CellValues>
 <RuleType>Fire</RuleType>
+<<<<<<< HEAD
+<ProbCatch>1</ProbCatch>
+=======
 <ProbCatch>0.7</ProbCatch>
+>>>>>>> feature/ui
 </Environment>

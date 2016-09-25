@@ -11,5 +11,5 @@
 50,51,2;
 </CellValues>
 <RuleType>Fire</RuleType>
-<ProbCatch>0.7</ProbCatch>
+<ProbCatch>1</ProbCatch>
 </Environment>

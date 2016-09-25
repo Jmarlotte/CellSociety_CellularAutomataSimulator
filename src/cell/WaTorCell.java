@@ -73,9 +73,10 @@ public class WaTorCell extends Cell {
 	}
 	
 	@Override
-	public void update() {
+	public boolean update() {
 		// do not do anything since in WaTor the update rule is "global"
 		assert false; // crash the program now, since this function is not supposed to be called. 
+		return false;
 	}
 
 
