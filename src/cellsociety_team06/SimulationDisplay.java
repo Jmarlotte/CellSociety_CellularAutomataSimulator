@@ -112,7 +112,6 @@ private BorderPane root;
 		ObservableList<Node> children = root.getChildren();
 		double offsetX = (windowSize - gridWidth)/2;
 		double offsetY = (windowSize-gridHeight)/2;
-		System.out.println("OFFSET: "+offsetX);
 		for( Cell cell : board){
 			double offX = offsetX + getCellOffsetX(cell.getX());
 			double offY = offsetY + getCellOffsetY(cell.getY());
@@ -207,9 +206,9 @@ private BorderPane root;
 		panel.getChildren().add(stopButton);
 		panel.getChildren().add(resetButton);
 		panel.getChildren().add(stepButton);
-		panel.getChildren().addAll(new Label("     Simulation:  "), new Text());
+		panel.getChildren().addAll(new Label("     " + myUIElements.getString("simSetterLabel") + "  "), new Text());
 		panel.getChildren().add(simSetter);
-		panel.getChildren().addAll(new Label("     Speed:  "), new Text());
+		panel.getChildren().addAll(new Label("     " + myUIElements.getString("speedSetterLabel") + "  "), new Text());
 		panel.getChildren().add(speedSetter);
 		
 		return panel; 
