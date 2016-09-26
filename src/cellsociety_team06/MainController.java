@@ -1,5 +1,11 @@
 package cellsociety_team06;
 
+import java.util.ArrayList;
+
+import com.sun.jmx.snmp.SnmpUnknownSubSystemException;
+
+import cell.Cell;
+import io.SpecificationFileParser;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.util.Duration;
@@ -12,6 +18,8 @@ public class MainController {
     private static final int BASE_RATE = MILLISECOND_DELAY * 15;
     private static final double SECOND_DELAY = 1.0 / FRAMES_PER_SECOND;
     private SimulationController simulator;
+    private String simulationFileName;
+    private SimulationDisplay display;
     
 	Timeline loop;
 	
@@ -22,6 +30,9 @@ public class MainController {
         loop.setCycleCount(Timeline.INDEFINITE);
         loop.getKeyFrames().add(frame);
         loop.setDelay(new Duration(SECOND_DELAY));
+
+		display = new SimulationDisplay();
+		display.setDelegate(this);
 	}
 	
 	private void step(double elapsedTime){
@@ -37,24 +48,41 @@ public class MainController {
 	}
 	
 	public void resumeSimulation(){
-		loop.play();
+		if (simulator == null)
+			resetSimulation();
+		else
+			loop.play();
 	}
 	
 	public void changeSimulationSpeed(double newRate){
 		loop.setRate(newRate);
 	}
 	
-	public void resetSimulation(String newSim){
-		newSim = "src/"+newSim+".xml";
+	public void resetSimulation(){
+		loop.stop();
+		SpecificationFileParser sfp = new SpecificationFileParser();
+		sfp.readFile(simulationFileName);		
+		ArrayList<Cell> board = sfp.getBoard();
+		simulator = new SimulationController(board, display);
+		simulator.setSimType();
+		display.createBoard(board);
+		System.out.println(simulationFileName);
+	}
+	
+	public void setSimulationFileName(String newSim){
+		simulationFileName = "data/"+newSim+".xml";
 	}
 	
 	public void stepSimulation(){
-		
+		simulator.step();
 	}
 	
 	public void setSimulator(SimulationController s){
 		simulator = s;
-		s.getDisplay().setDelegate(this);
+	}
+	
+	public SimulationDisplay getDisplay(){
+		return display;
 	}
 	
 	public void start(){

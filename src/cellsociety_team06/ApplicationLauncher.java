@@ -24,23 +24,18 @@ public class ApplicationLauncher extends Application {
 	public void start(Stage primaryStage) throws Exception {
 		// TODO Auto-generated method stub
 		
-		SpecificationFileParser sfp = new SpecificationFileParser();
-		sfp.readFile(FIRE_FILE);
-		
-		SimulationDisplay displayView = new SimulationDisplay(100, 100);
-		ArrayList<Cell> board = sfp.getBoard();
-		SimulationController simulationController = new SimulationController(board, displayView);
-		simulationController.setSimType();
-		displayView.createBoard(board);
-		//TODO: Implement a method where the simulationController sets up initial stuff
-//		simulationController.beginStuff
-		
-		primaryStage.setScene(displayView.getScene());
-		primaryStage.show();
-		//Hand off control to MainController 
 		MainController controller = new MainController();
-		controller.setSimulator(simulationController);
-		controller.changeSimulationSpeed(10.0);
-		controller.start();
+		primaryStage.setScene(controller.getDisplay().getScene());
+//		SimulationDisplay displayView = new SimulationDisplay();
+//		primaryStage.setScene(displayView.getScene());
+		primaryStage.show();
+//		controller.resetSimulation();
+		
+
+//		//TODO: Implement a method where the simulationController sets up initial stuff
+//		
+//		//Hand off control to MainController 
+//		controller.setSimulator(simulationController);
+//		controller.start();
 	}
 }

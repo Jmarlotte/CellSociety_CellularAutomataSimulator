@@ -30,6 +30,9 @@ public class SimulationDisplay {
 
 private final String RESOURCE_PATH = "resources/DisplaySettings";
 private final String UIElements_Path = "resources/UIElements";
+private final int NUMBER_OF_AVAILABLE_SIMULATIONS = 4;
+private final int NUMBER_OF_AVAILABLE_SPEEDS = 5;
+
 private ResourceBundle myResources;
 private ResourceBundle myUIElements;
 private ComboBox simSetter;
@@ -41,30 +44,23 @@ private Button resetButton;
 private ComboBox speedSetter;
 private MainController delegate;
 
-
 private double gridWidth;
 private double gridHeight;
-private int rowCount;
-private int columnCount;
-private int numCells = 10000;
 private Shape[][] cellShapes;
+private int numCells;
 
 private Color[] colors;
 double windowSize;
 private BorderPane root; 
 	
-	public SimulationDisplay(int rows, int columns){
+	public SimulationDisplay(){
 		myResources = ResourceBundle.getBundle(RESOURCE_PATH);
 		myUIElements = ResourceBundle.getBundle(UIElements_Path);
 		root = new BorderPane();
 		root.setTop(makeUIPanel());
 		
 		myScene = createScene(root);
-		rowCount = rows;
-		columnCount = columns;
 		windowSize = myScene.getWidth();
-	//	createGrid(50, 50, windowSize, root);
-		//	root.getChildren().add(grid);
 		
 	}
 	
@@ -74,45 +70,6 @@ private BorderPane root;
 		Scene scene = new Scene(root, width, height, Color.WHITE);
 		return scene;
 	}
-	
-//	private Shape[][] createGrid(int rows, int columns, double windowSize, BorderPane root){
-//		gridWidth = Integer.parseInt(myResources.getString("GridWidth"));
-//		gridHeight = gridWidth;
-//		double offsetX = (windowSize - gridWidth)/2;
-//		double offsetY = (windowSize-gridHeight)/2;
-//		double cellSize = (double)gridWidth / rows;
-//		Shape[][] cells = new Shape[rows][columns];
-//		for (int i = 0; i < rows; i++){
-//			double y = offsetY + cellSize*i;
-//			for (int j = 0; j < columns; j++){
-//				double x = offsetX + cellSize*j;
-//				Rectangle cell = new Rectangle(x, y, cellSize, cellSize);
-//				cells[i][j] = cell;
-//				if (i%2 == j % 2)
-//					cell.setFill(Color.WHITE);
-//				root.getChildren().add(cell);
-//			}
-//		}
-//		return cells;
-//	}
-	
-/*	private GridPane createGridPane(double windowSize){
-		GridPane grid = new GridPane();
-		
-		gridWidth = Integer.parseInt(myResources.getString("GridWidth"));
-		gridHeight = Integer.parseInt(myResources.getString("GridHeight"));
-		grid.setLayoutX((windowSize - gridWidth)/2);
-		grid.setLayoutY((windowSize-gridHeight)/2);
-		grid.setGridLinesVisible(true);
-		grid.setHgap(0);
-		grid.setVgap(0);
-		for (int i = 0; i < 1; i++){
-			Rectangle rect = new Rectangle(100, 100);
-			rect.setFill(Color.RED);
-			grid.add(rect, i, i);
-		}
-		return grid;
-	} */
 	
 	public Scene getScene(){
 		return myScene;
@@ -127,20 +84,14 @@ private BorderPane root;
 		double gridArea = gridWidth*gridHeight;
 		double sizeRatio = gridArea/numCells; 
 		return Math.sqrt(sizeRatio); 
-		
-		//return 0.0;
 	}
 	
 	private double getCellOffsetX(int column){
 		return column*getCellWidth();
-		
-		//return 0.0;
 	}
 	
 	private double getCellOffsetY(int row){
 		return row *getCellWidth();
-		
-		//return 0.0;
 	}
 	
 	/**
@@ -159,36 +110,25 @@ private BorderPane root;
 	}
 	
 	public void createBoard(ArrayList<Cell> board) {
-		
-		// TODO: Implement this
-//		int numCellstoUpdate = board.size();
 		gridWidth = Integer.parseInt(myResources.getString("GridWidth"));
 		gridHeight = Integer.parseInt(myResources.getString("GridHeight"));
+		numCells = board.size();
 		int rowCount = (int)Math.sqrt(board.size());
-		cellShapes = new Shape[rowCount][columnCount];
+		cellShapes = new Shape[rowCount][rowCount];
 		ObservableList<Node> children = root.getChildren();
-//		numCellstoUpdate -=1;
-//		System.out.print(numCellstoUpdate);
 		double offsetX = (windowSize - gridWidth)/2;
 		double offsetY = (windowSize-gridHeight)/2;
 		System.out.println("OFFSET: "+offsetX);
 		for( Cell cell : board){
-//			double OffY = getCellOffsetY(cell.getY()) + (myScene.getHeight()- gridHeight)/2; 
-//			double OffX = getCellOffsetX(cell.getX()) + (myScene.getWidth()- gridWidth)/2;
 			double offX = offsetX + getCellOffsetX(cell.getX());
 			double offY = offsetY + getCellOffsetY(cell.getY());
 			//change color assignment
-//			Color cellFill = new Color(cell.getValue().getVal()/2.0, cell.getValue().getVal()/2.0, cell.getValue().getVal()/2.0, 1 );
 			Color cellFill = colors[cell.getValue().getVal()];
-			Rectangle newCell = new Rectangle( offX, offY, getCellWidth(), getCellWidth() );
+			Rectangle newCell = new Rectangle(offX, offY, getCellWidth(), getCellWidth() );
 			newCell.setFill(cellFill);
 			cellShapes[cell.getX()][cell.getY()] = newCell;
-//			cells[numCellstoUpdate] = cellVisElement;
-//			numCellstoUpdate -= 1; 
 			children.add(newCell);
-		}
-		
-//		root.getChildren().addAll(cellShapes);
+		}		
 	}
 	
 	private Button createButton(String description, EventHandler<ActionEvent> handler ){
@@ -211,11 +151,11 @@ private BorderPane root;
 		
 	}
 	
-	private ComboBox<String> createComboBox(String description, EventHandler<ActionEvent> handler){
+	private ComboBox<String> createComboBox(String description, int numberOfOptions, EventHandler<ActionEvent> handler){
 		
 		ArrayList<String> options = new ArrayList<String>();
 		
-		for (int i = 1; i < 5 ; i++){
+		for (int i = 1; i < numberOfOptions + 1 ; i++){
 			String temp = myUIElements.getString(description + Integer.toString(i));
 			if (! temp.equals(null)){
 				options.add(temp);
@@ -237,33 +177,33 @@ private BorderPane root;
             public void handle (ActionEvent event) {
             	startButtonHandler();
             }});
-		
+		startButton.setDisable(true);
 		stopButton = createButton("stopButton", new EventHandler<ActionEvent>() {
             @Override
             public void handle (ActionEvent event) {
             	stopButtonHandler();
             }});
-		
+		stopButton.setDisable(true);
 		stepButton = createButton("stepButton", new EventHandler<ActionEvent>() {
             @Override
             public void handle (ActionEvent event) {
             	stepButtonHandler();
             }});
-		
+		stepButton.setDisable(true);
 		resetButton = createButton("resetButton", new EventHandler<ActionEvent>() {
             @Override
             public void handle (ActionEvent event) {
             	resetButtonHandler();
           
             }});
-		
-		simSetter = createComboBox("simSetter", new EventHandler<ActionEvent>() {
+		resetButton.setDisable(true);
+		simSetter = createComboBox("simSetter", NUMBER_OF_AVAILABLE_SIMULATIONS, new EventHandler<ActionEvent>() {
             @Override
             public void handle (ActionEvent event) {
             	simSetterHandler();
             }});
 		
-		speedSetter = createComboBox("speedSetter", new EventHandler<ActionEvent>() {
+		speedSetter = createComboBox("speedSetter", NUMBER_OF_AVAILABLE_SPEEDS, new EventHandler<ActionEvent>() {
             @Override
             public void handle (ActionEvent event) {
             	speedSetterHandler();
@@ -307,7 +247,7 @@ private BorderPane root;
 		stopButton.setDisable(true);
 		startButton.setDisable(false);
 		stepButton.setDisable(false);
-		delegate.resetSimulation(simSetter.getSelectionModel().getSelectedItem().toString());
+		delegate.resetSimulation();
 	}
 	
 	private void stepButtonHandler(){
@@ -317,11 +257,15 @@ private BorderPane root;
 		
 	private void simSetterHandler(){
 		//TODO:
-		System.out.println(simSetter.getSelectionModel().getSelectedItem().toString());
+		delegate.setSimulationFileName(simSetter.getSelectionModel().getSelectedItem().toString());
+		resetButton.setDisable(false);
 	}
 	
 	private void speedSetterHandler(){
 		//TODO:
+		String newRatePercentage = speedSetter.getSelectionModel().getSelectedItem().toString();
+		double newRate = gridWidth = Double.parseDouble(myUIElements.getString(newRatePercentage));
+		delegate.changeSimulationSpeed(newRate);
 	}
 	
 }
