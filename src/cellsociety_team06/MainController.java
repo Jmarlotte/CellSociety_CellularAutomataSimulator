@@ -44,12 +44,17 @@ public class MainController {
 		loop.setRate(newRate);
 	}
 	
-	public void resetSimulation(){
+	public void resetSimulation(String newSim){
+		newSim = "src/"+newSim+".xml";
+	}
+	
+	public void stepSimulation(){
 		
 	}
 	
 	public void setSimulator(SimulationController s){
 		simulator = s;
+		s.getDisplay().setDelegate(this);
 	}
 	
 	public void start(){

@@ -120,5 +120,8 @@ public class SimulationController {
 		display = d;
 	}
 
+	public SimulationDisplay getDisplay(){
+		return display;
+	}
 
 }

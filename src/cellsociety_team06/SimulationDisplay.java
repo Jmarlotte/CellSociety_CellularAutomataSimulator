@@ -39,7 +39,7 @@ private Button stopButton;
 private Button startButton;
 private Button resetButton;
 private ComboBox speedSetter;
-
+private MainController delegate;
 
 
 private double gridWidth;
@@ -261,7 +261,6 @@ private BorderPane root;
             @Override
             public void handle (ActionEvent event) {
             	simSetterHandler();
-          
             }});
 		
 		speedSetter = createComboBox("speedSetter", new EventHandler<ActionEvent>() {
@@ -282,25 +281,43 @@ private BorderPane root;
 		
 		return panel; 
 		}
+	
+	public void setDelegate(MainController controller){
+		delegate = controller;
+	}
 		
 	private void startButtonHandler(){
 		//TODO:
+		startButton.setDisable(true);
+		stopButton.setDisable(false);
+		stepButton.setDisable(true);
+		delegate.resumeSimulation();
 	}
 		
 	private void stopButtonHandler(){
 		//TODO:
+		stopButton.setDisable(true);
+		startButton.setDisable(false);
+		stepButton.setDisable(false);
+		delegate.pauseSimulation();
 	}
 	
 	private void resetButtonHandler(){
 		//TODO:
+		stopButton.setDisable(true);
+		startButton.setDisable(false);
+		stepButton.setDisable(false);
+		delegate.resetSimulation(simSetter.getSelectionModel().getSelectedItem().toString());
 	}
 	
 	private void stepButtonHandler(){
 		//TODO:
+		delegate.stepSimulation();
 	}
 		
 	private void simSetterHandler(){
 		//TODO:
+		System.out.println(simSetter.getSelectionModel().getSelectedItem().toString());
 	}
 	
 	private void speedSetterHandler(){
