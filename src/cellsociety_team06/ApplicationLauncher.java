@@ -10,11 +10,13 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 public class ApplicationLauncher extends Application {
+	private static final String FIRE_FILE = "data/fire.xml";
+	private static final String WATOR_FILE = "data/wator.xml";
+	private static final String GAME_OF_LIFE_FILE = "data/game_of_life.xml";
+	private static final String SEGREGATION_FILE = "data/segregation.xml";
 	
 	public static void main(String [] args){
-		SpecificationFileParser sfp = new SpecificationFileParser();
-		sfp.readFile("data/wator.xml");
-		System.out.println(sfp.getBoard().get(0).getRule());
+//		System.out.println(sfp.getBoard().get(0).getRule());
 		launch(args);
 	}
 
@@ -23,7 +25,7 @@ public class ApplicationLauncher extends Application {
 		// TODO Auto-generated method stub
 		
 		SpecificationFileParser sfp = new SpecificationFileParser();
-		sfp.readFile("data/fire.xml");
+		sfp.readFile(FIRE_FILE);
 		
 		SimulationDisplay displayView = new SimulationDisplay(100, 100);
 		ArrayList<Cell> board = sfp.getBoard();
@@ -38,6 +40,7 @@ public class ApplicationLauncher extends Application {
 		//Hand off control to MainController 
 		MainController controller = new MainController();
 		controller.setSimulator(simulationController);
+		controller.changeSimulationSpeed(10.0);
 		controller.start();
 	}
 }

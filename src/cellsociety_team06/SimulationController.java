@@ -21,6 +21,7 @@ public class SimulationController {
 	private SimulationDisplay display;
 	private Timer timer;
 	private int interval;
+	private BaseStepper stepper; 
 
 	public SimulationController(ArrayList<Cell> bd, SimulationDisplay sd) {
 		interval = 1000;
@@ -31,27 +32,31 @@ public class SimulationController {
 
 	public void setSimType() {
 		Color[] simulationColors;
-		BaseStepper stepper; 
 		Object rule = board.get(0).getRule();
 		
 		//TODO: Set the stepper in all instances
 		if (rule instanceof FireRule){
 			simulationColors = CellColors.fireColors();
-			
-		} else if (rule instanceof ReproductionRule){
+			stepper = new LocalStepper(board);
+		} 
+		else if (rule instanceof ReproductionRule){
 			simulationColors = CellColors.reproductionColors();
-			
-		} else if (rule instanceof WaTorRule){
+			stepper = new LocalStepper(board);
+		} 
+		else if (rule instanceof WaTorRule){
 			simulationColors = CellColors.waTorColors();
 			stepper = new WaTorStepper(board);
-		} else if (rule instanceof SegregationRule){
+		} 
+		else if (rule instanceof SegregationRule){
 			simulationColors = CellColors.segregationColors();
 			stepper = new SegregationStepper(board);
-		} else{
+		} 
+		else{
 			System.out.println("COULD NOT DETECT RULE");
 			simulationColors = new Color[0];
 		}
 		display.setColors(simulationColors);
+		
 	}
 	
 	public void startTask() {
@@ -89,7 +94,8 @@ public class SimulationController {
 	}
 
 	public void step(){
-		stepLocal();
+		stepper.step();
+		display.updateBoard(board);
 	}
 	
 	/**
@@ -105,7 +111,8 @@ public class SimulationController {
 				changedCells.add(c);
 			}
 		}
-		display.updateBoard(changedCells);
+		display.updateBoard(board);
+//		display.updateBoard(changedCells);
 //		display.updateScreen(changedCells);
 	}
 

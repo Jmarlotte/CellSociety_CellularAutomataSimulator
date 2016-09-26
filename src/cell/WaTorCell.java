@@ -60,7 +60,7 @@ public class WaTorCell extends Cell {
 	}
 
 	public void changeTypeAndKeepReprTimerAndKeepHealth(int type, int ttr, int health) {
-		System.out.println(String.format("\tChanging (%d,%d) to shark type", this.getX(), this.getY()));
+//		System.out.println(String.format("\tChanging (%d,%d) to shark type", this.getX(), this.getY()));
 		assert type==WaTorRule.SHARK_TYPE; // only shark has health
 		this.value.setVal(type);
 		this.currentHealth = health;

@@ -9,13 +9,14 @@ import javafx.util.Duration;
 public class MainController {
     private static final int FRAMES_PER_SECOND = 60;
     private static final int MILLISECOND_DELAY = 1000 / FRAMES_PER_SECOND;
+    private static final int BASE_RATE = MILLISECOND_DELAY * 15;
     private static final double SECOND_DELAY = 1.0 / FRAMES_PER_SECOND;
     private SimulationController simulator;
     
 	Timeline loop;
 	
 	public MainController(){
-        KeyFrame frame = new KeyFrame(Duration.millis(MILLISECOND_DELAY),
+        KeyFrame frame = new KeyFrame(Duration.millis(BASE_RATE),
                 e -> step(SECOND_DELAY));
         loop = new Timeline();
         loop.setCycleCount(Timeline.INDEFINITE);
@@ -39,8 +40,8 @@ public class MainController {
 		loop.play();
 	}
 	
-	public void changeSimulationSpeed(){
-		
+	public void changeSimulationSpeed(double newRate){
+		loop.setRate(newRate);
 	}
 	
 	public void resetSimulation(){

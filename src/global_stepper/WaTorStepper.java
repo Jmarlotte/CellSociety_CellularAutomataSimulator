@@ -31,38 +31,38 @@ public class WaTorStepper extends BaseStepper {
 		// shark update
 		ArrayList<Cell> sharkCells = getCellsOfType(board, WaTorRule.SHARK_TYPE);
 		for(Cell c : sharkCells) {
-			System.out.println(String.format("(%d,%d)", c.getX(), c.getY()));
+			//System.out.println(String.format("(%d,%d)", c.getX(), c.getY()));
 		}
-		System.out.println();
+		//System.out.println();
 		for(Cell thisC : sharkCells) {
 			WaTorCell thisCell = (WaTorCell) thisC;
-			System.out.println(String.format("Shark (%d,%d)", thisCell.getX(), thisCell.getY()));
+			//System.out.println(String.format("Shark (%d,%d)", thisCell.getX(), thisCell.getY()));
 			thisCell.step();
 			if(thisCell.getValue().getVal()==WaTorRule.EMPTY_TYPE) {
-				System.out.println(String.format("\tShark at (%d,%d) died", thisCell.getX(), thisCell.getY()));
+				//System.out.println(String.format("\tShark at (%d,%d) died", thisCell.getX(), thisCell.getY()));
 				continue;
 			}
 			ArrayList<Cell> allNeighbors = thisCell.getNeighbors();
 			for(Cell c : allNeighbors) {
-				System.out.println(String.format("\tneighbors: (%d,%d)", c.getX(), c.getY()));
+				//System.out.println(String.format("\tneighbors: (%d,%d)", c.getX(), c.getY()));
 			}
 			ArrayList<Cell> neighborCells = 
 					this.getCellsOfType(thisCell.getNeighbors(), WaTorRule.EMPTY_TYPE);
 			neighborCells.addAll(this.getCellsOfType(thisCell.getNeighbors(), WaTorRule.FISH_TYPE));
 			for(Cell c : neighborCells) {
-				System.out.println(String.format("\tvalid neighbors: (%d,%d)", c.getX(), c.getY()));
+				//System.out.println(String.format("\tvalid neighbors: (%d,%d)", c.getX(), c.getY()));
 			}
 			if(neighborCells.isEmpty()) {
 				// no empty or fish cell
-				System.out.println("\tNo empty cell");
+				//System.out.println("\tNo empty cell");
 				continue;
 			}
 			
 			WaTorCell targetCell = (WaTorCell)randomAccess(neighborCells);
-			System.out.println(String.format("\tmoving to (%d,%d)", targetCell.getX(), targetCell.getY()));
+			//System.out.println(String.format("\tmoving to (%d,%d)", targetCell.getX(), targetCell.getY()));
 			if(targetCell.getValue().getVal()==WaTorRule.FISH_TYPE) {
 				// eating a fish
-				System.out.println("\teating fish");
+				//System.out.println("\teating fish");
 				thisCell.eat();
 			}
 			// change type of neighbor cell, but keep reproduce timer and current health
