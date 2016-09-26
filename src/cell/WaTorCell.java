@@ -1,6 +1,5 @@
 package cell;
 
-import rule.SegregationRule;
 import rule.WaTorRule;
 
 public class WaTorCell extends Cell {
