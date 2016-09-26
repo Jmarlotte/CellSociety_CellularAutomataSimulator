@@ -1,10 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <Environment>
+<DefaultCellValue>0</DefaultCellValue>
 <Width>100</Width>
 <Height>100</Height>
-<Random>true</Random>
-<RandomRatio>0.5,0.5</RandomRatio>
+<CellValueType>Int</CellValueType>
+<CellValues>
+50,50,1;
+50,49,1;
+50,51,1;
+</CellValues>
 <RuleType>Reproduction</RuleType>
 <RequiredNeighborCountsToLive>2,3</RequiredNeighborCountsToLive>
 <RequiredNeighborCountsToEmerge>3</RequiredNeighborCountsToEmerge>
