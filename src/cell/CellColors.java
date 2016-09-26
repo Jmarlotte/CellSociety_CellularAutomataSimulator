@@ -1,6 +1,8 @@
 package cell;
 import javafx.scene.paint.Color;
 
+//@authors: Andrew Bihl, James Marlotte
+
 public class CellColors{
 	
 	public static Color[] fireColors(){

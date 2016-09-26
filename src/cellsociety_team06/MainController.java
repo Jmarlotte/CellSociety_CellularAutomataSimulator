@@ -2,7 +2,8 @@ package cellsociety_team06;
 
 import java.util.ArrayList;
 
-import com.sun.jmx.snmp.SnmpUnknownSubSystemException;
+
+//@authors: Andrew Bihl, James Marlotte
 
 import cell.Cell;
 import io.SpecificationFileParser;
@@ -11,7 +12,7 @@ import javafx.animation.Timeline;
 import javafx.util.Duration;
 
 // This class coordinates the game loop and handles user actions. 
-//It is the master controller that handles the running loop 
+// It is the master controller that handles the running loop 
 public class MainController {
     private static final int FRAMES_PER_SECOND = 60;
     private static final int MILLISECOND_DELAY = 1000 / FRAMES_PER_SECOND;
@@ -30,15 +31,12 @@ public class MainController {
         loop.setCycleCount(Timeline.INDEFINITE);
         loop.getKeyFrames().add(frame);
         loop.setDelay(new Duration(SECOND_DELAY));
-
 		display = new SimulationDisplay();
 		display.setDelegate(this);
 	}
 	
 	private void step(double elapsedTime){
 		simulator.step();
-		System.out.println("TEST");
-		System.out.println("RATE: "+loop.getRate());
 	}
 	
 

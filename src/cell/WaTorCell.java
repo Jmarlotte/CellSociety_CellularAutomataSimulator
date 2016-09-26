@@ -28,7 +28,6 @@ public class WaTorCell extends Cell {
 			}
 			this.currentHealth--;
 			if(this.currentHealth<=0) {
-				System.out.println("shark died");
 				this.changeType(WaTorRule.EMPTY_TYPE);
 			}
 		}

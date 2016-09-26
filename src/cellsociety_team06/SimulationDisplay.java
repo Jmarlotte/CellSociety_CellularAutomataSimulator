@@ -1,31 +1,26 @@
 package cellsociety_team06;
 import java.util.*;
-
-import javax.swing.JComboBox;
-
 import cell.Cell;
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.geometry.Insets;
-import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
 import javafx.scene.text.Text;
+
+//@authors: Andrew Bihl, James Marlotte
+
 public class SimulationDisplay {
 
 private final String RESOURCE_PATH = "resources/DisplaySettings";
@@ -35,13 +30,13 @@ private final int NUMBER_OF_AVAILABLE_SPEEDS = 5;
 
 private ResourceBundle myResources;
 private ResourceBundle myUIElements;
-private ComboBox simSetter;
+private ComboBox<String> simSetter;
 private Scene myScene;
 private Button stepButton;
 private Button stopButton;
 private Button startButton;
 private Button resetButton;
-private ComboBox speedSetter;
+private ComboBox<String> speedSetter;
 private MainController delegate;
 
 private double gridWidth;
@@ -101,7 +96,6 @@ private BorderPane root;
 	 * @param board
 	 */
 	public void updateBoard(ArrayList<Cell> changedCells) {
-		System.out.println("Updating "+changedCells.size()+" cells");
 		for (Cell cell : changedCells){
 			Shape s = cellShapes[cell.getX()][cell.getY()];
 			Color newColor = colors[cell.getValue().getVal()];
@@ -122,7 +116,6 @@ private BorderPane root;
 		for( Cell cell : board){
 			double offX = offsetX + getCellOffsetX(cell.getX());
 			double offY = offsetY + getCellOffsetY(cell.getY());
-			//change color assignment
 			Color cellFill = colors[cell.getValue().getVal()];
 			Rectangle newCell = new Rectangle(offX, offY, getCellWidth(), getCellWidth() );
 			newCell.setFill(cellFill);
@@ -220,14 +213,13 @@ private BorderPane root;
 		panel.getChildren().add(speedSetter);
 		
 		return panel; 
-		}
+	}
 	
 	public void setDelegate(MainController controller){
 		delegate = controller;
 	}
 		
 	private void startButtonHandler(){
-		//TODO:
 		startButton.setDisable(true);
 		stopButton.setDisable(false);
 		stepButton.setDisable(true);
@@ -235,7 +227,6 @@ private BorderPane root;
 	}
 		
 	private void stopButtonHandler(){
-		//TODO:
 		stopButton.setDisable(true);
 		startButton.setDisable(false);
 		stepButton.setDisable(false);
@@ -243,7 +234,6 @@ private BorderPane root;
 	}
 	
 	private void resetButtonHandler(){
-		//TODO:
 		stopButton.setDisable(true);
 		startButton.setDisable(false);
 		stepButton.setDisable(false);
@@ -251,18 +241,15 @@ private BorderPane root;
 	}
 	
 	private void stepButtonHandler(){
-		//TODO:
 		delegate.stepSimulation();
 	}
 		
 	private void simSetterHandler(){
-		//TODO:
 		delegate.setSimulationFileName(simSetter.getSelectionModel().getSelectedItem().toString());
 		resetButton.setDisable(false);
 	}
 	
 	private void speedSetterHandler(){
-		//TODO:
 		String newRatePercentage = speedSetter.getSelectionModel().getSelectedItem().toString();
 		double newRate = gridWidth = Double.parseDouble(myUIElements.getString(newRatePercentage));
 		delegate.changeSimulationSpeed(newRate);

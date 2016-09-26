@@ -12,7 +12,6 @@ public class LocalStepper extends BaseStepper {
 
 	@Override
 	public void step() {
-		System.out.println("called");
 		for(Cell c : board) {
 			c.prepareForUpdate();
 		}
