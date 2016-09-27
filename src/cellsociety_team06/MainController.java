@@ -13,7 +13,7 @@ import javafx.util.Duration;
 
 // This class coordinates the game loop and handles user actions. 
 // It is the master controller that handles the running loop 
-public class MainController {
+public class MainController implements SimulationDisplayDelegate {
     private static final int FRAMES_PER_SECOND = 60;
     private static final int MILLISECOND_DELAY = 1000 / FRAMES_PER_SECOND;
     private static final int BASE_RATE = MILLISECOND_DELAY * 15;
