@@ -37,7 +37,7 @@ private Button stopButton;
 private Button startButton;
 private Button resetButton;
 private ComboBox<String> speedSetter;
-private MainController delegate;
+private SimulationDisplayDelegate delegate;
 
 private double gridWidth;
 private double gridHeight;
