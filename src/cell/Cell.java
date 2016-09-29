@@ -88,4 +88,9 @@ public abstract class Cell {
 	}
 
 
+	public String getSaveStr() {
+		return String.format("%i %i %i", this.getX(), this.getY(), this.getValue().getVal());
+	}
+
+
 }

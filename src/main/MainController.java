@@ -6,6 +6,7 @@ import java.util.ArrayList;
 //@authors: Andrew Bihl, James Marlotte
 
 import cell.Cell;
+import io.FileParsingException;
 import io.SpecificationFileParser;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -61,7 +62,14 @@ public class MainController implements SimulationDisplayDelegate {
 	public void resetSimulation(){
 		loop.stop();
 		SpecificationFileParser sfp = new SpecificationFileParser();
-		sfp.readFile(simulationFileName);		
+		while(true) {
+			try {
+				sfp.readFile(simulationFileName);
+				break;
+			} catch (FileParsingException e) {
+				e.printStackTrace();
+			}	
+		}
 		ArrayList<Cell> board = sfp.getBoard();
 		simulator = new SimulationController(board, display);
 		simulator.setSimType();

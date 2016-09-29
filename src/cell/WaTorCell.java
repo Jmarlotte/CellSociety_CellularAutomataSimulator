@@ -12,6 +12,12 @@ public class WaTorCell extends Cell {
 		currentHealth = ((WaTorRule)this.rule).getInitialHealth();
 		this.resetReproduceTimer();
 	}
+	
+	@Override
+	public String getSaveStr() {
+		return String.format("%i %i %i %i %i", this.getX(), this.getY(), this.getValue().getVal(), 
+				this.currentHealth, this.timeToReproduce);
+	}
 
 	public void step() {
 		// fish: prepare to reproduce

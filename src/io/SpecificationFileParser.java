@@ -29,10 +29,11 @@ public class SpecificationFileParser {
 	 * Read XML file. Fill rule and board. 
 	 * @param name filename
 	 */
-	public void readFile(String name) {
+	public void readFile(String name) throws FileParsingException {
 		try {
 			DocumentBuilder db = DocumentBuilderFactory.newInstance().newDocumentBuilder();
 			Document d = db.parse(name);
+			checkRequiredField(d);
 			String ruleType = this.getUniqueKey(d, "RuleType");
 			if(ruleType.equals("Reproduction")) {
 				parseReproductionRule(d);
@@ -53,6 +54,18 @@ public class SpecificationFileParser {
 			return;
 		}
 		System.out.println("Parsing done");
+	}
+
+	private boolean fieldPresent(Document d, String s) {
+		return getUniqueKey(d, s)!=null;
+	}
+	
+	private void checkRequiredField(Document d) throws FileParsingException {
+		String[] requiredFields = {"Width", "Height", "RuleType"};
+		for(String s : requiredFields) {
+			if(!fieldPresent(d, s))
+				throw new FileParsingException(String.format("Field \"%s\" does not exist", s));
+		}
 	}
 
 	private void setupBoard(String cellClass, Document d, int neighborConnection) {
