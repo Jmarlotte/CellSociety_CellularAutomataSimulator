@@ -20,20 +20,19 @@ public class SpecificationFileParser {
 	private Rule rule;
 	private ArrayList<Cell> board; // adjacency list representation of board
 	private SpecFileParserDelegate delegate;
-	
+
 	public SpecificationFileParser(SpecFileParserDelegate d) {
 		delegate = d;
 	}
-	
+
 	private String getUniqueKey(Document d, String key) {
 		try {
 			return d.getElementsByTagName(key).item(0).getTextContent();
 		} catch (NullPointerException e) {
 			return null;
 		}
-
 	}
-	
+
 	private Document getDocumentFromFile(String f) throws FileParsingException {
 		Document d = null;
 		try {

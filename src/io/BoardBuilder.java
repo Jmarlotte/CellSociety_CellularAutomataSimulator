@@ -106,5 +106,37 @@ public class BoardBuilder {
 			}
 		}
 	}
+	
+	/**
+	 * Set custom neighbor connection
+	 * connect is an array of boolean of 8 numbers. 
+	 * each entry in connect represents existence/non-existence of connection with a neighbor, 
+	 * starting from upper-left corner and rotating clockwise. 
+	 */
+	private static void setCustomNeighborConnection(int width, int height, boolean[] connect, Cell[][] board) {
+		assert connect.length==8;
+		for(int h=0; h<height; h++) {
+			for(int w=0; w<width; w++) {
+				ArrayList<Cell> neighbors = new ArrayList<Cell>();
+				if(connect[0] && h!=0 && w!=0)
+					neighbors.add(board[h-1][w-1]);
+				if(connect[1] && h!=0)
+					neighbors.add(board[h-1][w]);
+				if(connect[2] && h!=0 && w!=width-1)
+					neighbors.add(board[h-1][w+1]);
+				if(connect[3] && w!=width-1)
+					neighbors.add(board[h][w+1]);
+				if(connect[4] && h!=height-1 && w!=width-1)
+					neighbors.add(board[h+1][w+1]);
+				if(connect[5] && h!=height-1)
+					neighbors.add(board[h+1][w]);
+				if(connect[6] && h!=height-1 && w!=0)
+					neighbors.add(board[h+1][w-1]);
+				if(connect[7] && w!=width-1)
+					neighbors.add(board[h][w-1]);
+				board[h][w].setNeighbors(neighbors);
+			}
+		}
+	}
 
 }
