@@ -15,7 +15,7 @@ public class BoardBuilder {
 
 	public static ArrayList<Cell> buildFullBoard(
 			String type, int width, int height, Rule rule, 
-			int connection, String[] cellStrs) 
+			NeighborConnection connection, String[] cellStrs) 
 					throws FileParsingException {
 		Cell[][] boardArr = new Cell[height][width];
 		for(String s : cellStrs) {
@@ -31,7 +31,7 @@ public class BoardBuilder {
 
 	public static ArrayList<Cell> buildRandomBoard(
 			String type, int width, int height, Rule rule, 
-			int connection, ArrayList<Double> ratio) 
+			NeighborConnection connection, ArrayList<Double> ratio) 
 					throws FileParsingException {
 		Cell[][] boardArr = RandomBoardInitializer.bernoulliRandomInitialize(
 				type, rule, height, width, ratio);
@@ -44,7 +44,7 @@ public class BoardBuilder {
 
 	public static ArrayList<Cell> buildDefaultNonDefaultBoard(
 			String type, int width, int height, Rule rule, 
-			int connection, int defaultCellVal, String nonDefaultCellValStr) 
+			NeighborConnection connection, int defaultCellVal, String nonDefaultCellValStr) 
 					throws FileParsingException {
 		Cell[][] boardArr = new Cell[height][width];
 		// add cell and append rule
@@ -80,7 +80,19 @@ public class BoardBuilder {
 		return cellList;
 	}
 
-	private static void setNeighborConnection(int width, int height, int connection, Cell[][] board) {
+	private static void setNeighborConnection(int width, int height, 
+			NeighborConnection connection, Cell[][] board) {
+		if(connection.getType().equals(NeighborConnectionType.CUSTOM)) {
+			System.out.println("Building custom connection");
+			boolean[] connect = ((CustomNeighborConnection) connection).getConnect();
+			setCustomNeighborConnection(width, height, connect, board);
+		} else {
+			setFourEightNeighborConnection(width, height, connection, board);
+		}
+	}
+
+	private static void setFourEightNeighborConnection(int width, int height, NeighborConnection connection,
+			Cell[][] board) {
 		for(int h=0; h<height; h++) {
 			for(int w=0; w<width; w++) {
 				ArrayList<Cell> neighbors = new ArrayList<Cell>();
@@ -92,7 +104,7 @@ public class BoardBuilder {
 					neighbors.add(board[h+1][w]);
 				if(w!=width-1)
 					neighbors.add(board[h][w+1]);
-				if(connection==8) {
+				if(connection.getType().equals(NeighborConnectionType.EIGHT_NEIGHBOR)) {
 					if(h!=0 && w!=0)
 						neighbors.add(board[h-1][w-1]);
 					if(h!=0 && w!=width-1)

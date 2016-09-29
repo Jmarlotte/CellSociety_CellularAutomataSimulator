@@ -100,7 +100,13 @@ public class MainController implements SimulationDisplayDelegate, SpecFileParser
 
 	@Override
 	public void showErrorMsg(String s) {
-		// TODO Add code to show error message as pop-up on GUi here
+		// TODO Add code to show error message as pop-up on GUI here
+	}
+
+	@Override
+	public void showWarningMessage(String msg) {
+		// TODO Add code to show warning message on display, but do NOT block UI flow
+		
 	}
 	
 }

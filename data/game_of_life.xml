@@ -8,4 +8,5 @@
 <RuleType>Reproduction</RuleType>
 <RequiredNeighborCountsToLive>2,3</RequiredNeighborCountsToLive>
 <RequiredNeighborCountsToEmerge>3</RequiredNeighborCountsToEmerge>
+<NeighborConnectionType>8</NeighborConnectionType>
 </Environment>

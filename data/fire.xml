@@ -9,6 +9,7 @@
 50,49,2;
 50,51,2;
 </CellValues>
+<NeighborConnectionType>4</NeighborConnectionType>
 <RuleType>Fire</RuleType>
 <ProbCatch>0.7</ProbCatch>
 </Environment>

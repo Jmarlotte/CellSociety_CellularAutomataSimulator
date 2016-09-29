@@ -56,16 +56,16 @@ public class SpecificationFileParser {
 			String ruleType = this.getUniqueKey(d, "RuleType");
 			if(ruleType.equals("Reproduction")) {
 				parseReproductionRule(d);
-				setupBoard(ruleType, d, 8);
+				setupBoard(ruleType, d);
 			} else if(ruleType.equals("Fire")) {
 				parseFireRule(d);
-				setupBoard(ruleType, d, 4);
+				setupBoard(ruleType, d);
 			} else if(ruleType.equals("Segregation")) {
 				parseSegregationRule(d);
-				setupBoard(ruleType, d, 8);
+				setupBoard(ruleType, d);
 			} else if(ruleType.equals("WaTor")) {
 				parseWaTorRule(d);
-				setupBoard(ruleType, d, 4);
+				setupBoard(ruleType, d);
 			}
 		} catch (FileParsingException e) {
 			String errorMsg = String.format("File %s error: %s", name, e.getMessage());
@@ -87,12 +87,36 @@ public class SpecificationFileParser {
 				throw new FileParsingException(String.format("Field \"%s\" does not exist", s));
 		}
 	}
+	
+	private NeighborConnection getNeighborConnection(Document d) throws FileParsingException {
+		String neighborConnectionType = getUniqueKey(d, "NeighborConnectionType");
+		if(neighborConnectionType==null) {
+			String msg = "NeighborConnectionType field not found, default to 8.";
+			System.out.println(msg);
+			delegate.showWarningMessage(msg);
+			return new NeighborConnection(NeighborConnectionType.EIGHT_NEIGHBOR);
+		}
+		if(neighborConnectionType.equals("4"))
+			return new NeighborConnection(NeighborConnectionType.FOUR_NEIGHBOR);
+		if(neighborConnectionType.equals("8"))
+			return new NeighborConnection(NeighborConnectionType.EIGHT_NEIGHBOR);
+		if(neighborConnectionType.equalsIgnoreCase("custom")) {
+			String neighborConnectStr = getUniqueKey(d, "NeighborConnect");
+			if(neighborConnectStr==null) {
+				throw new FileParsingException("NeighborConnect field not found for custom neighbor connection");
+			}
+			boolean[] connect = csvStrToBooleanArray(neighborConnectStr);
+			return new CustomNeighborConnection(connect);
+		}
+		return null;
+	}
 
-	private void setupBoard(String type, Document d, int connection) throws FileParsingException {
+	private void setupBoard(String type, Document d) throws FileParsingException {
 		int width = Integer.parseInt(getUniqueKey(d, "Width"));
 		int height = Integer.parseInt(getUniqueKey(d, "Height"));
 		String random = getUniqueKey(d, "Random");
 		String fullBoardDesciptionFile = getUniqueKey(d, "FullBoardDescriptionFile");
+		NeighborConnection connection = getNeighborConnection(d);
 		if(random!=null && random.equalsIgnoreCase("true")) {
 			String ratioStr = getUniqueKey(d, "RandomRatio");
 			ArrayList<Double> ratio = csvStrToDoubleList(ratioStr);
@@ -123,6 +147,15 @@ public class SpecificationFileParser {
 			intList.add(Integer.parseInt(c));
 		}
 		return intList;
+	}
+	
+	private boolean[] csvStrToBooleanArray(String s) {
+		String[] strArr = s.split(",");
+		boolean[] arr = new boolean[strArr.length];
+		for(int i=0; i<strArr.length; i++) {
+			arr[i] = Integer.parseInt(strArr[i])!=0;
+		}
+		return arr;
 	}
 
 	private ArrayList<Double> csvStrToDoubleList(String s) {

@@ -14,5 +14,6 @@
 <SharkReproductionInterval>20</SharkReproductionInterval>
 <FishReproductionInterval>15</FishReproductionInterval>
 <FishEnergy>4</FishEnergy>
-
+<NeighborConnectionType>custom</NeighborConnectionType>
+<NeighborConnect>1,0,1,0,1,0,1,0</NeighborConnect>
 </Environment>
