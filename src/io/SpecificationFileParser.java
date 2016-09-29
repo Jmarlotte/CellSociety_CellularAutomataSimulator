@@ -1,7 +1,10 @@
 package io;
+import java.io.IOException;
 import java.util.*;
 import javax.xml.parsers.*;
 import org.w3c.dom.*;
+import org.xml.sax.SAXException;
+
 import cell.Cell;
 import cell.CellFactory;
 import rule.FireRule;
@@ -59,7 +62,7 @@ public class SpecificationFileParser {
 	private boolean fieldPresent(Document d, String s) {
 		return getUniqueKey(d, s)!=null;
 	}
-	
+
 	private void checkRequiredField(Document d) throws FileParsingException {
 		String[] requiredFields = {"Width", "Height", "RuleType"};
 		for(String s : requiredFields) {
@@ -68,20 +71,31 @@ public class SpecificationFileParser {
 		}
 	}
 
-	private void setupBoard(String cellClass, Document d, int connection) throws FileParsingException {
+	private void setupBoard(String type, Document d, int connection) throws FileParsingException {
 		int width = Integer.parseInt(getUniqueKey(d, "Width"));
 		int height = Integer.parseInt(getUniqueKey(d, "Height"));
 		String random = getUniqueKey(d, "Random");
+		String fullBoardDesciptionFile = getUniqueKey(d, "FullBoardDescriptionFile");
 		if(random!=null && random.equalsIgnoreCase("true")) {
 			String ratioStr = getUniqueKey(d, "RandomRatio");
 			ArrayList<Double> ratio = csvStrToDoubleList(ratioStr);
 			board = BoardBuilder.buildRandomBoard(
-					cellClass, width, height, rule, connection, ratio);
+					type, width, height, rule, connection, ratio);
+		} else if(fullBoardDesciptionFile!=null) {
+			try {
+				Document descFile = DocumentBuilderFactory.newInstance().newDocumentBuilder().
+						parse(fullBoardDesciptionFile);
+				String boardDescStr = getUniqueKey(descFile, "BoardEnumeration");
+				String[] boardDescArr = boardDescStr.split(",");
+				board = BoardBuilder.buildFullBoard(type, width, height, rule, connection, boardDescArr);
+			} catch (Exception e) {
+				throw new FileParsingException("Unsupported Board Description File Format");
+			}
 		} else {
 			int defaultCellVal = Integer.parseInt(getUniqueKey(d, "DefaultCellValue"));
 			String nonDefaultCellValStr = getUniqueKey(d, "CellValues").trim().replace("\n", "");
 			board = BoardBuilder.buildDefaultNonDefaultBoard(
-					cellClass, width, height, rule, connection, defaultCellVal, nonDefaultCellValStr);
+					type, width, height, rule, connection, defaultCellVal, nonDefaultCellValStr);
 		}
 	}
 

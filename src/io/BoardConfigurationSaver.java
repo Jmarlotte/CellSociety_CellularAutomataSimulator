@@ -15,12 +15,15 @@ public class BoardConfigurationSaver {
 	 */
 	public static void saveBoard(ArrayList<Cell> board, String fileName) {
 		StringBuilder sb = new StringBuilder();
+		sb.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n");
 		sb.append("<BoardEnumeration>");
-		for(Cell c : board) {
+		for(int i=0; i<board.size(); i++) {
+			Cell c = board.get(i);
 			sb.append(c.getSaveStr());
-			sb.append(",\n");
+			if(i!=board.size()-1)
+				sb.append(",\n");
 		}
 		sb.append("</BoardEnumeration>");
 	}
-	
+
 }
