@@ -1,12 +1,9 @@
 package io;
-import java.io.IOException;
 import java.util.*;
 import javax.xml.parsers.*;
 import org.w3c.dom.*;
-import org.xml.sax.SAXException;
 
 import cell.Cell;
-import cell.CellFactory;
 import rule.FireRule;
 import rule.ReproductionRule;
 import rule.Rule;
@@ -22,7 +19,12 @@ public class SpecificationFileParser {
 
 	private Rule rule;
 	private ArrayList<Cell> board; // adjacency list representation of board
-
+	private SpecFileParserDelegate delegate;
+	
+	public SpecificationFileParser(SpecFileParserDelegate d) {
+		delegate = d;
+	}
+	
 	private String getUniqueKey(Document d, String key) {
 		try {
 			return d.getElementsByTagName(key).item(0).getTextContent();
@@ -67,7 +69,9 @@ public class SpecificationFileParser {
 				setupBoard(ruleType, d, 4);
 			}
 		} catch (FileParsingException e) {
-			System.out.println(String.format("File %s error: %s", name, e.getMessage()));
+			String errorMsg = String.format("File %s error: %s", name, e.getMessage());
+			System.out.println(errorMsg);
+			this.delegate.showErrorMsg(errorMsg);
 			return;
 		}
 		System.out.println("Parsing done");

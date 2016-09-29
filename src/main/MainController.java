@@ -7,6 +7,7 @@ import java.util.ArrayList;
 
 import cell.Cell;
 import io.FileParsingException;
+import io.SpecFileParserDelegate;
 import io.SpecificationFileParser;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -16,7 +17,7 @@ import ui.SimulationDisplayDelegate;
 
 // This class coordinates the game loop and handles user actions. 
 // It is the master controller that handles the running loop 
-public class MainController implements SimulationDisplayDelegate {
+public class MainController implements SimulationDisplayDelegate, SpecFileParserDelegate {
     private static final int FRAMES_PER_SECOND = 60;
     private static final int MILLISECOND_DELAY = 1000 / FRAMES_PER_SECOND;
     private static final int BASE_RATE = MILLISECOND_DELAY * 15;
@@ -61,7 +62,7 @@ public class MainController implements SimulationDisplayDelegate {
 	
 	public void resetSimulation(){
 		loop.stop();
-		SpecificationFileParser sfp = new SpecificationFileParser();
+		SpecificationFileParser sfp = new SpecificationFileParser(this);
 		while(true) {
 			try {
 				sfp.readFile(simulationFileName);
@@ -95,6 +96,11 @@ public class MainController implements SimulationDisplayDelegate {
 	
 	public void start(){
 		loop.play();
+	}
+
+	@Override
+	public void showErrorMsg(String s) {
+		// TODO Add code to show error message as pop-up on GUi here
 	}
 	
 }
