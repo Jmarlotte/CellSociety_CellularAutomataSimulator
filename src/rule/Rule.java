@@ -5,6 +5,6 @@ package rule;
  * @author ZYL
  *
  */
-public class Rule {
+public abstract class Rule {
 
 }

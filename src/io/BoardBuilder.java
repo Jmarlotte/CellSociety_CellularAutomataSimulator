@@ -29,7 +29,6 @@ public class BoardBuilder {
 		return cellList;
 	}
 
-
 	public static ArrayList<Cell> buildRandomBoard(
 			String type, int width, int height, Rule rule, 
 			int connection, ArrayList<Double> ratio) 

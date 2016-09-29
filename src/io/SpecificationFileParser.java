@@ -31,6 +31,18 @@ public class SpecificationFileParser {
 		}
 
 	}
+	
+	private Document getDocumentFromFile(String f) throws FileParsingException {
+		Document d = null;
+		try {
+			DocumentBuilder db;
+			db = DocumentBuilderFactory.newInstance().newDocumentBuilder();
+			d = db.parse(f);
+		} catch (Exception e) {
+			throw new FileParsingException("Error reading file");
+		}
+		return d;
+	}
 
 	/**
 	 * Read XML file. Fill rule and board. 
@@ -38,8 +50,7 @@ public class SpecificationFileParser {
 	 */
 	public void readFile(String name) throws FileParsingException {
 		try {
-			DocumentBuilder db = DocumentBuilderFactory.newInstance().newDocumentBuilder();
-			Document d = db.parse(name);
+			Document d = getDocumentFromFile(name);
 			checkRequiredField(d);
 			String ruleType = this.getUniqueKey(d, "RuleType");
 			if(ruleType.equals("Reproduction")) {
@@ -55,9 +66,8 @@ public class SpecificationFileParser {
 				parseWaTorRule(d);
 				setupBoard(ruleType, d, 4);
 			}
-
-		} catch (Exception e) {
-			e.printStackTrace();
+		} catch (FileParsingException e) {
+			System.out.println(String.format("File %s error: %s", name, e.getMessage()));
 			return;
 		}
 		System.out.println("Parsing done");
