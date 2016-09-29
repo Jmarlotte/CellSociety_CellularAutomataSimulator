@@ -1,4 +1,4 @@
-package cellsociety_team06;
+package ui;
 
 public interface SimulationDisplayDelegate {
 	public void stepSimulation();

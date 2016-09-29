@@ -11,6 +11,7 @@ import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.util.Duration;
 import ui.SimulationDisplay;
+import ui.SimulationDisplayDelegate;
 
 // This class coordinates the game loop and handles user actions. 
 // It is the master controller that handles the running loop 
