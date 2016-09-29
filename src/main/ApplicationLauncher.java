@@ -1,4 +1,4 @@
-package cellsociety_team06;
+package main;
 
 import javafx.application.Application;
 import javafx.stage.Stage;

@@ -1,4 +1,4 @@
-package cellsociety_team06;
+package ui;
 import java.util.*;
 import cell.Cell;
 import javafx.collections.ObservableList;
@@ -18,6 +18,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
 import javafx.scene.text.Text;
+import main.MainController;
 
 //@authors: Andrew Bihl, James Marlotte
 

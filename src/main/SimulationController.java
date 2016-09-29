@@ -1,4 +1,4 @@
-package cellsociety_team06;
+package main;
 import java.util.*;
 
 //@authors: Andrew Bihl, James Marlotte
@@ -14,6 +14,7 @@ import rule.FireRule;
 import rule.ReproductionRule;
 import rule.SegregationRule;
 import rule.WaTorRule;
+import ui.SimulationDisplay;
 
 public class SimulationController {
 
