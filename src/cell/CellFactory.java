@@ -6,6 +6,11 @@ import java.util.Arrays;
 import io.FileParsingException;
 import rule.*;
 
+/**
+ * Factory class to return cell according to type
+ * @author ZYL
+ *
+ */
 public class CellFactory {
 
 	public static Cell newCell(String type, int value, Rule rule) throws FileParsingException {

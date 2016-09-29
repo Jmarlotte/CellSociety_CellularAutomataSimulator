@@ -1,5 +1,10 @@
 package cell;
 
+/**
+ * Cell value
+ * @author ZYL
+ *
+ */
 public class CellValue {
 
 	private int val;

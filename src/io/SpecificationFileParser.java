@@ -13,7 +13,11 @@ import rule.Rule;
 import rule.SegregationRule;
 import rule.WaTorRule;
 
-
+/**
+ * Class for input parsing
+ * @author ZYL
+ *
+ */
 public class SpecificationFileParser {
 
 	private Rule rule;

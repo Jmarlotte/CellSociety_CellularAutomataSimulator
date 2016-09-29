@@ -4,6 +4,11 @@ import java.util.ArrayList;
 
 import cell.Cell;
 
+/**
+ * Stepper for environments in which local rules are sufficient
+ * @author ZYL
+ *
+ */
 public class LocalStepper extends BaseStepper {
 
 	public LocalStepper(ArrayList<Cell> board) {

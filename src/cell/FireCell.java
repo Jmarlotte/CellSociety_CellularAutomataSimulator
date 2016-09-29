@@ -4,6 +4,11 @@ import java.util.Random;
 
 import rule.FireRule;
 
+/**
+ * Fire cell
+ * @author ZYL
+ *
+ */
 public class FireCell extends Cell {
 
 	public FireCell(int value, FireRule rule) {

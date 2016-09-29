@@ -5,6 +5,11 @@ import java.util.Random;
 
 import cell.Cell;
 
+/**
+ * Base stepper
+ * @author ZYL
+ *
+ */
 public abstract class BaseStepper {
 
 	protected ArrayList<Cell> board;

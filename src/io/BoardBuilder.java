@@ -6,6 +6,11 @@ import cell.Cell;
 import cell.CellFactory;
 import rule.Rule;
 
+/**
+ * Build board from different types
+ * @author ZYL
+ *
+ */
 public class BoardBuilder {
 
 	public static ArrayList<Cell> buildFullBoard(

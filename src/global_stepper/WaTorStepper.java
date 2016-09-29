@@ -7,6 +7,11 @@ import cell.Cell;
 import cell.WaTorCell;
 import rule.WaTorRule;
 
+/**
+ * Stepper for WaTor environment
+ * @author ZYL
+ *
+ */
 public class WaTorStepper extends BaseStepper {
 
 	public WaTorStepper(ArrayList<Cell> board) {

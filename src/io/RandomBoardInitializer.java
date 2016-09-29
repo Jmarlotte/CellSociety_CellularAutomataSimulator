@@ -4,6 +4,11 @@ import java.util.*;
 import cell.*;
 import rule.*;
 
+/**
+ * Random Board Initializer
+ * @author ZYL
+ *
+ */
 public class RandomBoardInitializer {
 
 	/**

@@ -4,6 +4,11 @@ import java.util.*;
 
 import rule.Rule;
 
+/**
+ * Cell super class
+ * @author ZYL
+ *
+ */
 public abstract class Cell {
 
 	protected ArrayList<Cell> neighbors;

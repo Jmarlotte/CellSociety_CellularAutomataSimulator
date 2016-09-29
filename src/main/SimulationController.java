@@ -16,6 +16,11 @@ import rule.SegregationRule;
 import rule.WaTorRule;
 import ui.SimulationDisplay;
 
+/**
+ * Simulation controller
+ * @author ZYL
+ *
+ */
 public class SimulationController {
 
 	private ArrayList<Cell> board;

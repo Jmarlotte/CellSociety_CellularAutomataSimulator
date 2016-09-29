@@ -1,5 +1,10 @@
 package io;
 
+/**
+ * File Parsing Exception
+ * @author ZYL
+ *
+ */
 public class FileParsingException extends Exception {
 
 	private static final long serialVersionUID = 5613635213616260928L;

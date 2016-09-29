@@ -2,6 +2,11 @@ package cell;
 
 import rule.WaTorRule;
 
+/**
+ * WaTor cell
+ * @author ZYL
+ *
+ */
 public class WaTorCell extends Cell {
 
 	private int currentHealth;

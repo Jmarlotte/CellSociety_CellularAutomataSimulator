@@ -2,6 +2,11 @@ package cell;
 
 import rule.ReproductionRule;
 
+/**
+ * Game of life cell
+ * @author ZYL
+ *
+ */
 public class ReproductionCell extends Cell {
 
 	public ReproductionCell(int value, ReproductionRule rule) {

@@ -5,6 +5,11 @@ import java.util.ArrayList;
 import cell.Cell;
 import rule.SegregationRule;
 
+/**
+ * Stepper for segregation environment
+ * @author ZYL
+ *
+ */
 public class SegregationStepper extends BaseStepper {
 
 	public static final int NUM_NEIGHBORS = 8;
