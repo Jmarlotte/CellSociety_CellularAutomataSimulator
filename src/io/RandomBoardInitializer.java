@@ -17,7 +17,7 @@ public class RandomBoardInitializer {
 	 */
 	public static Cell[][] bernoulliRandomInitialize(
 			String cellType, Rule rule, int height, int width, 
-			ArrayList<Double> ratios) {
+			ArrayList<Double> ratios) throws FileParsingException {
 		Cell[][] board = new Cell[height][width];
 		for(int i=0; i<height; i++) {
 			for(int j=0; j<width; j++) {

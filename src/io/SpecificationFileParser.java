@@ -68,7 +68,7 @@ public class SpecificationFileParser {
 		}
 	}
 
-	private void setupBoard(String cellClass, Document d, int neighborConnection) {
+	private void setupBoard(String cellClass, Document d, int neighborConnection) throws FileParsingException {
 		int width = Integer.parseInt(getUniqueKey(d, "Width"));
 		int height = Integer.parseInt(getUniqueKey(d, "Height"));
 		String random = getUniqueKey(d, "Random");
@@ -165,7 +165,7 @@ public class SpecificationFileParser {
 	 * @return
 	 */
 	private ArrayList<Cell> buildBoard(String cellClass, int width, int height, int defaultCellVal,
-			String nonDefaultCellValStr, Rule rule, int connection) {
+			String nonDefaultCellValStr, Rule rule, int connection) throws FileParsingException {
 		Cell[][] board = new Cell[height][width];
 		// add cell and append rule
 		for(int h=0; h<height; h++) {
