@@ -2,7 +2,7 @@
 
 <Environment>
 <DefaultCellValue>1</DefaultCellValue>
-<!-- <Width>100</Width> -->
+<Width>100</Width>
 <Height>100</Height>
 <CellValues>
 50,50,2;
