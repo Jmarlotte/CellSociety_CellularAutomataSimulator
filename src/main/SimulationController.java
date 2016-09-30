@@ -9,6 +9,7 @@ import cell.CellColors;
 import global_stepper.BaseStepper;
 import global_stepper.SegregationStepper;
 import global_stepper.WaTorStepper;
+import io.BoardConfigurationSaver;
 import javafx.scene.paint.Color;
 import rule.FireRule;
 import rule.ReproductionRule;
@@ -71,6 +72,15 @@ public class SimulationController {
 
 	public SimulationDisplay getDisplay(){
 		return display;
+	}
+	
+	/**
+	 * Save current board configuration
+	 * @param fileName
+	 */
+	//TODO: add a "Save" button to UI and call this function when appropriate
+	public void saveBoard(String fileName) {
+		BoardConfigurationSaver.saveBoard(board, fileName);
 	}
 
 }

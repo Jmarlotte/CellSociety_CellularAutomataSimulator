@@ -1,5 +1,7 @@
 package io;
 
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
 import java.util.*;
 import cell.*;
 
@@ -24,6 +26,12 @@ public class BoardConfigurationSaver {
 				sb.append(",\n");
 		}
 		sb.append("</BoardEnumeration>");
+		try(  PrintWriter out = new PrintWriter( fileName )  ){
+		    out.println( sb.toString() );
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 }
