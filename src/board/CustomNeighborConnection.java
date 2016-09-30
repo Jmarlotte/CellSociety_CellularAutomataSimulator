@@ -10,8 +10,8 @@ public class CustomNeighborConnection extends NeighborConnection {
 	private boolean[] connect;
 	
 
-	public CustomNeighborConnection(boolean[] c) {
-		super(NeighborConnectionType.CUSTOM);
+	public CustomNeighborConnection(boolean[] c, boolean wrap) {
+		super(NeighborConnectionType.CUSTOM, wrap);
 		connect = c;
 	}
 

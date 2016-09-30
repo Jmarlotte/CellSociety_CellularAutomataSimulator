@@ -94,23 +94,33 @@ public class SpecificationFileParser {
 	
 	private NeighborConnection getNeighborConnection(Document d) throws FileParsingException {
 		String neighborConnectionType = getUniqueKey(d, "NeighborConnectionType");
+		String neighborWrap = getUniqueKey(d, "NeighborWrap");
+		boolean wrap = true;
+		if(neighborWrap==null || neighborWrap.equalsIgnoreCase("false")) {
+			if(neighborWrap==null) {
+				String msg = "NeighborWrap field not found, default to false.";
+				System.out.println(msg);
+				delegate.showWarningMessage(msg);
+			}
+			wrap = false;
+		}
 		if(neighborConnectionType==null) {
 			String msg = "NeighborConnectionType field not found, default to 8.";
 			System.out.println(msg);
 			delegate.showWarningMessage(msg);
-			return new NeighborConnection(NeighborConnectionType.EIGHT_NEIGHBOR);
+			return new NeighborConnection(NeighborConnectionType.EIGHT_NEIGHBOR, wrap);
 		}
 		if(neighborConnectionType.equals("4"))
-			return new NeighborConnection(NeighborConnectionType.FOUR_NEIGHBOR);
+			return new NeighborConnection(NeighborConnectionType.FOUR_NEIGHBOR, wrap);
 		if(neighborConnectionType.equals("8"))
-			return new NeighborConnection(NeighborConnectionType.EIGHT_NEIGHBOR);
+			return new NeighborConnection(NeighborConnectionType.EIGHT_NEIGHBOR, wrap);
 		if(neighborConnectionType.equalsIgnoreCase("custom")) {
 			String neighborConnectStr = getUniqueKey(d, "NeighborConnect");
 			if(neighborConnectStr==null) {
 				throw new FileParsingException("NeighborConnect field not found for custom neighbor connection");
 			}
 			boolean[] connect = csvStrToBooleanArray(neighborConnectStr);
-			return new CustomNeighborConnection(connect);
+			return new CustomNeighborConnection(connect, wrap);
 		}
 		return null;
 	}

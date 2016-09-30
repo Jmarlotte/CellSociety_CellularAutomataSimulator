@@ -26,7 +26,7 @@ public class BoardConfigurationSaver {
 				sb.append(",\n");
 		}
 		sb.append("</BoardEnumeration>");
-		try(  PrintWriter out = new PrintWriter( fileName )  ){
+		try ( PrintWriter out = new PrintWriter(fileName) ){
 		    out.println( sb.toString() );
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
