@@ -45,7 +45,7 @@ public class SegregationStepper extends BaseStepper {
 		ArrayList<Cell> unhappyCells = new ArrayList<Cell>();
 		for(Cell c : thisTypeCells) {
 			int numDiff = this.getCellsOfType(c.getNeighbors(), otherType).size();
-			if(numDiff/(float)NUM_NEIGHBORS < this.satisfactionThreshold) {
+			if(numDiff/(float)NUM_NEIGHBORS > 1-this.satisfactionThreshold) {
 				unhappyCells.add(c);
 			}
 		}
