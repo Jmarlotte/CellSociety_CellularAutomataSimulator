@@ -19,4 +19,8 @@ public class FileParsingException extends Exception {
 		return errorMsg;
 	}
 	
+	@Override
+	public String getMessage() {
+		return errorMsg;
+	}
 }

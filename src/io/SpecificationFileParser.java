@@ -54,6 +54,7 @@ public class SpecificationFileParser {
 	 * @param name filename
 	 */
 	public void readFile(String name) throws FileParsingException {
+		System.out.println("Reading file " + name);
 		try {
 			Document d = getDocumentFromFile(name);
 			checkRequiredField(d);
@@ -72,6 +73,7 @@ public class SpecificationFileParser {
 				setupBoard(ruleType, d);
 			}
 		} catch (FileParsingException e) {
+			// e.printStackTrace();
 			String errorMsg = String.format("File %s error: %s", name, e.getMessage());
 			System.out.println(errorMsg);
 			this.delegate.showErrorMsg(errorMsg);
@@ -91,7 +93,7 @@ public class SpecificationFileParser {
 				throw new FileParsingException(String.format("Field \"%s\" does not exist", s));
 		}
 	}
-	
+
 	private NeighborConnection getNeighborConnection(Document d) throws FileParsingException {
 		String neighborConnectionType = getUniqueKey(d, "NeighborConnectionType");
 		String neighborWrap = getUniqueKey(d, "NeighborWrap");
@@ -133,23 +135,35 @@ public class SpecificationFileParser {
 		NeighborConnection connection = getNeighborConnection(d);
 		if(random!=null && random.equalsIgnoreCase("true")) {
 			String ratioStr = getUniqueKey(d, "RandomRatio");
-			ArrayList<Double> ratio = csvStrToDoubleList(ratioStr);
-			board = BoardBuilder.buildRandomBoard(
-					type, width, height, rule, connection, ratio);
+			String countsStr = getUniqueKey(d, "RandomCounts");
+			if((ratioStr==null) == (countsStr==null))
+				throw new FileParsingException(
+						"One and only one of \"RandomRatio\" or \"RandomCounts\" "
+								+ "field must exist for random initialization");
+			if(ratioStr!=null) {
+				ArrayList<Double> ratio = csvStrToDoubleList(ratioStr);
+				board = BoardBuilder.randomBernoulliBoard(
+						type, width, height, rule, connection, ratio);
+			} else {
+				ArrayList<Integer> counts = csvStrToIntList(countsStr);
+				board = BoardBuilder.randomCountsBoard(
+						type, width, height, rule, connection, counts);
+			}
+
 		} else if(fullBoardDesciptionFile!=null) {
 			try {
 				Document descFile = DocumentBuilderFactory.newInstance().newDocumentBuilder().
 						parse(fullBoardDesciptionFile);
 				String boardDescStr = getUniqueKey(descFile, "BoardEnumeration");
 				String[] boardDescArr = boardDescStr.split(",");
-				board = BoardBuilder.buildFullBoard(type, width, height, rule, connection, boardDescArr);
+				board = BoardBuilder.fullBoard(type, width, height, rule, connection, boardDescArr);
 			} catch (Exception e) {
 				throw new FileParsingException("Unsupported Board Description File Format");
 			}
 		} else {
 			int defaultCellVal = Integer.parseInt(getUniqueKey(d, "DefaultCellValue"));
 			String nonDefaultCellValStr = getUniqueKey(d, "CellValues").trim().replace("\n", "");
-			board = BoardBuilder.buildDefaultNonDefaultBoard(
+			board = BoardBuilder.defaultNonDefaultBoard(
 					type, width, height, rule, connection, defaultCellVal, nonDefaultCellValStr);
 		}
 	}
@@ -162,7 +176,7 @@ public class SpecificationFileParser {
 		}
 		return intList;
 	}
-	
+
 	private boolean[] csvStrToBooleanArray(String s) {
 		String[] strArr = s.split(",");
 		boolean[] arr = new boolean[strArr.length];

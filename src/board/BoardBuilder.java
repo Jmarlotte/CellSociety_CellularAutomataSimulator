@@ -2,8 +2,6 @@ package board;
 
 import java.util.ArrayList;
 
-import com.sun.org.apache.bcel.internal.classfile.ConstantNameAndType;
-
 import cell.Cell;
 import cell.CellFactory;
 import io.FileParsingException;
@@ -16,7 +14,7 @@ import rule.Rule;
  */
 public class BoardBuilder {
 
-	public static ArrayList<Cell> buildFullBoard(
+	public static ArrayList<Cell> fullBoard(
 			String type, int width, int height, Rule rule, 
 			NeighborConnection nc, String[] cellStrs) 
 					throws FileParsingException {
@@ -31,8 +29,21 @@ public class BoardBuilder {
 		ArrayList<Cell> cellList = boardArrToList(width, height, boardArr);
 		return cellList;
 	}
+	
+	public static ArrayList<Cell> randomCountsBoard(
+			String type, int width, int height, Rule rule, 
+			NeighborConnection nc, ArrayList<Integer> counts) 
+					throws FileParsingException {
+		Cell[][] boardArr = RandomBoardInitializer.fixedCountRandomInitialize(
+				type, rule, height, width, counts);
+		// Set up neighbor connection
+		setNeighborConnection(nc, boardArr);
+		// Build ArrayList
+		ArrayList<Cell> cellList = boardArrToList(width, height, boardArr);
+		return cellList;
+	}
 
-	public static ArrayList<Cell> buildRandomBoard(
+	public static ArrayList<Cell> randomBernoulliBoard(
 			String type, int width, int height, Rule rule, 
 			NeighborConnection nc, ArrayList<Double> ratio) 
 					throws FileParsingException {
@@ -45,7 +56,7 @@ public class BoardBuilder {
 		return cellList;
 	}
 
-	public static ArrayList<Cell> buildDefaultNonDefaultBoard(
+	public static ArrayList<Cell> defaultNonDefaultBoard(
 			String type, int width, int height, Rule rule, 
 			NeighborConnection nc, int defaultCellVal, String nonDefaultCellValStr) 
 					throws FileParsingException {
