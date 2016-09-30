@@ -8,6 +8,6 @@
 <!-- <RandomRatio>0.5,0.35,0.15</RandomRatio> -->
 <RandomCounts>5000,3000,2000</RandomCounts>
 <RuleType>Segregation</RuleType>
-<SatisfactionThreshold>0.3</SatisfactionThreshold>
+<SatisfactionThreshold>1</SatisfactionThreshold>
 <NeighborConnectionType>8</NeighborConnectionType>
 </Environment>

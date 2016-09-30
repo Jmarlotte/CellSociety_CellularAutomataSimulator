@@ -156,54 +156,54 @@ public class BoardBuilder {
 		}
 	}
 
-	private static void connectAdjNeighbors(Cell[][] board, int x, int y, boolean wrap) {
+	private static void connectAdjNeighbors(Cell[][] board, int i, int j, boolean wrap) {
 		int height = board.length;
 		int width = board[0].length;
 		int[] diff = new int[] {-1,1};
-		for(int dx : diff) {
-			int newx = height+dx;
-			if(newx<0 && wrap)
-				newx = height-1;
-			if(newx>height-1 && wrap)
-				newx = 0;
+		for(int di : diff) {
+			int newi = i+di;
+			if(newi<0 && wrap)
+				newi = height-1;
+			if(newi>height-1 && wrap)
+				newi = 0;
 			try {
-				board[x][y].getNeighbors().add(board[newx][width]);
+				board[i][j].getNeighbors().add(board[newi][j]);
 			} catch(IndexOutOfBoundsException e) {
 				continue;
 			}
 		}
-		for(int dy : diff) {
-			int newy = width+dy;
-			if(newy<0 && wrap)
-				newy = width-1;
-			if(newy>width-1 && wrap)
-				newy = 0;
+		for(int dj : diff) {
+			int newj = j+dj;
+			if(newj<0 && wrap)
+				newj = width-1;
+			if(newj>width-1 && wrap)
+				newj = 0;
 			try {
-				board[x][y].getNeighbors().add(board[height][newy]);
+				board[i][j].getNeighbors().add(board[i][newj]);
 			} catch(IndexOutOfBoundsException e) {
 				continue;
 			}
 		}
 	}
 
-	private static void connectDiagNeighbors(Cell[][] board, int x, int y, boolean wrap) {
+	private static void connectDiagNeighbors(Cell[][] board, int i, int j, boolean wrap) {
 		int height = board.length;
 		int width = board[0].length;
 		int[] diff = new int[] {-1,1};
-		for(int dx : diff) {
-			for(int dy : diff) {
-				int newx = height+dx;
-				int newy = width+dy;
-				if(newx<0 && wrap)
-					newx = height-1;
-				if(newx>height-1 && wrap)
-					newx = 0;
-				if(newy<0 && wrap)
-					newy = width-1;
-				if(newy>width-1 && wrap)
-					newy = 0;
+		for(int di : diff) {
+			for(int dj : diff) {
+				int newi = i+di;
+				int newj = j+dj;
+				if(newi<0 && wrap)
+					newi = height-1;
+				if(newi>height-1 && wrap)
+					newi = 0;
+				if(newj<0 && wrap)
+					newj = width-1;
+				if(newj>width-1 && wrap)
+					newj = 0;
 				try {
-					board[x][y].getNeighbors().add(board[newx][newy]);
+					board[i][j].getNeighbors().add(board[newi][newj]);
 				} catch(IndexOutOfBoundsException e) {
 					continue;
 				}

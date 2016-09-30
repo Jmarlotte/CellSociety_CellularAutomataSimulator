@@ -97,5 +97,9 @@ public abstract class Cell {
 		return String.format("%i %i %i", this.getX(), this.getY(), this.getValue().getVal());
 	}
 
+	@Override
+	public String toString() {
+		return "Cell [value=" + value.getVal() + ", x=" + x + ", y=" + y + "]";
+	}
 
 }
