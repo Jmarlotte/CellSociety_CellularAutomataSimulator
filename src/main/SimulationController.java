@@ -1,6 +1,8 @@
 package main;
 import java.util.*;
 
+import board.BoardConfigurationSaver;
+
 //@authors: Andrew Bihl, James Marlotte
 
 import cell.Cell;
@@ -9,7 +11,6 @@ import cell.CellColors;
 import global_stepper.BaseStepper;
 import global_stepper.SegregationStepper;
 import global_stepper.WaTorStepper;
-import io.BoardConfigurationSaver;
 import javafx.scene.paint.Color;
 import rule.FireRule;
 import rule.ReproductionRule;

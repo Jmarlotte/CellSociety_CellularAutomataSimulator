@@ -1,4 +1,4 @@
-package io;
+package board;
 
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;

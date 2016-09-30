@@ -1,7 +1,8 @@
-package io;
+package board;
 
 import java.util.*;
 import cell.*;
+import io.FileParsingException;
 import rule.*;
 
 /**

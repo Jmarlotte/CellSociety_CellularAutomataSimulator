@@ -1,4 +1,4 @@
-package io;
+package board;
 
 /**
  * Enum for neighbor connection type

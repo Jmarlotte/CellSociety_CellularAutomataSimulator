@@ -1,9 +1,10 @@
-package io;
+package board;
 
 import java.util.ArrayList;
 
 import cell.Cell;
 import cell.CellFactory;
+import io.FileParsingException;
 import rule.Rule;
 
 /**

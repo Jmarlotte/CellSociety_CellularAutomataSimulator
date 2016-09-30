@@ -1,4 +1,4 @@
-package io;
+package board;
 
 /**
  * Custom connection type

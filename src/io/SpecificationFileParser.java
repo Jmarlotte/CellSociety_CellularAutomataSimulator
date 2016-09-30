@@ -3,6 +3,10 @@ import java.util.*;
 import javax.xml.parsers.*;
 import org.w3c.dom.*;
 
+import board.BoardBuilder;
+import board.CustomNeighborConnection;
+import board.NeighborConnection;
+import board.NeighborConnectionType;
 import cell.Cell;
 import rule.FireRule;
 import rule.ReproductionRule;
