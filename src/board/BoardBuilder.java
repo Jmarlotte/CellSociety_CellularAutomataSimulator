@@ -117,7 +117,7 @@ public class BoardBuilder {
 				board[h][w].setNeighbors(new ArrayList<Cell>());
 				connectAdjNeighbors(board, h, w, nc.isWrap());
 				if(nc.getType().equals(NeighborConnectionType.EIGHT_NEIGHBOR))
-					connectDiagNeighbors(board, h, w, nc.isWrap());
+					connectCornerNeighbors(board, h, w, nc.isWrap());
 			}
 		}
 	}
@@ -186,7 +186,7 @@ public class BoardBuilder {
 		}
 	}
 
-	private static void connectDiagNeighbors(Cell[][] board, int i, int j, boolean wrap) {
+	private static void connectCornerNeighbors(Cell[][] board, int i, int j, boolean wrap) {
 		int height = board.length;
 		int width = board[0].length;
 		int[] diff = new int[] {-1,1};
