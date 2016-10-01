@@ -28,10 +28,12 @@ private final String RESOURCE_PATH = "resources/DisplaySettings";
 private final String UIElements_Path = "resources/UIElements";
 private final int NUMBER_OF_AVAILABLE_SIMULATIONS = 4;
 private final int NUMBER_OF_AVAILABLE_SPEEDS = 5;
+private final int NUMBER_OF_AVAILABLE_SIZES = 5;
+private final int NUMBER_OF_AVAILABLE_CELL_SHAPES = 3;
 
 private ResourceBundle myResources;
 private ResourceBundle myUIElements;
-private ComboBox<String> simSetter;
+
 private Scene myScene;
 private Button stepButton;
 private Button stopButton;
@@ -39,6 +41,9 @@ private Button startButton;
 private Button resetButton;
 private ComboBox<String> speedSetter;
 private SimulationDisplayDelegate delegate;
+private ComboBox<String> gridSizeSetter;
+private ComboBox<String> cellShapeSetter;
+private ComboBox<String> simSetter;
 
 private double gridWidth;
 private double gridHeight;
@@ -203,6 +208,19 @@ private BorderPane root;
           
             }});
 		
+		gridSizeSetter = createComboBox("gridSizeSetter", NUMBER_OF_AVAILABLE_SIZES, new EventHandler<ActionEvent>() {
+            @Override
+            public void handle (ActionEvent event) {
+            	gridSizeSetterHandler();
+          
+            }});
+		
+		cellShapeSetter = createComboBox("cellShapeSetter", NUMBER_OF_AVAILABLE_CELL_SHAPES, new EventHandler<ActionEvent>() {
+            @Override
+            public void handle (ActionEvent event) {
+            	cellShapeSetterHandler();
+          
+            }});
 		panel.getChildren().add(startButton);
 		panel.getChildren().add(stopButton);
 		panel.getChildren().add(resetButton);
@@ -211,6 +229,10 @@ private BorderPane root;
 		panel.getChildren().add(simSetter);
 		panel.getChildren().addAll(new Label("     " + myUIElements.getString("speedSetterLabel") + "  "), new Text());
 		panel.getChildren().add(speedSetter);
+		panel.getChildren().addAll(new Label("     " + myUIElements.getString("cellShapeLabel") + "  "), new Text());
+		panel.getChildren().add(cellShapeSetter);
+		panel.getChildren().addAll(new Label("     " + myUIElements.getString("gridSizeLabel") + "  "), new Text());
+		panel.getChildren().add(gridSizeSetter);
 		
 		return panel; 
 	}
@@ -253,6 +275,14 @@ private BorderPane root;
 		String newRatePercentage = speedSetter.getSelectionModel().getSelectedItem().toString();
 		double newRate = gridWidth = Double.parseDouble(myUIElements.getString(newRatePercentage));
 		delegate.changeSimulationSpeed(newRate);
+	}
+	
+	private void gridSizeSetterHandler(){
+		
+	}
+	
+	private void cellShapeSetterHandler(){
+		
 	}
 	
 }
