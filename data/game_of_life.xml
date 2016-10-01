@@ -1,12 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <Environment>
-<Width>100</Width>
-<Height>100</Height>
-<Random>true</Random>
-<RandomRatio>0.5,0.5</RandomRatio>
+<Width>20</Width>
+<Height>20</Height>
+<!-- <Random>true</Random>
+<RandomRatio>0.5,0.5</RandomRatio> -->
+<DefaultCellValue>0</DefaultCellValue>
+<CellValues>
+10,15,1;
+10,14,1;
+10,16,1;
+9,16,1;
+8,15,1;
+</CellValues>
 <RuleType>Reproduction</RuleType>
 <RequiredNeighborCountsToLive>2,3</RequiredNeighborCountsToLive>
 <RequiredNeighborCountsToEmerge>3</RequiredNeighborCountsToEmerge>
 <NeighborConnectionType>8</NeighborConnectionType>
+<NeighborWrap>true</NeighborWrap>
 </Environment>
