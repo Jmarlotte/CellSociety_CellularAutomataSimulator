@@ -9,6 +9,9 @@ import java.util.*;
  * @author ZYL
  */
 public class ReproductionRule extends Rule {
+	
+	public static final int EMPTY_TYPE = 0;
+	public static final int OCCUPIED_TYPE = 1;
 
 	private ArrayList<Integer> liveNeighborCounts;
 
