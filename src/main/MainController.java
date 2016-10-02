@@ -73,7 +73,8 @@ public class MainController implements SimulationDisplayDelegate {
 		ArrayList<Cell> board = sfp.getBoard();
 		simulator = new SimulationController(board, display);
 		simulator.setSimType();
-		display.createBoard(board);
+		simulator.createBoard(board);
+//		display.createBoard(board);
 		System.out.println(simulationFileName);
 	}
 	
