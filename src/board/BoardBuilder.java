@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import cell.Cell;
 import cell.CellFactory;
+import cell.CellNeighbors;
 import io.FileParsingException;
 import rule.Rule;
 
@@ -114,7 +115,6 @@ public class BoardBuilder {
 		int width = board[0].length;
 		for(int h=0; h<height; h++) {
 			for(int w=0; w<width; w++) {
-				board[h][w].setNeighbors(new ArrayList<Cell>());
 				connectAdjNeighbors(board, h, w, nc.isWrap());
 				if(nc.getType().equals(NeighborConnectionType.EIGHT_NEIGHBOR))
 					connectCornerNeighbors(board, h, w, nc.isWrap());
@@ -134,24 +134,23 @@ public class BoardBuilder {
 		assert connect.length==8;
 		for(int h=0; h<height; h++) {
 			for(int w=0; w<width; w++) {
-				ArrayList<Cell> neighbors = new ArrayList<Cell>();
+				CellNeighbors neighbors = board[h][w].getNeighbors();
 				if(connect[0] && h!=0 && w!=0)
-					neighbors.add(board[h-1][w-1]);
+					neighbors.setTl(board[h-1][w-1]);
 				if(connect[1] && h!=0)
-					neighbors.add(board[h-1][w]);
+					neighbors.setT(board[h-1][w]);
 				if(connect[2] && h!=0 && w!=width-1)
-					neighbors.add(board[h-1][w+1]);
+					neighbors.setTr(board[h-1][w+1]);
 				if(connect[3] && w!=width-1)
-					neighbors.add(board[h][w+1]);
+					neighbors.setR(board[h][w+1]);
 				if(connect[4] && h!=height-1 && w!=width-1)
-					neighbors.add(board[h+1][w+1]);
+					neighbors.setBr(board[h+1][w+1]);
 				if(connect[5] && h!=height-1)
-					neighbors.add(board[h+1][w]);
+					neighbors.setB(board[h+1][w]);
 				if(connect[6] && h!=height-1 && w!=0)
-					neighbors.add(board[h+1][w-1]);
+					neighbors.setBl(board[h+1][w-1]);
 				if(connect[7] && w!=width-1)
-					neighbors.add(board[h][w-1]);
-				board[h][w].setNeighbors(neighbors);
+					neighbors.setL(board[h][w-1]);
 			}
 		}
 	}
@@ -159,56 +158,128 @@ public class BoardBuilder {
 	private static void connectAdjNeighbors(Cell[][] board, int i, int j, boolean wrap) {
 		int height = board.length;
 		int width = board[0].length;
-		int[] diff = new int[] {-1,1};
-		for(int di : diff) {
-			int newi = i+di;
-			if(newi<0 && wrap)
-				newi = height-1;
-			if(newi>height-1 && wrap)
-				newi = 0;
-			try {
-				board[i][j].getNeighbors().add(board[newi][j]);
-			} catch(IndexOutOfBoundsException e) {
-				continue;
-			}
-		}
-		for(int dj : diff) {
-			int newj = j+dj;
-			if(newj<0 && wrap)
-				newj = width-1;
-			if(newj>width-1 && wrap)
-				newj = 0;
-			try {
-				board[i][j].getNeighbors().add(board[i][newj]);
-			} catch(IndexOutOfBoundsException e) {
-				continue;
-			}
-		}
+		connectT(board, i, j, wrap, height);
+		connectB(board, i, j, wrap, height);
+		connectL(board, i, j, wrap, width);
+		connectR(board, i, j, wrap, width);
+		
+	}
+
+	private static void connectR(Cell[][] board, int i, int j, boolean wrap, int width) {
+		int newj = j + 1;
+		if(newj<0 && wrap)
+			newj = width-1;
+		if(newj>width-1 && wrap)
+			newj = 0;
+		try {
+			board[i][j].getNeighbors().setR(board[i][newj]);
+		} catch(IndexOutOfBoundsException e) { }
+	}
+
+	private static void connectL(Cell[][] board, int i, int j, boolean wrap, int width) {
+		int newj = j - 1;
+		if(newj<0 && wrap)
+			newj = width-1;
+		if(newj>width-1 && wrap)
+			newj = 0;
+		try {
+			board[i][j].getNeighbors().setL(board[i][newj]);
+		} catch(IndexOutOfBoundsException e) { }
+	}
+
+	private static void connectB(Cell[][] board, int i, int j, boolean wrap, int height) {
+		int newi = i + 1;
+		if(newi<0 && wrap)
+			newi = height-1;
+		if(newi>height-1 && wrap)
+			newi = 0;
+		try {
+			board[i][j].getNeighbors().setB(board[newi][j]);
+		} catch(IndexOutOfBoundsException e) { }
+	}
+
+	private static void connectT(Cell[][] board, int i, int j, boolean wrap, int height) {
+		int newi = i - 1;
+		if(newi<0 && wrap)
+			newi = height-1;
+		if(newi>height-1 && wrap)
+			newi = 0;
+		try {
+			board[i][j].getNeighbors().setT(board[newi][j]);
+		} catch(IndexOutOfBoundsException e) { }
+	}
+	
+	private static void connectTl(Cell[][] board, int i, int j, boolean wrap, int height, int width) {
+		int newi = i - 1;
+		int newj = j - 1;
+		if(newi<0 && wrap)
+			newi = height-1;
+		if(newi>height-1 && wrap)
+			newi = 0;
+		if(newj<0 && wrap)
+			newj = width-1;
+		if(newj>width-1 && wrap)
+			newj = 0;
+		try {
+			board[i][j].getNeighbors().setTl(board[newi][newj]);
+		} catch(IndexOutOfBoundsException e) { }
+	}
+	
+	private static void connectTr(Cell[][] board, int i, int j, boolean wrap, int height, int width) {
+		int newi = i - 1;
+		int newj = j + 1;
+		if(newi<0 && wrap)
+			newi = height-1;
+		if(newi>height-1 && wrap)
+			newi = 0;
+		if(newj<0 && wrap)
+			newj = width-1;
+		if(newj>width-1 && wrap)
+			newj = 0;
+		try {
+			board[i][j].getNeighbors().setTr(board[newi][newj]);
+		} catch(IndexOutOfBoundsException e) { }
+	}
+	
+	private static void connectBr(Cell[][] board, int i, int j, boolean wrap, int height, int width) {
+		int newi = i + 1;
+		int newj = j + 1;
+		if(newi<0 && wrap)
+			newi = height-1;
+		if(newi>height-1 && wrap)
+			newi = 0;
+		if(newj<0 && wrap)
+			newj = width-1;
+		if(newj>width-1 && wrap)
+			newj = 0;
+		try {
+			board[i][j].getNeighbors().setBr(board[newi][newj]);
+		} catch(IndexOutOfBoundsException e) { }
+	}
+	
+	private static void connectBl(Cell[][] board, int i, int j, boolean wrap, int height, int width) {
+		int newi = i + 1;
+		int newj = j - 1;
+		if(newi<0 && wrap)
+			newi = height-1;
+		if(newi>height-1 && wrap)
+			newi = 0;
+		if(newj<0 && wrap)
+			newj = width-1;
+		if(newj>width-1 && wrap)
+			newj = 0;
+		try {
+			board[i][j].getNeighbors().setBl(board[newi][newj]);
+		} catch(IndexOutOfBoundsException e) { }
 	}
 
 	private static void connectCornerNeighbors(Cell[][] board, int i, int j, boolean wrap) {
 		int height = board.length;
 		int width = board[0].length;
-		int[] diff = new int[] {-1,1};
-		for(int di : diff) {
-			for(int dj : diff) {
-				int newi = i+di;
-				int newj = j+dj;
-				if(newi<0 && wrap)
-					newi = height-1;
-				if(newi>height-1 && wrap)
-					newi = 0;
-				if(newj<0 && wrap)
-					newj = width-1;
-				if(newj>width-1 && wrap)
-					newj = 0;
-				try {
-					board[i][j].getNeighbors().add(board[newi][newj]);
-				} catch(IndexOutOfBoundsException e) {
-					continue;
-				}
-			}
-		}
+		connectTl(board, i, j, wrap, height, width);
+		connectTr(board, i, j, wrap, height, width);
+		connectBr(board, i, j, wrap, height, width);
+		connectBl(board, i, j, wrap, height, width);
 	}
 
 }

@@ -20,7 +20,7 @@ public class ReproductionCell extends Cell {
 	
 	private void updateReproduction() {
 		int neighborCount = 0;
-		for(Cell c : this.neighbors) {
+		for(Cell c : this.neighbors.toList()) {
 			neighborCount += c.getValue().getVal();
 		}
 		if(this.value.getVal()==1) {

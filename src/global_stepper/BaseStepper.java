@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Random;
 
 import cell.Cell;
+import cell.CellNeighbors;
 
 /**
  * Base stepper
@@ -19,6 +20,10 @@ public abstract class BaseStepper {
 	}
 
 	public abstract void step();
+	
+	protected ArrayList<Cell> getCellsOfType(CellNeighbors cellList, int type) {
+		return getCellsOfType(cellList.toList(), type);
+	}
 	
 	protected ArrayList<Cell> getCellsOfType(ArrayList<Cell> cellList, int type) {
 		ArrayList<Cell> cells = new ArrayList<Cell>();

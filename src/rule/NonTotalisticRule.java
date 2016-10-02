@@ -36,8 +36,5 @@ public class NonTotalisticRule extends Rule {
 		return 0;
 	}
 	
-	private ArrayList<Cell> sortNeighbors(Cell c) {
-		return null;
-	}
 	
 }

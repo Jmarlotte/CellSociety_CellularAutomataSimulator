@@ -11,7 +11,8 @@ import rule.Rule;
  */
 public abstract class Cell {
 
-	protected ArrayList<Cell> neighbors;
+	// protected ArrayList<Cell> neighbors;
+	protected CellNeighbors neighbors;
 	protected CellValue value;
 
 	protected CellValue nextValue;
@@ -22,6 +23,7 @@ public abstract class Cell {
 	private int y;
 
 	public Cell(int value, Rule rule) {
+		neighbors = new CellNeighbors();
 		this.value = new CellValue(value);
 		this.nextValue = new CellValue(value);
 		this.rule = rule;
@@ -48,11 +50,11 @@ public abstract class Cell {
 		return valueChanged;
 	}
 
-	public ArrayList<Cell> getNeighbors() {
+	public CellNeighbors getNeighbors() {
 		return neighbors;
 	}
 
-	public void setNeighbors(ArrayList<Cell> neighbors) {
+	public void setNeighbors(CellNeighbors neighbors) {
 		this.neighbors = neighbors;
 	}
 

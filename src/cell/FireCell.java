@@ -24,7 +24,7 @@ public class FireCell extends Cell {
 	private void updateFire() {
 		if(this.getValue().getVal()==FireRule.TREE_TYPE) {
 			boolean neighborBurning = false;
-			for(Cell c : this.neighbors) {
+			for(Cell c : this.neighbors.toList()) {
 				if(c.getValue().getVal()==FireRule.BURNING_TYPE) {
 					neighborBurning = true;
 					break;
