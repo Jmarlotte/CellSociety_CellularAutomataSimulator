@@ -34,6 +34,27 @@ public class CellNeighbors {
 		return list;
 	}
 	
+	public ArrayList<Integer> getValues() {
+		ArrayList<Integer> values = new ArrayList<Integer>();
+		if(tl!=null)
+			values.add(tl.getValue().getVal());
+		if(t!=null)
+			values.add(t.getValue().getVal());
+		if(tr!=null)
+			values.add(tr.getValue().getVal());
+		if(r!=null)
+			values.add(r.getValue().getVal());
+		if(br!=null)
+			values.add(br.getValue().getVal());
+		if(b!=null)
+			values.add(b.getValue().getVal());
+		if(bl!=null)
+			values.add(bl.getValue().getVal());
+		if(l!=null)
+			values.add(l.getValue().getVal());
+		return values;
+	}
+	
 	public Cell getTl() {
 		return tl;
 	}

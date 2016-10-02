@@ -10,7 +10,7 @@ package cell;
 public class InvalidCell extends Cell {
 
 	public InvalidCell() {
-		super(0, null);
+		super(-1, null);
 	}
 
 	@Override
