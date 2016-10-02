@@ -21,6 +21,8 @@ public class ReproductionCell extends Cell {
 	private void updateReproduction() {
 		int neighborCount = 0;
 		for(Cell c : this.neighbors.toList()) {
+			if(c instanceof InvalidCell)
+				continue;
 			neighborCount += c.getValue().getVal();
 		}
 		if(this.value.getVal()==1) {

@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import cell.Cell;
 import cell.CellFactory;
 import cell.CellNeighbors;
+import cell.InvalidCell;
 import io.FileParsingException;
 import rule.Rule;
 
@@ -173,7 +174,9 @@ public class BoardBuilder {
 			newj = 0;
 		try {
 			board[i][j].getNeighbors().setR(board[i][newj]);
-		} catch(IndexOutOfBoundsException e) { }
+		} catch(IndexOutOfBoundsException e) { 
+			board[i][j].getNeighbors().setR(new InvalidCell());
+		}
 	}
 
 	private static void connectL(Cell[][] board, int i, int j, boolean wrap, int width) {
@@ -184,7 +187,9 @@ public class BoardBuilder {
 			newj = 0;
 		try {
 			board[i][j].getNeighbors().setL(board[i][newj]);
-		} catch(IndexOutOfBoundsException e) { }
+		} catch(IndexOutOfBoundsException e) { 
+			board[i][j].getNeighbors().setL(new InvalidCell());
+		}
 	}
 
 	private static void connectB(Cell[][] board, int i, int j, boolean wrap, int height) {
@@ -195,7 +200,9 @@ public class BoardBuilder {
 			newi = 0;
 		try {
 			board[i][j].getNeighbors().setB(board[newi][j]);
-		} catch(IndexOutOfBoundsException e) { }
+		} catch(IndexOutOfBoundsException e) { 
+			board[i][j].getNeighbors().setB(new InvalidCell());
+		}
 	}
 
 	private static void connectT(Cell[][] board, int i, int j, boolean wrap, int height) {
@@ -206,7 +213,9 @@ public class BoardBuilder {
 			newi = 0;
 		try {
 			board[i][j].getNeighbors().setT(board[newi][j]);
-		} catch(IndexOutOfBoundsException e) { }
+		} catch(IndexOutOfBoundsException e) { 
+			board[i][j].getNeighbors().setT(new InvalidCell());
+		}
 	}
 	
 	private static void connectTl(Cell[][] board, int i, int j, boolean wrap, int height, int width) {
@@ -222,7 +231,9 @@ public class BoardBuilder {
 			newj = 0;
 		try {
 			board[i][j].getNeighbors().setTl(board[newi][newj]);
-		} catch(IndexOutOfBoundsException e) { }
+		} catch(IndexOutOfBoundsException e) { 
+			board[i][j].getNeighbors().setTl(new InvalidCell());
+		}
 	}
 	
 	private static void connectTr(Cell[][] board, int i, int j, boolean wrap, int height, int width) {
@@ -238,7 +249,9 @@ public class BoardBuilder {
 			newj = 0;
 		try {
 			board[i][j].getNeighbors().setTr(board[newi][newj]);
-		} catch(IndexOutOfBoundsException e) { }
+		} catch(IndexOutOfBoundsException e) { 
+			board[i][j].getNeighbors().setTr(new InvalidCell());
+		}
 	}
 	
 	private static void connectBr(Cell[][] board, int i, int j, boolean wrap, int height, int width) {
@@ -254,7 +267,9 @@ public class BoardBuilder {
 			newj = 0;
 		try {
 			board[i][j].getNeighbors().setBr(board[newi][newj]);
-		} catch(IndexOutOfBoundsException e) { }
+		} catch(IndexOutOfBoundsException e) { 
+			board[i][j].getNeighbors().setBr(new InvalidCell());
+		}
 	}
 	
 	private static void connectBl(Cell[][] board, int i, int j, boolean wrap, int height, int width) {
@@ -270,7 +285,9 @@ public class BoardBuilder {
 			newj = 0;
 		try {
 			board[i][j].getNeighbors().setBl(board[newi][newj]);
-		} catch(IndexOutOfBoundsException e) { }
+		} catch(IndexOutOfBoundsException e) { 
+			board[i][j].getNeighbors().setBl(new InvalidCell());
+		}
 	}
 
 	private static void connectCornerNeighbors(Cell[][] board, int i, int j, boolean wrap) {
