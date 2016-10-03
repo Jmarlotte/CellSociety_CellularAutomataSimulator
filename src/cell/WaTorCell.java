@@ -20,7 +20,7 @@ public class WaTorCell extends Cell {
 	
 	@Override
 	public String getSaveStr() {
-		return String.format("%i %i %i %i %i", this.getX(), this.getY(), this.getValue().getVal(), 
+		return String.format("%d %d %d %d %d", this.getX(), this.getY(), this.getValue().getVal(), 
 				this.currentHealth, this.timeToReproduce);
 	}
 

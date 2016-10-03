@@ -2,6 +2,7 @@ package main;
 
 import java.util.ArrayList;
 
+import board.BoardConfigurationSaver;
 
 //@authors: Andrew Bihl, James Marlotte
 
@@ -14,6 +15,7 @@ import javafx.animation.Timeline;
 import javafx.util.Duration;
 import ui.SimulationDisplay;
 import ui.SimulationDisplayDelegate;
+import board.BoardConfigurationSaver;
 
 // This class coordinates the game loop and handles user actions. 
 // It is the master controller that handles the running loop 
@@ -65,7 +67,7 @@ public class MainController implements SimulationDisplayDelegate, SpecFileParser
 		SpecificationFileParser sfp = new SpecificationFileParser(this);
 		while(true) {
 			try {
-				sfp.readFile(simulationFileName);
+				sfp.readFile("data/"+simulationFileName+".xml");
 				break;
 			} catch (FileParsingException e) {
 				e.printStackTrace();
@@ -79,7 +81,7 @@ public class MainController implements SimulationDisplayDelegate, SpecFileParser
 	}
 	
 	public void setSimulationFileName(String newSim){
-		simulationFileName = "data/"+newSim+".xml";
+		simulationFileName = newSim;
 	}
 	
 	public void stepSimulation(){
@@ -92,6 +94,10 @@ public class MainController implements SimulationDisplayDelegate, SpecFileParser
 	
 	public SimulationDisplay getDisplay(){
 		return display;
+	}
+	
+	public void saveBoard(){
+		simulator.saveBoard(simulationFileName+".txt");
 	}
 	
 	public void start(){

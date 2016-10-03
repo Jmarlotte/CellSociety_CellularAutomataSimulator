@@ -7,4 +7,5 @@ public interface SimulationDisplayDelegate {
 	public void resumeSimulation();
 	public void pauseSimulation();
 	public void setSimulationFileName(String newSim);
+	public void saveBoard();
 }

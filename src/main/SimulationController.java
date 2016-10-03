@@ -25,7 +25,7 @@ import ui.TriangleGridDisplay;
 
 /**
  * Simulation controller
- * @author ZYL
+ * @author Andrew Bihl
  *
  */
 public class SimulationController {

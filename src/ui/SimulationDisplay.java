@@ -29,7 +29,7 @@ private final String RESOURCE_PATH = "resources/DisplaySettings";
 private final String UIElements_Path = "resources/UIElements";
 private final int NUMBER_OF_AVAILABLE_SIMULATIONS = 5;
 private final int NUMBER_OF_AVAILABLE_SPEEDS = 5;
-private final int NUMBER_OF_AVAILABLE_SIZES = 5;
+//private final int NUMBER_OF_AVAILABLE_SIZES = 5;
 private final int NUMBER_OF_AVAILABLE_CELL_SHAPES = 2;
 
 private ResourceBundle myResources;
@@ -40,6 +40,7 @@ private Button stepButton;
 private Button stopButton;
 private Button startButton;
 private Button resetButton;
+private Button saveBoardButton;
 private ComboBox<String> speedSetter;
 private SimulationDisplayDelegate delegate;
 //private ComboBox<String> gridSizeSetter;
@@ -143,11 +144,20 @@ private BorderPane root;
           
             }});
 		resetButton.setDisable(true);
+		
+		saveBoardButton = createButton("saveBoardButton", new EventHandler<ActionEvent>() {
+            @Override
+            public void handle (ActionEvent event) {
+            	saveBoardButtonHandler();
+            }});
+		saveBoardButton.setDisable(true);
+
 		simSetter = createComboBox("simSetter", NUMBER_OF_AVAILABLE_SIMULATIONS, new EventHandler<ActionEvent>() {
             @Override
             public void handle (ActionEvent event) {
             	simSetterHandler();
             }});
+		
 		
 		speedSetter = createComboBox("speedSetter", NUMBER_OF_AVAILABLE_SPEEDS, new EventHandler<ActionEvent>() {
             @Override
@@ -181,7 +191,8 @@ private BorderPane root;
 		panel.getChildren().add(speedSetter);
 		panel.getChildren().addAll(new Label("     " + myUIElements.getString("cellShapeLabel") + "  "), new Text());
 		panel.getChildren().add(cellShapeSetter);
-		panel.getChildren().addAll(new Label("     " + myUIElements.getString("gridSizeLabel") + "  "), new Text());
+		panel.getChildren().add(saveBoardButton);
+//		panel.getChildren().addAll(new Label("     " + myUIElements.getString("gridSizeLabel") + "  "), new Text());
 //		panel.getChildren().add(gridSizeSetter);
 		
 		return panel; 
@@ -196,6 +207,7 @@ private BorderPane root;
 		stopButton.setDisable(false);
 		stepButton.setDisable(true);
 		resetButton.setDisable(false);
+		saveBoardButton.setDisable(false);
 		delegate.resumeSimulation();
 	}
 		
@@ -232,6 +244,11 @@ private BorderPane root;
 //		
 //	}
 //	
+	private void saveBoardButtonHandler(){
+		delegate.saveBoard();
+	}
+
+	
 	private void cellShapeSetterHandler(){
 		
 	}
