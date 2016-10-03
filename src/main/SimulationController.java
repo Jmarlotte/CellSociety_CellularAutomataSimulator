@@ -20,6 +20,7 @@ import rule.WaTorRule;
 import ui.CellDisplayInfo;
 import ui.GridDisplay;
 import ui.SimulationDisplay;
+import ui.SquareGridDisplay;
 
 /**
  * Simulation controller
@@ -80,7 +81,7 @@ public class SimulationController {
 		double offsetY = (windowHeight-gridHeight)/2;
 		int rowCount = (int)Math.sqrt(board.size());
 		List<CellDisplayInfo> cells = makeCellDisplayList(board);
-		GridDisplay gridDisplay = new GridDisplay(rowCount, rowCount, gridWidth, gridWidth, cells);
+		GridDisplay gridDisplay = new SquareGridDisplay(rowCount, rowCount, gridWidth, gridWidth, cells);
 		boardDisplay = gridDisplay;
 		System.out.println("Offset x: "+offsetX+", offset y: "+offsetY);
 		display.addBoard(gridDisplay, offsetX, offsetY);
