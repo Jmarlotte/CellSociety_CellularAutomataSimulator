@@ -46,7 +46,6 @@ private ComboBox<String> cellShapeSetter;
 private ComboBox<String> simSetter;
 
 private GridDisplay board;
-double windowSize;
 private BorderPane root; 
 	
 	public SimulationDisplay(){
@@ -54,9 +53,7 @@ private BorderPane root;
 		myUIElements = ResourceBundle.getBundle(UIElements_Path);
 		root = new BorderPane();
 		root.setTop(makeUIPanel());
-		
 		myScene = createScene(root);
-		windowSize = myScene.getWidth();
 	}
 	
 	private Scene createScene(Parent root){
@@ -237,8 +234,12 @@ private BorderPane root;
 		
 	}
 	
-	public double getWindowSize(){
-		return windowSize;
+	public double getWindowWidth(){
+		return myScene.getWindow().getWidth();
 	}
 	
+	public double getWindowHeight(){
+		return myScene.getWindow().getHeight();
+	}
+		
 }

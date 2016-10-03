@@ -75,7 +75,6 @@ public class MainController implements SimulationDisplayDelegate, SpecFileParser
 		simulator = new SimulationController(board, display);
 		simulator.setSimType();
 		simulator.createBoard(board);
-//		display.createBoard(board);
 		System.out.println(simulationFileName);
 	}
 	

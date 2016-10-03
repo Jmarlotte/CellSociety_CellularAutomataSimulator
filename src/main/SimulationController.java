@@ -72,15 +72,17 @@ public class SimulationController {
 	 * Adds a grid to the display based on the current set simulation.
 	 */
 	public void createBoard(List<Cell> board){
-		double windowSize = display.getWindowSize();
+		double windowWidth = display.getWindowWidth();
+		double windowHeight = display.getWindowHeight();
 		int gridWidth = Integer.parseInt(myResources.getString("GridWidth"));
 		int gridHeight = Integer.parseInt(myResources.getString("GridHeight"));
-		double offsetX = (windowSize - gridWidth)/2;
-		double offsetY = (windowSize-gridHeight)/2;
+		double offsetX = (windowWidth - gridWidth)/2;
+		double offsetY = (windowHeight-gridHeight)/2;
 		int rowCount = (int)Math.sqrt(board.size());
 		List<CellDisplayInfo> cells = makeCellDisplayList(board);
 		GridDisplay gridDisplay = new GridDisplay(rowCount, rowCount, gridWidth, gridWidth, cells);
 		boardDisplay = gridDisplay;
+		System.out.println("Offset x: "+offsetX+", offset y: "+offsetY);
 		display.addBoard(gridDisplay, offsetX, offsetY);
 	}
 	
