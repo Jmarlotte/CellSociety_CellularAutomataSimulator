@@ -14,6 +14,7 @@ import javafx.scene.effect.DropShadow;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
@@ -45,7 +46,7 @@ private ComboBox<String> gridSizeSetter;
 private ComboBox<String> cellShapeSetter;
 private ComboBox<String> simSetter;
 
-private GridDisplay board;
+private Pane board;
 private BorderPane root; 
 	
 	public SimulationDisplay(){
@@ -72,7 +73,8 @@ private BorderPane root;
 		gridDisplay.getBoard().setLayoutX(x);
 		gridDisplay.getBoard().setLayoutY(y);
 		root.getChildren().add(gridDisplay.getBoard());
-		board = gridDisplay;
+		board = gridDisplay.getBoard();
+		System.out.println(root.getChildren().size());
 	}
 	
 	private Button createButton(String description, EventHandler<ActionEvent> handler ){

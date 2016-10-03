@@ -17,29 +17,34 @@ public class SquareGridDisplay extends GridDisplay {
 	protected void createCellShapes(Pane board, List<CellDisplayInfo> cells){
 		List<Node> children = board.getChildren();
 		for( CellDisplayInfo cell : cells){
-			double offX = getCellOffsetX(cell.x);
-			double offY = getCellOffsetY(cell.y);
+			double offX = getCellOffsetX(cell.column);
+			double offY = getCellOffsetY(cell.row);
 			Rectangle newCell = new Rectangle(offX, offY, cellWidth, cellHeight);
 			newCell.setFill(cell.color);
-			cellShapes[cell.x][cell.y] = newCell;
+			cellShapes[cell.row][cell.column] = newCell;
 			children.add(newCell);
 		}
 	}
 	
-	protected double getCellOffsetX(int column){
+	protected void setCellDimensions(int rows, int columns, double gridWidth, double gridHeight){
+		cellWidth = gridWidth / columns;
+		cellHeight = gridHeight / rows;
+	}
+	
+	private double getCellOffsetX(int column){
 		return column*cellWidth;
 	}
 	
-	protected double getCellOffsetY(int row){
+	private double getCellOffsetY(int row){
 		return row * cellHeight;
 	}
 	
-	protected double getCellWidth(double gridWidth, int columns){
-		return gridWidth / columns;
-	}
-	
-	protected double getCellHeight(double gridHeight, int rows){
-		return gridHeight / rows;
-	}
+//	protected double getCellWidth(int columns){
+//		return gridWidth / columns;
+//	}
+//	
+//	protected double getCellHeight(int rows){
+//		return gridHeight / rows;
+//	}
 	
 }

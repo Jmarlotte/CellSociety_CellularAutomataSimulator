@@ -21,6 +21,7 @@ import ui.CellDisplayInfo;
 import ui.GridDisplay;
 import ui.SimulationDisplay;
 import ui.SquareGridDisplay;
+import ui.TriangleGridDisplay;
 
 /**
  * Simulation controller
@@ -73,15 +74,17 @@ public class SimulationController {
 	 * Adds a grid to the display based on the current set simulation.
 	 */
 	public void createBoard(List<Cell> board){
+		
 		double windowWidth = display.getWindowWidth();
 		double windowHeight = display.getWindowHeight();
 		int gridWidth = Integer.parseInt(myResources.getString("GridWidth"));
 		int gridHeight = Integer.parseInt(myResources.getString("GridHeight"));
+		
 		double offsetX = (windowWidth - gridWidth)/2;
 		double offsetY = (windowHeight-gridHeight)/2;
 		int rowCount = (int)Math.sqrt(board.size());
 		List<CellDisplayInfo> cells = makeCellDisplayList(board);
-		GridDisplay gridDisplay = new SquareGridDisplay(rowCount, rowCount, gridWidth, gridWidth, cells);
+		GridDisplay gridDisplay = new TriangleGridDisplay(rowCount, rowCount, gridWidth, gridWidth, cells);
 		boardDisplay = gridDisplay;
 		System.out.println("Offset x: "+offsetX+", offset y: "+offsetY);
 		display.addBoard(gridDisplay, offsetX, offsetY);
@@ -91,7 +94,7 @@ public class SimulationController {
 		ArrayList<CellDisplayInfo> cellDisplayList = new ArrayList<CellDisplayInfo>();
 		for (Cell cell : cells){
 			Color color = simulationColors[cell.getValue().getVal()];
-			cellDisplayList.add(new CellDisplayInfo(cell.getX(), cell.getY(), color));
+			cellDisplayList.add(new CellDisplayInfo(cell.getY(), cell.getX(), color));
 		}
 		return cellDisplayList;
 	}
