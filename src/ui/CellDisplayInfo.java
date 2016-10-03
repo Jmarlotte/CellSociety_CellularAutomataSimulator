@@ -3,13 +3,13 @@ import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 
 public class CellDisplayInfo {
-	public int x;
-	public int y;
+	public int row;
+	public int column;
 	public Paint color;
 	
 	public CellDisplayInfo(int xCoordinate, int yCoordinate, Color fillColor){
-		x = xCoordinate;
-		y = yCoordinate;
+		column = xCoordinate;
+		row = yCoordinate;
 		color = fillColor; 
 	}
 }

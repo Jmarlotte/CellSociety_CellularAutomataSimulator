@@ -16,6 +16,7 @@ import javafx.scene.effect.DropShadow;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
@@ -30,8 +31,8 @@ private final String RESOURCE_PATH = "resources/DisplaySettings";
 private final String UIElements_Path = "resources/UIElements";
 private final int NUMBER_OF_AVAILABLE_SIMULATIONS = 5;
 private final int NUMBER_OF_AVAILABLE_SPEEDS = 5;
-private final int NUMBER_OF_AVAILABLE_SIZES = 5;
-private final int NUMBER_OF_AVAILABLE_CELL_SHAPES = 3;
+//private final int NUMBER_OF_AVAILABLE_SIZES = 5;
+private final int NUMBER_OF_AVAILABLE_CELL_SHAPES = 2;
 
 private ResourceBundle myResources;
 private ResourceBundle myUIElements;
@@ -41,13 +42,14 @@ private Button stepButton;
 private Button stopButton;
 private Button startButton;
 private Button resetButton;
+private Button saveBoardButton;
 private ComboBox<String> speedSetter;
 private SimulationDisplayDelegate delegate;
-private ComboBox<String> gridSizeSetter;
+//private ComboBox<String> gridSizeSetter;
 private ComboBox<String> cellShapeSetter;
 private ComboBox<String> simSetter;
 
-private GridDisplay board;
+private Pane board;
 private BorderPane root; 
 private LineChart myChart;
 
@@ -75,7 +77,8 @@ private LineChart myChart;
 		gridDisplay.getBoard().setLayoutX(x);
 		gridDisplay.getBoard().setLayoutY(y);
 		root.getChildren().add(gridDisplay.getBoard());
-		board = gridDisplay;
+		board = gridDisplay.getBoard();
+		System.out.println(root.getChildren().size());
 	}
 	
 	public void addChart(LineChart lineChart, double x, double y){
@@ -152,11 +155,20 @@ private LineChart myChart;
           
             }});
 		resetButton.setDisable(true);
+		
+		saveBoardButton = createButton("saveBoardButton", new EventHandler<ActionEvent>() {
+            @Override
+            public void handle (ActionEvent event) {
+            	saveBoardButtonHandler();
+            }});
+		saveBoardButton.setDisable(true);
+
 		simSetter = createComboBox("simSetter", NUMBER_OF_AVAILABLE_SIMULATIONS, new EventHandler<ActionEvent>() {
             @Override
             public void handle (ActionEvent event) {
             	simSetterHandler();
             }});
+		
 		
 		speedSetter = createComboBox("speedSetter", NUMBER_OF_AVAILABLE_SPEEDS, new EventHandler<ActionEvent>() {
             @Override
@@ -166,13 +178,13 @@ private LineChart myChart;
             }});
 		speedSetter.getSelectionModel().select(2);
 
-		
-		gridSizeSetter = createComboBox("gridSizeSetter", NUMBER_OF_AVAILABLE_SIZES, new EventHandler<ActionEvent>() {
-            @Override
-            public void handle (ActionEvent event) {
-            	gridSizeSetterHandler();
-          
-            }});
+//		
+//		gridSizeSetter = createComboBox("gridSizeSetter", NUMBER_OF_AVAILABLE_SIZES, new EventHandler<ActionEvent>() {
+//            @Override
+//            public void handle (ActionEvent event) {
+//            	gridSizeSetterHandler();
+//          
+//            }});
 		
 		cellShapeSetter = createComboBox("cellShapeSetter", NUMBER_OF_AVAILABLE_CELL_SHAPES, new EventHandler<ActionEvent>() {
             @Override
@@ -190,8 +202,9 @@ private LineChart myChart;
 		panel.getChildren().add(speedSetter);
 		panel.getChildren().addAll(new Label("     " + myUIElements.getString("cellShapeLabel") + "  "), new Text());
 		panel.getChildren().add(cellShapeSetter);
-		panel.getChildren().addAll(new Label("     " + myUIElements.getString("gridSizeLabel") + "  "), new Text());
-		panel.getChildren().add(gridSizeSetter);
+		panel.getChildren().add(saveBoardButton);
+//		panel.getChildren().addAll(new Label("     " + myUIElements.getString("gridSizeLabel") + "  "), new Text());
+//		panel.getChildren().add(gridSizeSetter);
 		
 		return panel; 
 	}
@@ -205,6 +218,7 @@ private LineChart myChart;
 		stopButton.setDisable(false);
 		stepButton.setDisable(true);
 		resetButton.setDisable(false);
+		saveBoardButton.setDisable(false);
 		delegate.resumeSimulation();
 	}
 		
@@ -237,9 +251,14 @@ private LineChart myChart;
 		delegate.changeSimulationSpeed(newRate);
 	}
 	
-	private void gridSizeSetterHandler(){
-		
+//	private void gridSizeSetterHandler(){
+//		
+//	}
+//	
+	private void saveBoardButtonHandler(){
+		delegate.saveBoard();
 	}
+
 	
 	private void cellShapeSetterHandler(){
 		
@@ -251,6 +270,10 @@ private LineChart myChart;
 	
 	public double getWindowHeight(){
 		return myScene.getWindow().getHeight();
+	}
+	
+	public String getShapeSelection(){
+		return cellShapeSetter.getSelectionModel().getSelectedItem();
 	}
 		
 }

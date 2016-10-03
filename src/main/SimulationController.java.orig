@@ -97,9 +97,13 @@ public class SimulationController {
 			boardDisplay = new SquareGridDisplay(rowCount, rowCount, gridWidth, gridWidth, cells);
 		}
 		System.out.println("Offset x: "+offsetX+", offset y: "+offsetY);
-		display.addBoard(boardDisplay, offsetX, offsetY);
+<<<<<<< HEAD
+		display.addBoard(gridDisplay, offsetX, offsetY);
 		myChartManager.chartCreator(board);
 		display.addChart(myChartManager.getMyChart(), 0, 400);
+=======
+		display.addBoard(boardDisplay, offsetX, offsetY);
+>>>>>>> triangleCells
 	}
 	
 	private List<CellDisplayInfo> makeCellDisplayList(List<Cell> cells){
@@ -129,6 +133,8 @@ public class SimulationController {
 	public SimulationDisplay getDisplay(){
 		return display;
 	}
+	
+	
 	
 	/**
 	 * Save current board configuration
