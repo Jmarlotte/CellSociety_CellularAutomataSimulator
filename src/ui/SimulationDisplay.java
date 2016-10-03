@@ -30,7 +30,7 @@ private final String UIElements_Path = "resources/UIElements";
 private final int NUMBER_OF_AVAILABLE_SIMULATIONS = 5;
 private final int NUMBER_OF_AVAILABLE_SPEEDS = 5;
 private final int NUMBER_OF_AVAILABLE_SIZES = 5;
-private final int NUMBER_OF_AVAILABLE_CELL_SHAPES = 3;
+private final int NUMBER_OF_AVAILABLE_CELL_SHAPES = 2;
 
 private ResourceBundle myResources;
 private ResourceBundle myUIElements;
@@ -42,7 +42,7 @@ private Button startButton;
 private Button resetButton;
 private ComboBox<String> speedSetter;
 private SimulationDisplayDelegate delegate;
-private ComboBox<String> gridSizeSetter;
+//private ComboBox<String> gridSizeSetter;
 private ComboBox<String> cellShapeSetter;
 private ComboBox<String> simSetter;
 
@@ -157,13 +157,13 @@ private BorderPane root;
             }});
 		speedSetter.getSelectionModel().select(2);
 
-		
-		gridSizeSetter = createComboBox("gridSizeSetter", NUMBER_OF_AVAILABLE_SIZES, new EventHandler<ActionEvent>() {
-            @Override
-            public void handle (ActionEvent event) {
-            	gridSizeSetterHandler();
-          
-            }});
+//		
+//		gridSizeSetter = createComboBox("gridSizeSetter", NUMBER_OF_AVAILABLE_SIZES, new EventHandler<ActionEvent>() {
+//            @Override
+//            public void handle (ActionEvent event) {
+//            	gridSizeSetterHandler();
+//          
+//            }});
 		
 		cellShapeSetter = createComboBox("cellShapeSetter", NUMBER_OF_AVAILABLE_CELL_SHAPES, new EventHandler<ActionEvent>() {
             @Override
@@ -182,7 +182,7 @@ private BorderPane root;
 		panel.getChildren().addAll(new Label("     " + myUIElements.getString("cellShapeLabel") + "  "), new Text());
 		panel.getChildren().add(cellShapeSetter);
 		panel.getChildren().addAll(new Label("     " + myUIElements.getString("gridSizeLabel") + "  "), new Text());
-		panel.getChildren().add(gridSizeSetter);
+//		panel.getChildren().add(gridSizeSetter);
 		
 		return panel; 
 	}
@@ -228,10 +228,10 @@ private BorderPane root;
 		delegate.changeSimulationSpeed(newRate);
 	}
 	
-	private void gridSizeSetterHandler(){
-		
-	}
-	
+//	private void gridSizeSetterHandler(){
+//		
+//	}
+//	
 	private void cellShapeSetterHandler(){
 		
 	}
@@ -242,6 +242,10 @@ private BorderPane root;
 	
 	public double getWindowHeight(){
 		return myScene.getWindow().getHeight();
+	}
+	
+	public String getShapeSelection(){
+		return cellShapeSetter.getSelectionModel().getSelectedItem();
 	}
 		
 }

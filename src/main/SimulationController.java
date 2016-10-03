@@ -84,10 +84,15 @@ public class SimulationController {
 		double offsetY = (windowHeight-gridHeight)/2;
 		int rowCount = (int)Math.sqrt(board.size());
 		List<CellDisplayInfo> cells = makeCellDisplayList(board);
-		GridDisplay gridDisplay = new TriangleGridDisplay(rowCount, rowCount, gridWidth, gridWidth, cells);
-		boardDisplay = gridDisplay;
+		String shapeType = display.getShapeSelection();
+		if (shapeType != null && shapeType.equalsIgnoreCase("triangle")){
+			boardDisplay = new TriangleGridDisplay(rowCount, rowCount, gridWidth, gridWidth, cells);
+		}
+		else{
+			boardDisplay = new SquareGridDisplay(rowCount, rowCount, gridWidth, gridWidth, cells);
+		}
 		System.out.println("Offset x: "+offsetX+", offset y: "+offsetY);
-		display.addBoard(gridDisplay, offsetX, offsetY);
+		display.addBoard(boardDisplay, offsetX, offsetY);
 	}
 	
 	private List<CellDisplayInfo> makeCellDisplayList(List<Cell> cells){
