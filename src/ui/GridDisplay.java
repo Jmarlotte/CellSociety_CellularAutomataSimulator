@@ -56,7 +56,6 @@ public class GridDisplay {
 	}
 	
 	private double getCellWidth(double gridWidth, int columns){
-		System.out.println("gridWidth: "+gridWidth+"columns"+columns);
 		return gridWidth / columns;
 	}
 	
