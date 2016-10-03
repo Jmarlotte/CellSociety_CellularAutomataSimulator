@@ -81,11 +81,9 @@ private LineChart myChart;
 		System.out.println(root.getChildren().size());
 	}
 	
-	public void addChart(LineChart lineChart, double x, double y){
-		//root.getChildren().remove(myChart);
-		//gridDisplay.getBoard().setLayoutX(x);
-		//gridDisplay.getBoard().setLayoutY(y);
-		root.setLeft(lineChart);
+	public void addChart(LineChart lineChart){
+		root.getChildren().remove(myChart);
+		root.setRight(lineChart);
 		myChart = lineChart;
 	}
 	

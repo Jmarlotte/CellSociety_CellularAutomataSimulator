@@ -1,4 +1,5 @@
 package ui;
+//@author James Marlotte
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -23,7 +24,6 @@ public class LineChartManager {
 	
 	private int updateCount = 1;
 	private LineChart<Number, Number> myChart;
-	//private int maxDataPoints = 50;
 	private NumberAxis myXAxis;
 	private NumberAxis myYAxis;
 	private ResourceBundle myChartResources = Resources.getBundle("resources/LineChart");
@@ -50,10 +50,9 @@ public class LineChartManager {
 					myVal +=1;
 					possValues.put(possValues.get(c.getValue().getVal()),myVal);
 			}else{
-				possValues.put(possValues.get(c.getValue().getVal()),1);
+				possValues.put(c.getValue().getVal(),1);
 			}
 		}
-		
 		series0 = new Series<Number,Number>();
 		series1 = new Series<Number,Number>();
 		series2 = new Series<Number,Number>();
@@ -62,31 +61,33 @@ public class LineChartManager {
 				series0.setName("EMPTY");
 				series1.setName("FISH");
 				series2.setName("SHARKS");
+				series2.getData().add(new XYChart.Data<>(0,possValues.get(2)));
 			}else if(board.get(0) instanceof FireCell){
+				if(possValues.get(0) == null){
+					possValues.put(0,0);
+				}
 				series0.setName("BURNT TREES");
 				series1.setName("UNTOUCHED TREES");
 				series2.setName("BURNING TREES");
+				series2.getData().add(new XYChart.Data<>(0,possValues.get(2)));
 			}else if(board.get(0) instanceof ReproductionCell){
 				series0.setName("EMPTY");
 				series1.setName("LIVE CELLS");
 			}
 		
 		series0.getData().add(new XYChart.Data<>(0,possValues.get(0) ));
-		series1.getData().add(new XYChart.Data<>(0,possValues.get(1)));
-		if (possValues.get(2) != null) series2.getData().add(new XYChart.Data<>(0,possValues.get(2)));
-		
+		series1.getData().add(new XYChart.Data<>(0,possValues.get(1)));		
 		myXAxis = new NumberAxis(myChartResources.getString("xaxis"), 0 , 50, 10);
 		myXAxis.setForceZeroInRange(false);
-		myYAxis = new NumberAxis(0,100, 100);
+		myYAxis = new NumberAxis(0,100, 10);
 		myYAxis.setLabel(myChartResources.getString("yaxis"));
 		myYAxis.setForceZeroInRange(true);
 		
 		myChart = new LineChart<Number,Number>(myXAxis,myYAxis);
-		myChart.setLayoutX(0);
-		myChart.setLayoutY(300);
 		myChart.getData().add(series0);
 		myChart.getData().add(series1);
-		if(series2 != null) myChart.getData().add(series2);
+		if(series2.getData() != null) myChart.getData().add(series2);
+		myYAxis.setAutoRanging(true);
 		
 		
 	}
@@ -102,9 +103,9 @@ public class LineChartManager {
 			Integer myVal = cellValues.get(c.getValue().getVal());
 			if (myVal != null){
 					myVal +=1;
-					cellValues.put(cellValues.get(c.getValue().getVal()),myVal);
+					cellValues.put(c.getValue().getVal(),myVal);
 			}else{
-				cellValues.put(cellValues.get(c.getValue().getVal()),1);
+				cellValues.put(c.getValue().getVal(),1);
 			}
 		}
 		
@@ -113,7 +114,7 @@ public class LineChartManager {
 		Series<Number, Number> serTemp1 = (Series) myChart.getData().get(1);
 		Series<Number, Number> serTemp2 = null;
 		
-		if(myChart.getData().size() > 2){
+		if(cellValues.get(2) != null){
 			serTemp2 = (Series) myChart.getData().get(2);
 			serTemp2.getData().add(new Data<Number, Number>(updateCount, cellValues.get(2)));
 		}

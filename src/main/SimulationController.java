@@ -8,6 +8,7 @@ import board.BoardConfigurationSaver;
 import cell.Cell;
 import global_stepper.LocalStepper;
 import cell.CellColors;
+import cell.SegregationCell;
 import global_stepper.BaseStepper;
 import global_stepper.SegregationStepper;
 import global_stepper.WaTorStepper;
@@ -85,7 +86,7 @@ public class SimulationController {
 		int gridWidth = Integer.parseInt(myResources.getString("GridWidth"));
 		int gridHeight = Integer.parseInt(myResources.getString("GridHeight"));
 		
-		double offsetX = (windowWidth - gridWidth)/2;
+		double offsetX = (windowWidth - gridWidth)/2 - 300;
 		double offsetY = (windowHeight-gridHeight)/2;
 		int rowCount = (int)Math.sqrt(board.size());
 		List<CellDisplayInfo> cells = makeCellDisplayList(board);
@@ -96,10 +97,12 @@ public class SimulationController {
 		else{
 			boardDisplay = new SquareGridDisplay(rowCount, rowCount, gridWidth, gridWidth, cells);
 		}
-		System.out.println("Offset x: "+offsetX+", offset y: "+offsetY);
+		
 		display.addBoard(boardDisplay, offsetX, offsetY);
+		
+		if(!(board.get(0) instanceof SegregationCell)){
 		myChartManager.chartCreator(board);
-		display.addChart(myChartManager.getMyChart(), 0, 400);
+		display.addChart(myChartManager.getMyChart());}
 	}
 	
 	private List<CellDisplayInfo> makeCellDisplayList(List<Cell> cells){
@@ -114,7 +117,8 @@ public class SimulationController {
 	public void updateBoard(List<Cell> board){
 		List<CellDisplayInfo> cells = makeCellDisplayList(board);
 		boardDisplay.updateBoard(cells);
-		myChartManager.updateChart(board);
+		if(!(board.get(0) instanceof SegregationCell)){
+		myChartManager.updateChart(board);}
 	}
 	
 	public void step(){
