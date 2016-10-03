@@ -229,16 +229,17 @@ private BorderPane root;
 		delegate.changeSimulationSpeed(newRate);
 	}
 	
+<<<<<<< HEAD
 	private void gridSizeSetterHandler(){
 		
 	}
 	
 	private void cellShapeSetterHandler(){
 		
-	}
-	
+=======
 	public double getWindowSize(){
 		return windowSize;
+>>>>>>> viewRefactor
 	}
 	
 }

@@ -74,9 +74,14 @@ public class MainController implements SimulationDisplayDelegate, SpecFileParser
 		ArrayList<Cell> board = sfp.getBoard();
 		simulator = new SimulationController(board, display);
 		simulator.setSimType();
+<<<<<<< HEAD
+		display.createBoard(board);
+		// System.out.println(simulationFileName);
+=======
 		simulator.createBoard(board);
 //		display.createBoard(board);
 		System.out.println(simulationFileName);
+>>>>>>> viewRefactor
 	}
 	
 	public void setSimulationFileName(String newSim){
