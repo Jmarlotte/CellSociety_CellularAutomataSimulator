@@ -1,6 +1,6 @@
 package cell;
 
-import rule.ReproductionRule;
+import rule.*;
 
 /**
  * Game of life cell
@@ -9,18 +9,23 @@ import rule.ReproductionRule;
  */
 public class ReproductionCell extends Cell {
 
-	public ReproductionCell(int value, ReproductionRule rule) {
+	public ReproductionCell(int value, Rule rule) {
 		super(value, rule);
 	}
 
 	@Override
 	public void prepareForUpdate() {
-		updateReproduction();
+		if(rule instanceof ReproductionRule)
+			updateReproduction();
+		else if(rule instanceof NonTotalisticRule)
+			updateNonTotalistic();
 	}
-	
+
 	private void updateReproduction() {
 		int neighborCount = 0;
 		for(Cell c : this.neighbors.toList()) {
+			if(c instanceof InvalidCell)
+				continue;
 			neighborCount += c.getValue().getVal();
 		}
 		if(this.value.getVal()==1) {
@@ -37,5 +42,9 @@ public class ReproductionCell extends Cell {
 			}
 		}
 	}
-	
+
+	private void updateNonTotalistic() {
+		this.nextValue.setVal(((NonTotalisticRule)rule).nextValue(this));
+	}
+
 }

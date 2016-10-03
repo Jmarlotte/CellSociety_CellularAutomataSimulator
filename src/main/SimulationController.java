@@ -15,9 +15,12 @@ import javafx.scene.chart.Chart;
 import javafx.scene.chart.LineChart;
 import javafx.scene.paint.Color;
 import rule.FireRule;
+import rule.NonTotalisticRule;
 import rule.ReproductionRule;
 import rule.SegregationRule;
 import rule.WaTorRule;
+import ui.CellDisplayInfo;
+import ui.GridDisplay;
 import ui.SimulationDisplay;
 
 /**
@@ -27,25 +30,29 @@ import ui.SimulationDisplay;
  */
 public class SimulationController {
 
+	private final String RESOURCE_PATH = "resources/DisplaySettings";
+
 	private ArrayList<Cell> board;
 	private SimulationDisplay display;
+	private GridDisplay boardDisplay;
 	private BaseStepper stepper; 
+	private ResourceBundle myResources;
+	private Color[] simulationColors;
 
 	public SimulationController(ArrayList<Cell> bd, SimulationDisplay sd) {
 		board = bd;
 		display = sd;
+		myResources = ResourceBundle.getBundle(RESOURCE_PATH);
 	}
 
 	public void setSimType() {
-		Color[] simulationColors;
 		Object rule = board.get(0).getRule();
 		
-		//TODO: Set the stepper in all instances
 		if (rule instanceof FireRule){
 			simulationColors = CellColors.fireColors();
 			stepper = new LocalStepper(board);
 		} 
-		else if (rule instanceof ReproductionRule){
+		else if ((rule instanceof ReproductionRule) || (rule instanceof NonTotalisticRule)){
 			simulationColors = CellColors.reproductionColors();
 			stepper = new LocalStepper(board);
 		} 
@@ -61,14 +68,45 @@ public class SimulationController {
 			System.out.println("COULD NOT DETECT RULE");
 			simulationColors = new Color[0];
 		}
-		display.setColors(simulationColors);
+	}
+	
+	/**
+	 * Adds a grid to the display based on the current set simulation.
+	 */
+	public void createBoard(List<Cell> board){
+		double windowWidth = display.getWindowWidth();
+		double windowHeight = display.getWindowHeight();
+		int gridWidth = Integer.parseInt(myResources.getString("GridWidth"));
+		int gridHeight = Integer.parseInt(myResources.getString("GridHeight"));
+		double offsetX = (windowWidth - gridWidth)/2;
+		double offsetY = (windowHeight-gridHeight)/2;
+		int rowCount = (int)Math.sqrt(board.size());
+		List<CellDisplayInfo> cells = makeCellDisplayList(board);
+		GridDisplay gridDisplay = new GridDisplay(rowCount, rowCount, gridWidth, gridWidth, cells);
+		boardDisplay = gridDisplay;
+		System.out.println("Offset x: "+offsetX+", offset y: "+offsetY);
+		display.addBoard(gridDisplay, offsetX, offsetY);
+	}
+	
+	private List<CellDisplayInfo> makeCellDisplayList(List<Cell> cells){
+		ArrayList<CellDisplayInfo> cellDisplayList = new ArrayList<CellDisplayInfo>();
+		for (Cell cell : cells){
+			Color color = simulationColors[cell.getValue().getVal()];
+			cellDisplayList.add(new CellDisplayInfo(cell.getX(), cell.getY(), color));
+		}
+		return cellDisplayList;
+	}
+	
+	public void updateBoard(List<Cell> board){
+		List<CellDisplayInfo> cells = makeCellDisplayList(board);
+		boardDisplay.updateBoard(cells);
 	}
 	
 	public void step(){
 		stepper.step();
-		display.updateBoard(board);
+		updateBoard(board);
 	}
-
+	
 	public void setDisplay(SimulationDisplay d){
 		display = d;
 	}

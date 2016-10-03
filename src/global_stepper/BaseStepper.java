@@ -3,8 +3,7 @@ package global_stepper;
 import java.util.ArrayList;
 import java.util.Random;
 
-import cell.Cell;
-import cell.CellNeighbors;
+import cell.*;
 
 /**
  * Base stepper
@@ -28,6 +27,8 @@ public abstract class BaseStepper {
 	protected ArrayList<Cell> getCellsOfType(ArrayList<Cell> cellList, int type) {
 		ArrayList<Cell> cells = new ArrayList<Cell>();
 		for(Cell c : cellList) {
+			if(c instanceof InvalidCell)
+				continue;
 			if(c.getValue().getVal()==type) {
 				cells.add(c);
 			}
