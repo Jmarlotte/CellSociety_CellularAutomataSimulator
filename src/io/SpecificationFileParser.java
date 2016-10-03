@@ -9,6 +9,7 @@ import board.NeighborConnection;
 import board.NeighborConnectionType;
 import cell.Cell;
 import rule.FireRule;
+import rule.NonTotalisticRule;
 import rule.ReproductionRule;
 import rule.Rule;
 import rule.SegregationRule;
@@ -61,17 +62,16 @@ public class SpecificationFileParser {
 			String ruleType = this.getUniqueKey(d, "RuleType");
 			if(ruleType.equals("Reproduction")) {
 				parseReproductionRule(d);
-				setupBoard(ruleType, d);
 			} else if(ruleType.equals("Fire")) {
 				parseFireRule(d);
-				setupBoard(ruleType, d);
 			} else if(ruleType.equals("Segregation")) {
 				parseSegregationRule(d);
-				setupBoard(ruleType, d);
 			} else if(ruleType.equals("WaTor")) {
 				parseWaTorRule(d);
-				setupBoard(ruleType, d);
+			} else if(ruleType.equals("NonTotalistic")) {
+				parseNonTotalisticRule(d);
 			}
+			setupBoard(ruleType, d);
 		} catch (FileParsingException e) {
 			// e.printStackTrace();
 			String errorMsg = String.format("File %s error: %s", name, e.getMessage());
@@ -176,6 +176,18 @@ public class SpecificationFileParser {
 		}
 		return intList;
 	}
+	
+	private ArrayList<String> csvStrToStringList(String s) {
+		if(s==null || s.equals("")) {
+			return new ArrayList<String>();
+		}
+		String[] strArr = s.split(",");
+		ArrayList<String> strList = new ArrayList<String>();
+		for(String c : strArr) {
+			strList.add(c.trim());
+		}
+		return strList;
+	}
 
 	private boolean[] csvStrToBooleanArray(String s) {
 		String[] strArr = s.split(",");
@@ -236,6 +248,12 @@ public class SpecificationFileParser {
 	private void parseSegregationRule(Document d) {
 		double threshold = Double.parseDouble(this.getUniqueKey(d, "SatisfactionThreshold"));
 		rule = new SegregationRule(threshold);
+	}
+	
+	private void parseNonTotalisticRule(Document d) {
+		ArrayList<String> surviveAllowed = csvStrToStringList(getUniqueKey(d, "SurviveAllowed"));
+		ArrayList<String> birthAllowed = csvStrToStringList(getUniqueKey(d, "BirthAllowed"));
+		rule = new NonTotalisticRule(surviveAllowed, birthAllowed);
 	}
 
 

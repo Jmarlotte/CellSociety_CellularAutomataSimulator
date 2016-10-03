@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Environment>
+<Width>20</Width>
+<Height>20</Height>
+<DefaultCellValue>0</DefaultCellValue>
+<CellValues>
+10,5,1;
+10,6,1;
+10,7,1;
+10,8,1;
+10,9,1;
+10,10,1;
+10,11,1;
+10,12,1;
+10,13,1;
+10,14,1;
+10,15,1;
+</CellValues>
+<RuleType>NonTotalistic</RuleType>
+<SurviveAllowed>xxx1xxxx</SurviveAllowed>
+<BirthAllowed></BirthAllowed>
+<NeighborConnectionType>8</NeighborConnectionType>
+<NeighborWrap>true</NeighborWrap>
+</Environment>

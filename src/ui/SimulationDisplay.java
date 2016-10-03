@@ -26,7 +26,7 @@ public class SimulationDisplay {
 
 private final String RESOURCE_PATH = "resources/DisplaySettings";
 private final String UIElements_Path = "resources/UIElements";
-private final int NUMBER_OF_AVAILABLE_SIMULATIONS = 4;
+private final int NUMBER_OF_AVAILABLE_SIMULATIONS = 5;
 private final int NUMBER_OF_AVAILABLE_SPEEDS = 5;
 private final int NUMBER_OF_AVAILABLE_SIZES = 5;
 private final int NUMBER_OF_AVAILABLE_CELL_SHAPES = 3;

@@ -13,6 +13,7 @@ import global_stepper.SegregationStepper;
 import global_stepper.WaTorStepper;
 import javafx.scene.paint.Color;
 import rule.FireRule;
+import rule.NonTotalisticRule;
 import rule.ReproductionRule;
 import rule.SegregationRule;
 import rule.WaTorRule;
@@ -38,12 +39,11 @@ public class SimulationController {
 		Color[] simulationColors;
 		Object rule = board.get(0).getRule();
 		
-		//TODO: Set the stepper in all instances
 		if (rule instanceof FireRule){
 			simulationColors = CellColors.fireColors();
 			stepper = new LocalStepper(board);
 		} 
-		else if (rule instanceof ReproductionRule){
+		else if ((rule instanceof ReproductionRule) || (rule instanceof NonTotalisticRule)){
 			simulationColors = CellColors.reproductionColors();
 			stepper = new LocalStepper(board);
 		} 

@@ -14,8 +14,8 @@ import rule.*;
 public class CellFactory {
 
 	public static Cell newCell(String type, int value, Rule rule) throws FileParsingException {
-		if(type.equals("Reproduction")) {
-			return new ReproductionCell(value, (ReproductionRule)rule);
+		if(type.equals("Reproduction") || type.equals("NonTotalistic")) {
+			return new ReproductionCell(value, rule);
 		} else if(type.equals("Fire")) {
 			return new FireCell(value, (FireRule)rule);
 		} else if(type.equals("WaTor")) {
