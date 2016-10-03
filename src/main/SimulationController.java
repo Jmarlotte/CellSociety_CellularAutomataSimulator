@@ -11,6 +11,8 @@ import cell.CellColors;
 import global_stepper.BaseStepper;
 import global_stepper.SegregationStepper;
 import global_stepper.WaTorStepper;
+import javafx.scene.chart.Chart;
+import javafx.scene.chart.LineChart;
 import javafx.scene.paint.Color;
 import rule.FireRule;
 import rule.ReproductionRule;
@@ -74,6 +76,8 @@ public class SimulationController {
 	public SimulationDisplay getDisplay(){
 		return display;
 	}
+	
+	
 	
 	/**
 	 * Save current board configuration
