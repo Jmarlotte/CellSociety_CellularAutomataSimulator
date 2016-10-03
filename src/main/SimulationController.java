@@ -21,6 +21,7 @@ import rule.SegregationRule;
 import rule.WaTorRule;
 import ui.CellDisplayInfo;
 import ui.GridDisplay;
+import ui.LineChartManager;
 import ui.SimulationDisplay;
 
 /**
@@ -38,6 +39,8 @@ public class SimulationController {
 	private BaseStepper stepper; 
 	private ResourceBundle myResources;
 	private Color[] simulationColors;
+	
+	private LineChartManager myChartManager= new LineChartManager();
 
 	public SimulationController(ArrayList<Cell> bd, SimulationDisplay sd) {
 		board = bd;
@@ -86,6 +89,8 @@ public class SimulationController {
 		boardDisplay = gridDisplay;
 		System.out.println("Offset x: "+offsetX+", offset y: "+offsetY);
 		display.addBoard(gridDisplay, offsetX, offsetY);
+		myChartManager.chartCreator(board);
+		display.addChart(myChartManager.getMyChart(), 0, 400);
 	}
 	
 	private List<CellDisplayInfo> makeCellDisplayList(List<Cell> cells){
@@ -100,6 +105,7 @@ public class SimulationController {
 	public void updateBoard(List<Cell> board){
 		List<CellDisplayInfo> cells = makeCellDisplayList(board);
 		boardDisplay.updateBoard(cells);
+		myChartManager.updateChart(board);
 	}
 	
 	public void step(){

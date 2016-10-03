@@ -2,6 +2,7 @@ package ui;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.ResourceBundle;
 import cell.Cell;
 import cell.FireCell;
@@ -15,6 +16,10 @@ import javafx.scene.chart.XYChart.Series;
 import sun.security.util.Resources;
 
 public class LineChartManager {
+	
+	public LineChartManager(){
+		
+	}
 	
 	private int updateCount = 1;
 	private LineChart<Number, Number> myChart;
@@ -32,7 +37,7 @@ public class LineChartManager {
 	
 	
 	
-	public void chartCreator(ArrayList<Cell> board){
+	public void chartCreator(List<Cell> board){
 		
 		HashMap<Integer, Integer> possValues = new HashMap<Integer, Integer>();
 		
@@ -48,6 +53,10 @@ public class LineChartManager {
 				possValues.put(possValues.get(c.getValue().getVal()),1);
 			}
 		}
+		
+		series0 = new Series<Number,Number>();
+		series1 = new Series<Number,Number>();
+		series2 = new Series<Number,Number>();
 		
 		if(board.get(0) instanceof WaTorCell ){
 				series0.setName("EMPTY");
@@ -68,10 +77,13 @@ public class LineChartManager {
 		
 		myXAxis = new NumberAxis(myChartResources.getString("xaxis"), 0 , 50, 10);
 		myXAxis.setForceZeroInRange(false);
+		myYAxis = new NumberAxis(0,100, 100);
 		myYAxis.setLabel(myChartResources.getString("yaxis"));
 		myYAxis.setForceZeroInRange(true);
 		
 		myChart = new LineChart<Number,Number>(myXAxis,myYAxis);
+		myChart.setLayoutX(0);
+		myChart.setLayoutY(300);
 		myChart.getData().add(series0);
 		myChart.getData().add(series1);
 		if(series2 != null) myChart.getData().add(series2);
@@ -79,7 +91,7 @@ public class LineChartManager {
 		
 	}
 	
-	public void updateChart(ArrayList<Cell> board){
+	public void updateChart(List<Cell> board){
 		
 		HashMap<Integer, Integer> cellValues = new HashMap<Integer, Integer>();
 		
@@ -125,8 +137,7 @@ public class LineChartManager {
 	public LineChart<Number, Number> getMyChart(){
 		return myChart;
 	}
+
 	
-/*	public void setMaxDataPoints(int n){
-		maxDataPoints =n;
-	} */
+
 }

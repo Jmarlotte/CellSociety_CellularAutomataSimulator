@@ -7,6 +7,8 @@ import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.chart.Chart;
+import javafx.scene.chart.LineChart;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
@@ -47,7 +49,8 @@ private ComboBox<String> simSetter;
 
 private GridDisplay board;
 private BorderPane root; 
-	
+private LineChart myChart;
+
 	public SimulationDisplay(){
 		myResources = ResourceBundle.getBundle(RESOURCE_PATH);
 		myUIElements = ResourceBundle.getBundle(UIElements_Path);
@@ -73,6 +76,14 @@ private BorderPane root;
 		gridDisplay.getBoard().setLayoutY(y);
 		root.getChildren().add(gridDisplay.getBoard());
 		board = gridDisplay;
+	}
+	
+	public void addChart(LineChart lineChart, double x, double y){
+		//root.getChildren().remove(myChart);
+		//gridDisplay.getBoard().setLayoutX(x);
+		//gridDisplay.getBoard().setLayoutY(y);
+		root.setLeft(lineChart);
+		myChart = lineChart;
 	}
 	
 	private Button createButton(String description, EventHandler<ActionEvent> handler ){
