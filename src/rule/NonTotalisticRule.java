@@ -3,7 +3,6 @@ package rule;
 import java.util.ArrayList;
 
 import cell.Cell;
-import cell.CellNeighbors;
 
 /**
  * Non Totalistic Rule
@@ -28,14 +27,19 @@ public class NonTotalisticRule extends Rule {
 	}
 	
 	public int nextValue(Cell c) {
-		if(surviveAllowed.size()==0 && c.getValue().getVal()==ReproductionRule.OCCUPIED_TYPE) {
+		if(c.getValue().getVal()==ReproductionRule.OCCUPIED_TYPE) {
+			for(String s : surviveAllowed)
+				if(allowed(c, s))
+					return 1;
 			return 0; // cannot survive
 		}
-		if(birthAllowed.size()==0 && c.getValue().getVal()==ReproductionRule.EMPTY_TYPE) {
-			return 0; // cannot be born
+		else if(c.getValue().getVal()==ReproductionRule.EMPTY_TYPE) {
+			for(String s : birthAllowed)
+				if(allowed(c, s))
+					return 1;
+			return 0; // cannot survive
 		}
-		
-		return 0;
+		throw new RuntimeException("Unrecognized cell type "+c);
 	}
 	
 	/**
