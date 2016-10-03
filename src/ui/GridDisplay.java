@@ -6,7 +6,6 @@ import java.util.List;
 import cell.Cell;
 import javafx.scene.Node;
 import javafx.scene.layout.Pane;
-import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
 
@@ -21,6 +20,19 @@ public class GridDisplay {
 		cellWidth = getCellWidth(width, columns);
 		cellHeight = getCellHeight(height, rows);
 		board = new Pane();
+		List<Node> children = board.getChildren();
+		createCellShapes(board, cells);
+		for( CellDisplayInfo cell : cells){
+			double offX = getCellOffsetX(cell.x);
+			double offY = getCellOffsetY(cell.y);
+			Rectangle newCell = new Rectangle(offX, offY, cellWidth, cellHeight);
+			newCell.setFill(cell.color);
+			cellShapes[cell.x][cell.y] = newCell;
+			children.add(newCell);
+		}
+	}
+	
+	private void createCellShapes(Pane board, List<CellDisplayInfo> cells){
 		List<Node> children = board.getChildren();
 		for( CellDisplayInfo cell : cells){
 			double offX = getCellOffsetX(cell.x);
@@ -44,6 +56,7 @@ public class GridDisplay {
 	}
 	
 	private double getCellWidth(double gridWidth, int columns){
+		System.out.println("gridWidth: "+gridWidth+"columns"+columns);
 		return gridWidth / columns;
 	}
 	

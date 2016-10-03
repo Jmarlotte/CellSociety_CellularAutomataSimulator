@@ -72,9 +72,9 @@ public class SimulationController {
 		double offsetY = (windowSize-gridHeight)/2;
 		int rowCount = (int)Math.sqrt(board.size());
 		List<CellDisplayInfo> cells = makeCellDisplayList(board);
-		GridDisplay gridDisplay = new GridDisplay(gridWidth, gridHeight, rowCount, rowCount, cells);
+		GridDisplay gridDisplay = new GridDisplay(rowCount, rowCount, gridWidth, gridWidth, cells);
 		boardDisplay = gridDisplay;
-		display.addBoard(gridDisplay);
+		display.addBoard(gridDisplay, offsetX, offsetY);
 	}
 	
 	private List<CellDisplayInfo> makeCellDisplayList(List<Cell> cells){

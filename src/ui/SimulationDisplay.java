@@ -40,6 +40,7 @@ private Button resetButton;
 private ComboBox<String> speedSetter;
 private SimulationDisplayDelegate delegate;
 
+private GridDisplay board;
 double windowSize;
 private BorderPane root; 
 	
@@ -51,7 +52,6 @@ private BorderPane root;
 		
 		myScene = createScene(root);
 		windowSize = myScene.getWidth();
-		
 	}
 	
 	private Scene createScene(Parent root){
@@ -65,58 +65,14 @@ private BorderPane root;
 		return myScene;
 	}
 
-//	private double getCellWidth(){
-//		double gridArea = gridWidth*gridHeight;
-//		double sizeRatio = gridArea/numCells; 
-//		return Math.sqrt(sizeRatio); 
-//	}
-////	
-//	private double getCellOffsetX(int column){
-//		return column*getCellWidth();
-//	}
-//	
-//	private double getCellOffsetY(int row){
-//		return row *getCellWidth();
-//	}
-//	
-	public void addBoard(GridDisplay gridDisplay){
+	public void addBoard(GridDisplay gridDisplay, double x, double y){
+		root.getChildren().remove(board);
+		gridDisplay.getBoard().setLayoutX(x);
+		gridDisplay.getBoard().setLayoutY(y);
 		root.getChildren().add(gridDisplay.getBoard());
+		board = gridDisplay;
 	}
 	
-//	/**
-//	 * Update the screen for current board
-//	 * Each cell's position is cell.getX() and cell.getY()
-//	 * Each cell's value is cell.getValue().getVal()
-//	 * @param board
-//	 */
-//	public void updateBoard(ArrayList<Cell> changedCells) {
-//		for (Cell cell : changedCells){
-//			Shape s = cellShapes[cell.getX()][cell.getY()];
-//			Color newColor = colors[cell.getValue().getVal()];
-//			s.setFill(newColor);
-//		}
-//	}
-//	
-//	public void createBoard(ArrayList<Cell> board) {
-//		gridWidth = Integer.parseInt(myResources.getString("GridWidth"));
-//		gridHeight = Integer.parseInt(myResources.getString("GridHeight"));
-//		numCells = board.size();
-//		int rowCount = (int)Math.sqrt(board.size());
-//		cellShapes = new Shape[rowCount][rowCount];
-//		ObservableList<Node> children = root.getChildren();
-//		double offsetX = (windowSize - gridWidth)/2;
-//		double offsetY = (windowSize-gridHeight)/2;
-//		for( Cell cell : board){
-//			double offX = offsetX + getCellOffsetX(cell.getX());
-//			double offY = offsetY + getCellOffsetY(cell.getY());
-//			Color cellFill = colors[cell.getValue().getVal()];
-//			Rectangle newCell = new Rectangle(offX, offY, getCellWidth(), getCellWidth() );
-//			newCell.setFill(cellFill);
-//			cellShapes[cell.getX()][cell.getY()] = newCell;
-//			children.add(newCell);
-//		}		
-//	}
-//	
 	private Button createButton(String description, EventHandler<ActionEvent> handler ){
 		
 		Button ret = new Button(); 
@@ -195,6 +151,8 @@ private BorderPane root;
             	speedSetterHandler();
           
             }});
+		speedSetter.getSelectionModel().select(2);
+
 		
 		panel.getChildren().add(startButton);
 		panel.getChildren().add(stopButton);
@@ -216,6 +174,7 @@ private BorderPane root;
 		startButton.setDisable(true);
 		stopButton.setDisable(false);
 		stepButton.setDisable(true);
+		resetButton.setDisable(false);
 		delegate.resumeSimulation();
 	}
 		
