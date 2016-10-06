@@ -22,6 +22,12 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
 import javafx.scene.text.Text;
 import main.MainController;
+//This entire file is part of my masterpiece.
+// James Marlotte
+/* This class sets up the visual elements of the project (GUI). I think it shows good flexibility and coding conventions. 
+ * This class makes it very easy to add new UI Elements through the makeUIPanel class.
+
+*/
 
 //@authors: Andrew Bihl, James Marlotte
 
@@ -31,7 +37,6 @@ private final String RESOURCE_PATH = "resources/DisplaySettings";
 private final String UIElements_Path = "resources/UIElements";
 private final int NUMBER_OF_AVAILABLE_SIMULATIONS = 5;
 private final int NUMBER_OF_AVAILABLE_SPEEDS = 5;
-//private final int NUMBER_OF_AVAILABLE_SIZES = 5;
 private final int NUMBER_OF_AVAILABLE_CELL_SHAPES = 2;
 
 private ResourceBundle myResources;
@@ -45,13 +50,12 @@ private Button resetButton;
 private Button saveBoardButton;
 private ComboBox<String> speedSetter;
 private SimulationDisplayDelegate delegate;
-//private ComboBox<String> gridSizeSetter;
 private ComboBox<String> cellShapeSetter;
 private ComboBox<String> simSetter;
 
 private Pane board;
 private BorderPane root; 
-private LineChart myChart;
+private LineChart<Number, Number> myChart;
 
 	public SimulationDisplay(){
 		myResources = ResourceBundle.getBundle(RESOURCE_PATH);
@@ -81,7 +85,7 @@ private LineChart myChart;
 		System.out.println(root.getChildren().size());
 	}
 	
-	public void addChart(LineChart lineChart){
+	public void addChart(LineChart<Number, Number> lineChart){
 		root.getChildren().remove(myChart);
 		root.setRight(lineChart);
 		myChart = lineChart;
@@ -176,13 +180,6 @@ private LineChart myChart;
             }});
 		speedSetter.getSelectionModel().select(2);
 
-//		
-//		gridSizeSetter = createComboBox("gridSizeSetter", NUMBER_OF_AVAILABLE_SIZES, new EventHandler<ActionEvent>() {
-//            @Override
-//            public void handle (ActionEvent event) {
-//            	gridSizeSetterHandler();
-//          
-//            }});
 		
 		cellShapeSetter = createComboBox("cellShapeSetter", NUMBER_OF_AVAILABLE_CELL_SHAPES, new EventHandler<ActionEvent>() {
             @Override
@@ -201,8 +198,7 @@ private LineChart myChart;
 		panel.getChildren().addAll(new Label("     " + myUIElements.getString("cellShapeLabel") + "  "), new Text());
 		panel.getChildren().add(cellShapeSetter);
 		panel.getChildren().add(saveBoardButton);
-//		panel.getChildren().addAll(new Label("     " + myUIElements.getString("gridSizeLabel") + "  "), new Text());
-//		panel.getChildren().add(gridSizeSetter);
+
 		
 		return panel; 
 	}
@@ -249,10 +245,7 @@ private LineChart myChart;
 		delegate.changeSimulationSpeed(newRate);
 	}
 	
-//	private void gridSizeSetterHandler(){
-//		
-//	}
-//	
+
 	private void saveBoardButtonHandler(){
 		delegate.saveBoard();
 	}
