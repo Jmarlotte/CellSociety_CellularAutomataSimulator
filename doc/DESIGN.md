@@ -47,6 +47,18 @@ For global rules, a global controller seems necessary to control the simulation 
 
 In addition, we talked about how the board size change should work. We decide to make an underlying fixed-sized board (e.g. 100x100). Then board size change effectively changes the visible part of the board, rather than creating new board region or destroying existing board region. 
 
+### Adding Features
+
+I tried to make features as easy to extend as possible. Adding a new simulation require new subclasses to `Cell`, `Rule`, and/or `Stepper`. 
+
+ 1. Cell Type: Each cell class subclasses `Cell`, and any subclass in the `Cell` can be used in any cell type-agnostic place. For example, when creating a board, most of the board layout (such as width and height of the board, number of neighbors, connection of neighbors, etc.) is generic to all cells. In fact, the whole `BoardBuilder` class is designed to handle the superclass `Cell`, and the only connection to type-specific information is handled through `CellFactory`, which is a factory class that instantiates desired cell subclass instance using provided information. 
+ 2. Rule Types: Each rule class subclasses `Rule`. Rules and cells are separate and not necessarily a one-to-one relationship. This design enables maximal extendability by allowing a `Cell` to have multiple `Rule` types or a `Rule` to be applied on multiple `Cell` types. One use case is already demonstrated in the code: the `ReproductionCell` (our name for game of life, since it is mainly about reproduction) can handle both a traditional rule that is based only on number of neighbors (`ReproductionRule`) and a non-totalistic rule that is based on the exact location of neighbors (`NonTotalisticRule`). 
+ 3. Stepper: Each stepper subclasses `BaseStepper`. Each `Stepper` has a method called `step()`, which changes the board, represented by an `ArrayList` of `Cell`s. Again, the `Cell` is the superclass name, which is agnostic of specific cell type. According to specific rules, each `Stepper` class implements the stepping function differently, and this is the only place in which specific type of `Cell`s and `Rule`s need to be known. 
+
+To add a new simulation, a new `Cell` subclass needs to be created and a new `Rule` class needs to be created. In addition, `CellFactory` needs to be modified to handle initialization of the new cell type. If the simulation can be done locally, then `LocalStepper` can be reused in `SimulationController`. Otherwise, a new `Stepper` needs to be created to handle global update rule and `SimulationController` needs to b modified to handle this new type of `Stepper`. Other than this, IO and rendering do not need any change. The simplicity of requirement illustrates the flexibility of our design. 
+
+(JAMES AND ANDREW, PUT ADDING UI FEATURES HERE)
+
 ### Team Responsibilities
 
 Yilun implemented simulation logic and file parsing. All extensions in Configuration and Simulation parts are also implemented by Yilun. James and Andrew implemented UI, as well as extensions in Visualization. 
