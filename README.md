@@ -14,9 +14,12 @@ Date finished: Oct 6
 
 Yilun spent about 30 hours on the project.
 
+James spent about 40 hours on the project.
+
 ####each person's role in developing the project
 
 Yilun works on simulation and configuration (XML parsing and error handling).
+James and Andrew implemented UI, extensions in Visualization, and controllers linking the UI and model.
 
 ####any books, papers, online, or human resources that you used in developing the project
 
@@ -42,7 +45,7 @@ Not particularly, the UI should be straightforward
 
 Yilun: None in simulation and IO part, to the best of my knowledge.
 
-The line graph does not reflect accurate cell counts.
+The line graph does not reflect accurate cell counts at times.
 
 ####any extra features included in the project
 
