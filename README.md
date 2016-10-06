@@ -42,7 +42,7 @@ Not particularly, the UI should be straightforward
 
 Yilun: None in simulation and IO part, to the best of my knowledge.
 
-The line graph is not getting accurate cell counts.
+The line graph does not reflect accurate cell counts.
 
 ####any extra features included in the project
 
