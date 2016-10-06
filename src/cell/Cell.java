@@ -1,6 +1,7 @@
-package cell;
+// This entire file is part of my masterpiece.
+// Yilun Zhou
 
-import java.util.*;
+package cell;
 
 import rule.Rule;
 
@@ -64,10 +65,6 @@ public abstract class Cell {
 
 	public void setValue(CellValue value) {
 		this.value = value;
-	}
-
-	public CellValue getNextValue() {
-		return nextValue;
 	}
 
 	public Rule getRule() {

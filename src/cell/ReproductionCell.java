@@ -1,3 +1,6 @@
+// This entire file is part of my masterpiece.
+// Yilun Zhou
+
 package cell;
 
 import rule.*;
