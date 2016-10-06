@@ -1,6 +1,14 @@
 // This entire file is part of my masterpiece.
 // Yilun Zhou
 
+/**
+ * This is an instance for a Cell subclass. This class
+ * does not afford local update since cell "moving" is a "global"
+ * behavior. Thus, the prepareForUpdate() is left empty and the 
+ * update is handled by SegregationStepper in global_stepper package.
+ * 
+ */
+
 package cell;
 
 import rule.SegregationRule;

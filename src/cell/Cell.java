@@ -1,6 +1,18 @@
 // This entire file is part of my masterpiece.
 // Yilun Zhou
 
+/**
+ * This is the abstract superclass for all Cells. It sets up basic 
+ * structures of a cell, such as CellNeighbor, Rule, and CellValue. 
+ * 
+ * In addition, it is also capable for local stepping, a type of simulation 
+ * in which each cell has complete information as to how to behave according 
+ * to its neighbor. This is the case for Game of Life and Fire. 
+ * 
+ * The discussion for Rule and CellNeighbor is in the analysis file, which talks 
+ * about the separability of cell, rule, and board geometry. 
+ */
+
 package cell;
 
 import rule.Rule;

@@ -1,6 +1,23 @@
 // This entire file is part of my masterpiece.
 // Yilun Zhou
 
+/**This is class shows a Factory design pattern. Specifically, two functions
+ * newCell() and newCellFromString() creates a cell from either a parameter 
+ * specification or a String specification. 
+ * 
+ * The former method is called when a cell needs to be created from scratch, and 
+ * all details of the cell is provided. 
+ * 
+ * The latter method is called when a board from a text description file is created. 
+ * A text description file contains all information necessary to create a cell, and 
+ * this method parses the string create cell. 
+ * 
+ * The factory pattern hides all details of Cell initialization, whose most remarkable 
+ * feature is selecting different subclasses of Cell for different types. Thus, 
+ * it when creating a new cell, the only part that needs to change for accomondating new 
+ * cell is this class, rather than every place where a Cell is instantiated. 
+*/
+
 package cell;
 
 import java.util.ArrayList;

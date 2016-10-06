@@ -1,6 +1,13 @@
 // This entire file is part of my masterpiece.
 // Yilun Zhou
 
+/**
+ * This is an instance for a Cell subclass. The only significant
+ * method override is the update function, which uses the rule and
+ * neighbor counts to determine next step cell value. 
+ * 
+ */
+
 package cell;
 
 import rule.*;

@@ -1,6 +1,18 @@
 // This entire file is part of my masterpiece.
 // Yilun Zhou
 
+/**
+ * This class represents an invalid, non-existent cell due 
+ * to being a neighbor of a border cell and wrapping is not enabled
+ * This cell is used as a placeholder for non-totalistic 
+ * rule to align neighbors. 
+ * 
+ * In addition, since this cell is not supposed to be updated, the 
+ * prepareForUpdate() will instantly crash the program if called. This
+ * is used as a sanity check for debugging purposes. 
+ * 
+ */
+
 package cell;
 
 /**
